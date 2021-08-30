@@ -5,4 +5,4 @@
 Dockerfile
 *__pycache__
 *.pyc
-/pynance/db.sqlite3
+/scrilla/db.sqlite3

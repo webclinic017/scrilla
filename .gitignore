@@ -2,5 +2,5 @@
 *.env
 !.sample.env
 *.pyc
-pynance/db.sqlite3
-pynance/static/*
+scrilla/db.sqlite3
+scrilla/static/*
