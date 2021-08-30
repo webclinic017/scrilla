@@ -2,5 +2,6 @@
 *.env
 !.sample.env
 *.pyc
-scrilla/db.sqlite3
-scrilla/static/*
+/scrilla/db.sqlite3
+/scrilla/static/*
+/dist/
