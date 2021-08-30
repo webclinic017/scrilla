@@ -1,33 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@chinchalinchin 
-chinchalinchin
-/
-dockerized-django
-1
-00
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-dockerized-django/scripts/run-server.sh
-@chinchalinchin
-chinchalinchin fix scripts, adjust settings
-Latest commit 5fc1342 23 days ago
- History
- 1 contributor
-Executable File  55 lines (45 sloc)  1.82 KB
- 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 SCRIPT_NAME='run-server'
 nl=$'\n'
@@ -40,10 +10,10 @@ for more information on application configuration."
 
 PROJECT_DIR=$SCRIPT_DIR/..
 UTIL_DIR=$SCRIPT_DIR/util
-APP_DIR=$PROJECT_DIR/app
+APP_DIR=$PROJECT_DIR/scrilla
 ENV_DIR=$PROJECT_DIR/env
 source "$SCRIPT_DIR/util/sys-util.sh"
-source "$UTIL_DIR/env-vars.sh" "runtime"
+source "$UTIL_DIR/env-vars.sh"
 
 
 if [ "$1" == "--help" ] || [ "$1" == "--h" ] || [ "$1" == "-help" ] || [ "$1" == "-h" ]
