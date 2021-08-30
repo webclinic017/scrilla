@@ -1,0 +1,8 @@
+
+/env/
+*.env
+.gitignore
+Dockerfile
+*__pycache__
+*.pyc
+/pynance/db.sqlite3
