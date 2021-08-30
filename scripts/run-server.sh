@@ -27,6 +27,7 @@ else
 
     cd "$APP_DIR"
 
+    ls -al 
     log "Collecting static files." "$SCRIPT_NAME"
     python3 manage.py collectstatic --noinput
     

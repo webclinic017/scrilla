@@ -1,16 +1,12 @@
 import os, dotenv
-from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.setdefault('SECRET_KEY', 'django-insecure-t@i)fx@+_f3au=30(8!cqv)^0f557#-&o_9q&e@68-nq95wx9r')
-APP_ENV = os.environ.setdefault('APP_ENV', 'local')
+SECRET_KEY = os.environ.setdefault('SECRET_KEY', 'changeme')
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.dirname(BASE_DIR)
 APP_ENV = str(os.environ.setdefault('APP_ENV', 'local')).strip()
 
-print(APP_ENV)
 if APP_ENV == 'local':
     dotenv.load_dotenv(os.path.join(PROJECT_DIR, 'env','.env'))
 
@@ -40,6 +36,16 @@ elif APP_ENV=='container':
     ALLOWED_HOSTS = [ '*' ]
     CORS_ALLOW_ALL_ORIGINS = True
 
+else: 
+    DEBUG = True
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'db.sqlite3',
+        }
+    }
+    ALLOWED_HOSTS = [ '*' ]
+    CORS_ALLOW_ALL_ORIGINS = True
 
 
 SUPERUSER_USERNAME = str(os.getenv('DJANGO_SUPERUSER_USERNAME')).strip()
