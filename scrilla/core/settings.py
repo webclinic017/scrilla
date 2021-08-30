@@ -10,6 +10,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.dirname(BASE_DIR)
 APP_ENV = str(os.environ.setdefault('APP_ENV', 'local')).strip()
 
+print(APP_ENV)
 if APP_ENV == 'local':
     dotenv.load_dotenv(os.path.join(PROJECT_DIR, 'env','.env'))
 
