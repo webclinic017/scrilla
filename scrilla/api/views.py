@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from scrilla import files
-from scrilla.analysis import optimizer
+from scrilla.analysis import optimizer, statistics, markets
 from scrilla.objects.portfolio import Portfolio
 
 def parse_query_params(request):
@@ -35,4 +35,14 @@ def risk_return(request):
     params, profiles = parse_query_params(request), {}
 
     for ticker in params['tickers']:
-        pass
+        profiles[ticker] = statistics.calculate_risk_return(ticker=params['tickers'],
+                                                            start_date=params['start_date'],
+                                                            end_date=params['end_date'])
+        profiles[ticker]['sharpe_ratio'] = markets.sharpe_ratio(ticker=params['tickers'],
+                                                            start_date=params['start_date'],
+                                                            end_date=params['end_date'])
+        profiles[ticker]['asset_beta'] = markets.market_beta(ticker=params['tickers'],
+                                                            start_date=params['start_date'],
+                                                            end_date=params['end_date'])
+
+    return Response(data=profiles)
