@@ -16,7 +16,7 @@ def parse_query_params(request):
     }
 
 @api_view(['GET'])
-def optimize(request):
+def optimize_portfolio(request):
     params = parse_query_params(request)
     
     portfolio = Portfolio(tickers=params['tickers'], start_date=params['start_date'], end_date=params['end_date'])
@@ -29,3 +29,10 @@ def optimize(request):
     response = files.format_allocation(optimal_allocation, portfolio, investment=params['invest'])
     
     return Response(data=response)
+
+@api_view(['GET'])
+def risk_return(request):
+    params, profiles = parse_query_params(request), {}
+
+    for ticker in params['tickers']:
+        pass

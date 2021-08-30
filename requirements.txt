@@ -1,9 +1,13 @@
-python-dotenv==0.17.1
+# application dependencies
+scrilla==1.0.4
+
+# framework dependencies
 django==3.2.6
 djangorestframework==3.12.4
-gunicorn==20.1.0
-whitenoise==5.1.0
 django-cors-headers==3.7.0
 django-referrer-policy==1.0.0
 
-scrilla==1.0.4
+# server dependencies
+python-dotenv==0.17.1
+gunicorn==20.1.0
+whitenoise==5.1.0

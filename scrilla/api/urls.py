@@ -1,7 +1,7 @@
 from django.urls import path
 
-from api.views import optimize
+from api.views import optimize_portfolio
 
 urlpatterns = [ 
-    path('optimize/', optimize)
+    path('optimize/', optimize_portfolio)
 ]
