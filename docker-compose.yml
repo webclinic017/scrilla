@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+    app: 
+      build: .
+      depends_on:
+        - data
+      ports:
+        - "8000:8000"
+      networks:
+        - data_net
+      env_file: 
+        - ./env/.env
+      command: [ "wait-for-it" ]
+
+    data:
+      image: postgres:12
+      restart: always
+      ports: 
+        - "5432:5432"
+      volumes:
+        - postgres:/var/lib/postgresql/data
+      networks:
+        - data_net
+      env_file:
+        - ./env/.env 
+
+networks:
+    data_net:  
+
+volumes: 
+    postgres:
