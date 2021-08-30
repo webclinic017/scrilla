@@ -6,4 +6,4 @@ whitenoise==5.1.0
 django-cors-headers==3.7.0
 django-referrer-policy==1.0.0
 
-scrilla==1.0.3b
+scrilla==1.0.3rc0
