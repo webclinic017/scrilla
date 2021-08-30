@@ -7,6 +7,7 @@ from scrilla import files, services
 from scrilla.analysis import optimizer, statistics, markets
 from scrilla.util import plotter
 from scrilla.objects.portfolio import Portfolio
+from scrilla.objects.cashflow import Cashflow
 
 def parse_query_params(request):
     return {
@@ -84,10 +85,31 @@ def efficient_frontier(request):
 
 @api_view(['GET'])
 def discount_dividend(request):
-    params = parse_query_params(request)
+    params, response, cashflow_to_plot = parse_query_params(request), {}, None
 
     for ticker in params['tickers']:
         if params['discount']:
             discount = params['discount']
         else:
             discount = markets.cost_of_equity(ticker=ticker, start_date=params['start_date'], end_date=params['end_date'])
+        
+        sample = services.get_dividend_history(ticker=ticker)
+        present_value = Cashflow(sample=sample,discount_rate=discount).calculate_net_present_value()
+
+        if present_value:
+            response[ticker]={ 'discount_dividend_model': present_value }
+        else: 
+            response[ticker]={ 'error': 'discount dividend price cannot be computed for this equity' }
+        
+        if params['image']:
+            cashflow_to_plot = Cashflow(sample=sample,discount_rate=discount)
+            break
+    
+    if params['image']:
+        graph = plotter.plot_cashflow(ticker=params['tickers'][0], cashflow=cashflow_to_plot, show=False)
+        response = HttpResponse(content_type="image/png")
+        graph.print_png(response)
+        return response
+    
+    return Response(data=response)
+
