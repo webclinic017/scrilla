@@ -5,3 +5,4 @@
 /scrilla/db.sqlite3
 /scrilla/static/*
 /dist/
+/.vscode
