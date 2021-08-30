@@ -31,18 +31,25 @@ def optimize_portfolio(request):
     return Response(data=response)
 
 @api_view(['GET'])
-def risk_return(request):
+def risk_profile(request):
     params, profiles = parse_query_params(request), {}
 
     for ticker in params['tickers']:
-        profiles[ticker] = statistics.calculate_risk_return(ticker=params['tickers'],
-                                                            start_date=params['start_date'],
+        profiles[ticker] = statistics.calculate_risk_return(ticker=params['tickers'], start_date=params['start_date'],
                                                             end_date=params['end_date'])
-        profiles[ticker]['sharpe_ratio'] = markets.sharpe_ratio(ticker=params['tickers'],
-                                                            start_date=params['start_date'],
+        profiles[ticker]['sharpe_ratio'] = markets.sharpe_ratio(ticker=params['tickers'], start_date=params['start_date'],
                                                             end_date=params['end_date'])
-        profiles[ticker]['asset_beta'] = markets.market_beta(ticker=params['tickers'],
-                                                            start_date=params['start_date'],
+        profiles[ticker]['asset_beta'] = markets.market_beta(ticker=params['tickers'], start_date=params['start_date'],
                                                             end_date=params['end_date'])
 
     return Response(data=profiles)
+
+@api_view(['GET'])
+def correlation_matrix(request):
+    params = parse_query_params(request)
+
+    matrix = statistics.ito_correlation_matrix(tickers=params['tickers'], start_date=params['start_date'], end_date=params['end_date'])
+
+    response = files.format_correlation_matrix(tickers=params['tickers'], correlation_matrix=matrix)
+
+    return Response(data=response)
