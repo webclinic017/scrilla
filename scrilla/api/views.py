@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from scrilla import files
+from scrilla import files, services
 from scrilla.analysis import optimizer, statistics, markets
 from scrilla.util import plotter
 from scrilla.objects.portfolio import Portfolio
