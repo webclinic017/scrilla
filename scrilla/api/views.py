@@ -16,8 +16,8 @@ def parse_query_params(request):
         'end_date': request.query_params.get('end_date'),
         'invest': request.query_params.get('invest'),
         'target': request.query_params.get('target'),
-        'sharpe': request.query_params.get('sharpe'),
-        'image': request.query_params.get('image'),
+        'sharpe': str(request.query_params.get('sharpe')).lower() == 'true',
+        'image': str(request.query_params.get('image')).lower() == 'true',
         'discount': request.query_params.get('discount')
     }
 
