@@ -6,7 +6,7 @@ import { animations } from '../../app.animations';
   templateUrl: './banner.component.html',
   styleUrls: ['./banner.component.css'],
   animations: [
-    animations.getOpenCloseTrigger('500ms', '', '')
+    animations.getOpenCloseTrigger(100, 0)
   ]
 })
 
