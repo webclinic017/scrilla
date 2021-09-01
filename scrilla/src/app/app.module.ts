@@ -9,7 +9,9 @@ import { FooterComponent } from './components/footer/footer.component';
 import { SplashComponent } from './components/splash/splash.component';
 
 import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 
@@ -26,7 +28,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     BrowserAnimationsModule,
 
     MatButtonModule,
+    MatDividerModule,
     MatIconModule,
+    MatListModule,
     MatToolbarModule
   ],
   providers: [],

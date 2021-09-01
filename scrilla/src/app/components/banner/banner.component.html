@@ -1,10 +1,31 @@
-<mat-toolbar color="basic">
-    <button mat-icon-button color="accent" aria-label="expansion-toggle"
-            (click) = "toggleMenu()">
-        <mat-icon>menu</mat-icon>
-    </button> 
-</mat-toolbar>
+<header class="header">
+    <mat-toolbar color="basic">
+        <button mat-icon-button color="accent" aria-label="expansion-toggle"
+                (click) = "toggleMenu()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        
+        <h1>scrilla</h1>
+    </mat-toolbar>
+</header>
 
 <div class="expansion-panel" [@openClose]="this.menuState">
-    test
+    <mat-list>
+        <div mat-subheader>Apps</div>
+        <mat-list-item >
+          <mat-icon mat-list-icon>label_important</mat-icon>
+          <div mat-line>title goes here</div>
+          <div mat-line>description goes here </div>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+
+        <div mat-subheader>Documentation</div>
+        <mat-list-item>
+          <mat-icon mat-list-icon>label_important</mat-icon>
+          <div mat-line>title goes here</div>
+          <div mat-line>description goes here</div>
+        </mat-list-item>
+
+      </mat-list>
 </div>

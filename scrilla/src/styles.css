@@ -1,4 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+html, body { height: 100%;  margin: 0; }
+
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.page {
+    display: flex;
+    flex-direction: column;
+    height:100%;
+}
+.page .header{
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: auto;
+}
+.page .content{
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+}
+.page .footer{
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: 40px;
+}
