@@ -1,1 +1,9 @@
-<p>banner works!</p>
+<mat-toolbar color="basic">
+    <button mat-icon-button color="accent" aria-label="expansion-toggle"
+            (click) = "toggleMenu()">
+        <mat-icon>menu</mat-icon>
+    </button> 
+</mat-toolbar>
+<div class="expansion-panel" [@openClose]="this.menuState">
+    test
+</div>
