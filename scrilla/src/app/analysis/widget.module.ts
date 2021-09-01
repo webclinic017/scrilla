@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AnalysisRoutingModule } from './analysis-routing.module';
-import { AnalysisComponent } from './analysis.component';
+import { WidgetRoutingModule } from './widget-routing.module';
 import { RiskProfileComponent } from './components/risk-profile/risk-profile.component';
 import { PriceModelComponent } from './components/price-model/price-model.component';
 import { PortfolioOptimizerComponent } from './components/portfolio-optimizer/portfolio-optimizer.component';
@@ -13,7 +12,6 @@ import { DateComponent } from './components/arguments/date/date.component';
 
 @NgModule({
   declarations: [
-    AnalysisComponent,
     RiskProfileComponent,
     PriceModelComponent,
     PortfolioOptimizerComponent,
@@ -23,7 +21,7 @@ import { DateComponent } from './components/arguments/date/date.component';
   ],
   imports: [
     CommonModule,
-    AnalysisRoutingModule
+    WidgetRoutingModule
   ]
 })
-export class AnalysisModule { }
+export class WidgetModule { }

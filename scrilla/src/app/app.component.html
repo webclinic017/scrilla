@@ -1,8 +1,37 @@
-<div class="page">
-    <app-banner></app-banner>
+<mat-drawer-container class="fill">
 
-    <section class="content">test test</section>
+    <mat-drawer #navigationDrawer mode="over">
+        <mat-nav-list #menuSelection>
+            <div mat-subheader>Apps</div>
+    
+            <mat-list-item *ngFor="let widget of staticData.getWidgetInfo()">
+                <mat-icon color="accent" matListIcon >label_important</mat-icon>
+                <a matLine [routerLink]="widget.route" (click)="navigationDrawer.toggle()">{{widget.name}}</a>
+            
+            </mat-list-item>
+    
+            <mat-divider></mat-divider>
+    
+            <div mat-subheader>Documentation</div>
+            <mat-list-item>
+              <mat-icon color="accent" mat-list-icon>label_important</mat-icon>
+              <div mat-line>title goes here</div>
+            </mat-list-item>
+    
+        </mat-nav-list>
+    </mat-drawer>
 
-    <footer class="footer"> here is the footer</footer>
-</div>
+    
+    <div id="app-display" class="page">
+        <app-banner (toggle)="navigationDrawer.toggle()"></app-banner>
+
+        <section class="content">
+            <router-outlet></router-outlet>
+        </section>
+
+        <footer class="footer"> here is the footer</footer>
+
+    </div>
+
+</mat-drawer-container>
 

@@ -1,4 +1,9 @@
 .expansion-panel{
+    position: absolute;
+    top: 20%;
     background-color: black;
-    color:antiquewhite;
+    color:red;
+}
+.hover{
+    cursor: pointer;
 }

@@ -12,15 +12,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .page .header{
     flex-grow: 0;
     flex-shrink: 1;
-    flex-basis: auto;
+    flex-basis: 20%;
 }
 .page .content{
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: auto;
+    background-color:aquamarine;
 }
 .page .footer{
     flex-grow: 0;
     flex-shrink: 1;
-    flex-basis: 40px;
+    flex-basis: 5%;
 }
+
+.fill{ width: 100%; height: 100%;}

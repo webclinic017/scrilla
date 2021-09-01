@@ -33,8 +33,8 @@ export class animations{
                                         properties : animationProperties = defaultAnimationProperties){
 
         return trigger('openClose', [
-            state('open', style({ height: `${openHeight}%` })),
-            state('closed', style({ height: `${closeHeight}%` })),
+            state('open', style({ bottom: `${openHeight}%` })),
+            state('closed', style({ bottom: `${closeHeight}%` })),
             transition('open => closed', [
                 animate(this.getAnimationString(properties.duration, properties.delay, properties.easing))
             ]),

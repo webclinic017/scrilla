@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { StaticService } from './services/static.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'scrilla';
+
+  constructor(public staticData: StaticService) { }
+
+  public toggle(){
+    console.log('toggled')
+  }
 }

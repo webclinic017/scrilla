@@ -1,26 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { animations } from '../../app.animations';
+import { Component, OnInit, Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
   styleUrls: ['./banner.component.css'],
-  animations: [
-    animations.getOpenCloseTrigger(100, 0)
-  ]
 })
 
 export class BannerComponent implements OnInit {
 
+  @Output()
+  public toggle : EventEmitter<string> = new EventEmitter<string>();
+
   public menuState : string = 'closed';
 
-  constructor() { }
-
   ngOnInit(): void {
+
   }
 
   public toggleMenu(): void{
-    if (this.menuState === 'closed'){ this.menuState = 'open' }
+    if (this.menuState === 'closed'){ this.menuState = 'open'; }
     else { this.menuState = 'closed'}
+    this.toggle.emit(this.menuState)
   }
 }
