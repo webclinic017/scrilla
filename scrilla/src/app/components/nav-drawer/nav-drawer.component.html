@@ -1,0 +1,35 @@
+<mat-drawer #navigationDrawer mode="over">
+    <mat-nav-list #menuSelection>
+        <div mat-subheader>Apps</div>
+
+        <mat-list-item *ngFor="let widget of staticData.getWidgetInfo()">
+            <mat-icon color="accent" matListIcon >label_important</mat-icon>
+            <a matLine [routerLink]="widget.route" (click)="navigationDrawer.toggle()">{{widget.name}}</a>
+        
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+
+        <div mat-subheader>Documentation</div>
+        <mat-list-item *ngFor="let doc of staticData.getDocInfo()">
+          <mat-icon color="accent" mat-list-icon>label_important</mat-icon>
+          <div mat-line (click)="navigationDrawer.toggle()">{{doc.name}}</div>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+        <div mat-subheader>Account</div>
+        <mat-list-item>
+            <mat-icon color="accent" mat-list-icon>label_important</mat-icon>
+            <div mat-line (click)="navigationDrawer.toggle()">Register</div>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon color="accent" mat-list-icon>label_important</mat-icon>
+            <div mat-line (click)="navigationDrawer.toggle()">Login</div>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon color="accent" mat-list-icon>label_important</mat-icon>
+            <div mat-line (click)="navigationDrawer.toggle()">Pricing</div>
+        </mat-list-item>
+
+    </mat-nav-list>
+</mat-drawer>

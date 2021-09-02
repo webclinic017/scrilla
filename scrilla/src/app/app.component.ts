@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { NavDrawerComponent } from './components/nav-drawer/nav-drawer.component';
 import { StaticService } from './services/static.service';
 
 @Component({
@@ -7,11 +8,17 @@ import { StaticService } from './services/static.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  @ViewChild('navDisplay')
+  public navDrawer !:NavDrawerComponent ;
+
   title = 'scrilla';
 
   constructor(public staticData: StaticService) { }
 
   public toggle(){
-    console.log('toggled')
+    console.log('toggling')
+    console.log(this.navDrawer)
+    this.navDrawer.toggle()
   }
 }

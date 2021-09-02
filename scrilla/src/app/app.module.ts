@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { NavDrawerComponent } from './components/nav-drawer/nav-drawer.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     AppComponent,
     BannerComponent,
     FooterComponent,
-    SplashComponent
+    SplashComponent,
+    NavDrawerComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
