@@ -23,8 +23,8 @@ export class animations{
 
     /**
      * 
-     * @param openHeight the opened height of a component as a percentage
-     * @param closeHeight the closed height of a component as a percentage
+     * @param openHeight the opened height of a component.
+     * @param closeHeight the closed height of a component.
      * @param properties animation properties. default properties are exported from this file
      *      as defaultAnimationProperties
      * @returns 
@@ -33,14 +33,29 @@ export class animations{
                                         properties : animationProperties = defaultAnimationProperties){
 
         return trigger('openClose', [
-            state('open', style({ bottom: `${openHeight}%` })),
-            state('closed', style({ bottom: `${closeHeight}%` })),
-            transition('open => closed', [
-                animate(this.getAnimationString(properties.duration, properties.delay, properties.easing))
-            ]),
-            transition('closed => open', [
+            state('open', style({ bottom: `${openHeight}` })),
+            state('closed', style({ bottom: `${closeHeight}` })),
+            transition('open <=> closed', [
                 animate(this.getAnimationString(properties.duration, properties.delay, properties.easing))
             ])
         ])
+    }
+
+    public static getScaleTrigger( scaleFactor: number,
+                                        properties : animationProperties = defaultAnimationProperties){
+        return trigger('scale', [
+            state('scale', style({ transform: `scale(${scaleFactor})`,})),
+            transition('void <=> scale', [
+                animate(this.getAnimationString(properties.duration, properties.delay, properties.easing))
+            ])
+        ]);
+    }
+
+    public static getHighlightTrigger(cssColor: string,
+                                        properties : animationProperties = defaultAnimationProperties){
+        return trigger('highlight', [
+            state('none', style({})),
+            state('highlight', style({ backgroundColor: `${cssColor}`}))
+        ])                                   
     }
 }

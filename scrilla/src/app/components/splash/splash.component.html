@@ -4,8 +4,17 @@
         <div class="title"><h2>asset management made easy</h2></div>
 
         <div class="buttons">
-            <button mat-raised-button class="mat-elevation-z2" color="accent">Sign Up</button>
-            <button mat-raised-button class="mat-elevation-z2" color="accent">Try It Out</button>
+            <button mat-raised-button class="mat-elevation-z2" color="accent"
+                [@scale]="this.registerBtnAnimationControl.scale" 
+                [@highlight]="this.registerBtnAnimationControl.highlight"
+                (mouseenter)="this.animateRegisterBtn()" 
+                (mouseleave)="this.resetRegisterBtn()">
+                Register</button>
+            <button mat-raised-button class="mat-elevation-z2" color="accent"
+                [@scale]="this.tryBtnAnimationControl.scale" 
+                [@highlight]="this.tryBtnAnimationControl.highlight"
+                (mouseenter)="this.animateTryBtn()" 
+                (mouseleave)="this.resetTryBtn()">Try It Out</button>
         </div>
     </div>
 
