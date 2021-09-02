@@ -1,10 +1,9 @@
 <mat-drawer-container class="fill">
 
-    <app-nav-drawer #navDisplay></app-nav-drawer>
-
+    <app-nav-drawer></app-nav-drawer>
     
     <div id="app-display" class="page">
-        <app-banner (toggle)="toggle()"></app-banner>
+        <app-banner (toggle)="this.navDrawer.toggle()"></app-banner>
 
         <section class="content">
             <router-outlet></router-outlet>
