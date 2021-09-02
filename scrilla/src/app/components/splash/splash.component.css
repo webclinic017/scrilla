@@ -7,17 +7,22 @@
 }
 .splash-card{
     width: 100%; height: 25%;
+    padding-top: 2%; padding-bottom: 2%;
     display: flex; flex-direction: column;
     justify-content:center;
 }
-.splash-card .title{
+.splash-card .title-pane{
     text-align: center;
 }
-.splash-card .buttons{
+.splash-card .content-pane{
+    background: none;
+    width: 50%; 
+    margin: auto;
+    display: flex; flex-direction: row;
+    justify-content:space-between; align-items:center;
+}
+.splash-card .button-pane{
     width: 50%; margin:auto;
     display: flex; flex-direction: row;
     align-items: center; justify-content: space-evenly;
-}
-.testbutton{
-    width: 75%;
 }

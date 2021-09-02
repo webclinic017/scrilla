@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavDrawerComponent } from './components/nav-drawer/nav-drawer.component';
+import { SideNavComponent } from './components/sidenav/sidenav.component';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +8,8 @@ import { NavDrawerComponent } from './components/nav-drawer/nav-drawer.component
 })
 export class AppComponent {
 
-  @ViewChild(NavDrawerComponent)
-  public navDrawer !:NavDrawerComponent ;
+  @ViewChild(SideNavComponent)
+  public navDrawer !:SideNavComponent ;
 
   title = 'scrilla';
 

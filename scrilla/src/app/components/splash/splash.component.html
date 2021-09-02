@@ -1,21 +1,42 @@
 <div class="splash-container">
 
     <div class="splash-card mat-elevation-z0">
-        <div class="title"><h2>asset management made easy</h2></div>
 
-        <div class="buttons">
+        <div class="title-pane"><h2>asset management made easy</h2></div>
+
+        <div class="content-pane">
+            <button mat-icon-button
+                [@scale]="this.leftNavAnimationControl.scale"
+                (mouseenter)="this.leftNavAnimationControl = animator.emitAnimation()"
+                (mouseleave)="this.leftNavAnimationControl = animator.resetAnimation()">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <div>
+                text goes here
+            </div>
+            <button mat-icon-button
+                [@scale]="this.rightNavAnimationControl.scale"
+                (mouseenter)="this.rightNavAnimationControl = animator.emitAnimation()"
+                (mouseleave)="this.rightNavAnimationControl = animator.resetAnimation()">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+
+        </div>
+
+        <div class="button-pane">
             <button mat-raised-button class="mat-elevation-z2" color="accent"
                 [@scale]="this.registerBtnAnimationControl.scale" 
                 [@highlight]="this.registerBtnAnimationControl.highlight"
-                (mouseenter)="this.animateRegisterBtn()" 
-                (mouseleave)="this.resetRegisterBtn()">
+                (mouseenter)="this.registerBtnAnimationControl = animator.emitAnimation()" 
+                (mouseleave)="this.registerBtnAnimationControl = animator.resetAnimation()">
                 Register</button>
             <button mat-raised-button class="mat-elevation-z2" color="accent"
                 [@scale]="this.tryBtnAnimationControl.scale" 
                 [@highlight]="this.tryBtnAnimationControl.highlight"
-                (mouseenter)="this.animateTryBtn()" 
-                (mouseleave)="this.resetTryBtn()">Try It Out</button>
+                (mouseenter)="this.tryBtnAnimationControl = animator.emitAnimation()" 
+                (mouseleave)="this.tryBtnAnimationControl = animator.resetAnimation()">Try It Out</button>
         </div>
+
     </div>
 
 </div>

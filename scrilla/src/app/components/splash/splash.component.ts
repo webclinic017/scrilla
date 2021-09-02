@@ -1,59 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { animations, animationProperties } from '../../app.animations';
+import { AnimationProperties, AnimationControl, AnimationService } from '../../services/animations.service';
 
-const scaleAnimationProperties : animationProperties = {
+const scaleAnimationProperties : AnimationProperties = {
   delay: '',
   duration: '250ms',
   easing: ''
 }
-
-// TODO: figure some way to pull hex color from theme palette instead of manually
-// passing it in the animation...
 
 @Component({
   selector: 'app-splash',
   templateUrl: './splash.component.html',
   styleUrls: ['./splash.component.css'],
   animations: [
-    animations.getScaleTrigger(1.5, scaleAnimationProperties),
-    animations.getHighlightTrigger('#81C784')
+    AnimationService.getScaleTrigger(1.5, scaleAnimationProperties),
+      // TODO: figure some way to pull hex color from theme palette instead of manually
+      // passing it in the animation...
+    AnimationService.getHighlightTrigger('#81C784')
   ]
 })
 export class SplashComponent implements OnInit {
 
-  // animation controls. values: 'normal', 'enlarge'. See src/app/app.animations for more info.
-  public registerBtnAnimationControl: any = {
-    scale: '', highlight: ''
-  };
-  public tryBtnAnimationControl : any = {
-    scale: '', hightlight: ''
-  };
+  public registerBtnAnimationControl: AnimationControl = this.animator.resetAnimation();
+  public tryBtnAnimationControl : AnimationControl =  this.animator.resetAnimation();
+  public rightNavAnimationControl: AnimationControl = this.animator.resetAnimation();
+  public leftNavAnimationControl : AnimationControl = this.animator.resetAnimation();
 
-  constructor() { }
+  constructor(public animator : AnimationService) { }
 
   ngOnInit(): void {}
   
-  public animateRegisterBtn(){
-    this.registerBtnAnimationControl = {
-      scale: 'scale', highlight: 'highlight'
-    }
-  }
-  public resetRegisterBtn(){
-    this.registerBtnAnimationControl = {
-        scale: '', highlight: ''
-    }
-  }
-
-  public animateTryBtn(){
-    this.tryBtnAnimationControl = {
-      scale: 'scale', highlight: 'highlight'
-    }
-  }
-
-  public resetTryBtn(){
-    this.tryBtnAnimationControl = {
-      scale: '', highlight: ''
-    }
-  }
-
 }
