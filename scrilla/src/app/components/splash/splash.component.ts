@@ -20,10 +20,10 @@ const scaleAnimationProperties : AnimationProperties = {
 })
 export class SplashComponent implements OnInit {
 
-  public registerBtnAnimationControl: AnimationControl = this.animator.resetAnimation();
-  public tryBtnAnimationControl : AnimationControl =  this.animator.resetAnimation();
-  public rightNavAnimationControl: AnimationControl = this.animator.resetAnimation();
-  public leftNavAnimationControl : AnimationControl = this.animator.resetAnimation();
+  public registerBtnAnimationControl: AnimationControl = this.animator.void();
+  public tryBtnAnimationControl : AnimationControl =  this.animator.void();
+  public rightNavAnimationControl: AnimationControl = this.animator.void();
+  public leftNavAnimationControl : AnimationControl = this.animator.void();
 
   constructor(public animator : AnimationService) { }
 

@@ -11,17 +11,25 @@ export interface AnimationControl{
 
 const scaleState = 'scale'
 const highlightState = 'highlight'
+const defaultAnimationProperties : AnimationProperties = {
+    delay: '25ms', duration: '500ms', easing: ''
+}
 
 @Injectable({
     providedIn: 'root'
 })
 export class AnimationService{
 
-
-    private static defaultAnimationProperties : AnimationProperties = {
-        delay: '25ms', duration: '500ms', easing: ''
+    // SERVICE INSTANCE METHODS
+    public animate() : AnimationControl{
+        return { scale: `${scaleState}`, highlight: `${highlightState}` }
     }
-    
+
+    public void() : AnimationControl {
+        return { scale: '', highlight: ''}
+    }
+
+    // STATIC METHODS
     public static getAnimationString(properties : AnimationProperties){
         let animation_string = properties.duration;
         if(properties.delay){ animation_string = animation_string + ' ' + properties.delay}
@@ -29,32 +37,8 @@ export class AnimationService{
         return animation_string;
     }
 
-    public emitAnimation() : AnimationControl{
-        return { scale: `${scaleState}`, highlight: `${highlightState}` }
-    }
-
-    public resetAnimation() : AnimationControl {
-        return { scale: '', highlight: ''}
-    }
-    /**
-     * 
-     * @param openHeight the opened height of a component.
-     * @param closeHeight the closed height of a component.
-     * @param properties animation properties. default properties are exported from this file
-     *      as defaultAnimationProperties
-     * @returns 
-     */
-    public static getOpenCloseTrigger(openHeight: number, closeHeight: number,
-                                        properties : AnimationProperties = this.defaultAnimationProperties){
-        return trigger('openClose', [
-            state('open', style({ bottom: `${openHeight}` })),
-            state('closed', style({ bottom: `${closeHeight}` })),
-            transition('open <=> closed', [ animate(this.getAnimationString(properties))])
-        ])
-    }
-
     public static getScaleTrigger( scaleFactor: number,
-                                        properties : AnimationProperties = this.defaultAnimationProperties){
+                                        properties : AnimationProperties = defaultAnimationProperties){
         return trigger(`${scaleState}`, [
             state(`${scaleState}`, style({ transform: `scale(${scaleFactor})`,})),
             transition(`void <=> ${scaleState}`, [ animate(this.getAnimationString(properties))])
@@ -62,7 +46,7 @@ export class AnimationService{
     }
 
     public static getHighlightTrigger(cssColor: string,
-                                        properties : AnimationProperties = this.defaultAnimationProperties){
+                                        properties : AnimationProperties = defaultAnimationProperties){
         return trigger(`${highlightState}`, [
             state(`${highlightState}`, style({ backgroundColor: `${cssColor}`})),
             transition(`void <=> ${highlightState}`, [ animate(this.getAnimationString(properties))])

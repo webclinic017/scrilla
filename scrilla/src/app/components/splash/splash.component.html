@@ -7,8 +7,8 @@
         <div class="content-pane">
             <button mat-icon-button
                 [@scale]="this.leftNavAnimationControl.scale"
-                (mouseenter)="this.leftNavAnimationControl = animator.emitAnimation()"
-                (mouseleave)="this.leftNavAnimationControl = animator.resetAnimation()">
+                (mouseenter)="this.leftNavAnimationControl = animator.animate()"
+                (mouseleave)="this.leftNavAnimationControl = animator.void()">
                 <mat-icon>chevron_left</mat-icon>
             </button>
             <div>
@@ -16,8 +16,8 @@
             </div>
             <button mat-icon-button
                 [@scale]="this.rightNavAnimationControl.scale"
-                (mouseenter)="this.rightNavAnimationControl = animator.emitAnimation()"
-                (mouseleave)="this.rightNavAnimationControl = animator.resetAnimation()">
+                (mouseenter)="this.rightNavAnimationControl = animator.animate()"
+                (mouseleave)="this.rightNavAnimationControl = animator.void()">
                 <mat-icon>chevron_right</mat-icon>
             </button>
 
@@ -27,14 +27,14 @@
             <button mat-raised-button class="mat-elevation-z2" color="accent"
                 [@scale]="this.registerBtnAnimationControl.scale" 
                 [@highlight]="this.registerBtnAnimationControl.highlight"
-                (mouseenter)="this.registerBtnAnimationControl = animator.emitAnimation()" 
-                (mouseleave)="this.registerBtnAnimationControl = animator.resetAnimation()">
+                (mouseenter)="this.registerBtnAnimationControl = animator.animate()" 
+                (mouseleave)="this.registerBtnAnimationControl = animator.void()">
                 Register</button>
             <button mat-raised-button class="mat-elevation-z2" color="accent"
                 [@scale]="this.tryBtnAnimationControl.scale" 
                 [@highlight]="this.tryBtnAnimationControl.highlight"
-                (mouseenter)="this.tryBtnAnimationControl = animator.emitAnimation()" 
-                (mouseleave)="this.tryBtnAnimationControl = animator.resetAnimation()">Try It Out</button>
+                (mouseenter)="this.tryBtnAnimationControl = animator.animate()" 
+                (mouseleave)="this.tryBtnAnimationControl = animator.void()">Try It Out</button>
         </div>
 
     </div>
