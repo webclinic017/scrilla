@@ -1,4 +1,8 @@
-<mat-drawer #navigationDrawer mode="over">
+<mat-sidenav #navigationDrawer>
+    <button mat-icon-button color="warn" class="cancel-button" (click)="navigationDrawer.toggle()">
+        <mat-icon>cancel</mat-icon>
+    </button>
+
     <mat-nav-list #menuSelection>
         <div mat-subheader>Apps</div>
 
@@ -32,4 +36,4 @@
         </mat-list-item>
 
     </mat-nav-list>
-</mat-drawer>
+</mat-sidenav>

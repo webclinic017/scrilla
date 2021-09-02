@@ -1,0 +1,17 @@
+@use '~@angular/material' as mat;
+@use 'sass:map';
+
+@use './app/components/splash/splash.theme' as splash;
+
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$primary: mat-palette($mat-grey);
+$accent: mat-palette($mat-green);
+$warn: mat-palette($mat-red);
+
+$theme: mat-dark-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+@include splash.theme($theme)

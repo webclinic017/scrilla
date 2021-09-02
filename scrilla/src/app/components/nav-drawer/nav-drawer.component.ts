@@ -15,8 +15,5 @@ export class NavDrawerComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public toggle(): void{ 
-    console.log(this.drawer)
-    this.drawer.toggle();
-  }
+  public toggle(): void{ this.drawer.toggle(); }
 }

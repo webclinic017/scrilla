@@ -5,21 +5,20 @@
     display: flex; flex-direction: column;
     align-items: center; justify-content: space-around;
 }
-.button-container{
-    width: 100%;
+.splash-card{
+
+    width: 100%; height: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+}
+.splash-card .title{
+    text-align: center;
+}
+.splash-card .buttons{
+    width: 50%; margin:auto;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-}
-.splash-card{
-    margin: auto;
-    width: 50%; height: 25%;
-    display: flex;
-    flex-direction: column;
-    justify-content:center;
-    border-radius: 5px;
-
-    /** temporary. will be themed.*/
-    background-color:black;
 }
