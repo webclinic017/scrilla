@@ -1,0 +1,25 @@
+.splash-container{
+    background-image: url('/assets/imgs/market_transparent.jpg');
+    background-size: cover;
+    height: 100%; width: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: space-around;
+}
+.button-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.splash-card{
+    margin: auto;
+    width: 50%; height: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    border-radius: 5px;
+
+    /** temporary. will be themed.*/
+    background-color:black;
+}
