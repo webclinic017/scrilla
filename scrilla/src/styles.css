@@ -16,7 +16,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; overflow-x:
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: auto;
-    background-color:aquamarine;
 }
 .page .footer{
     flex-grow: 0;
@@ -25,7 +24,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; overflow-x:
 }
 
 .fill{ width: 100%; height: 100%;}
-
+.fill-width{ width:100%; }
+.fill-height{ height: 100%; }
 .spacer {
     flex: 1 1 auto;
 }

@@ -1,0 +1,12 @@
+
+.tickers-container{
+    display:flex;
+    flex-direction: row;
+    justify-content:flex-start;
+}
+.tickers-container .ticker-input{ min-width:40%; }
+.ticker-card{ min-height:80%; }
+.ticker-card .ticker-card-content{
+    display:flex; flex-direction: column;
+    justify-content:space-around; height: 100%;
+}

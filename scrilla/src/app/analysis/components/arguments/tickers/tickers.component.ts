@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TickersComponent implements OnInit {
 
+  public rawInput !: string;
+  
   constructor() { }
 
   ngOnInit(): void {

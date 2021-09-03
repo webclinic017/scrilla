@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,7 +10,6 @@ import { FooterComponent } from './components/footer/footer.component';
 import { SplashComponent } from './components/splash/splash.component';
 
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -32,7 +32,6 @@ import { SideNavComponent } from './components/sidenav/sidenav.component';
     BrowserAnimationsModule,
 
     MatButtonModule,
-    MatCardModule,
     MatDividerModule,
     MatIconModule,
     MatListModule,
