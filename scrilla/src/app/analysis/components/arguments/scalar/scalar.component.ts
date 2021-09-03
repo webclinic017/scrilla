@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-scalar',
@@ -7,9 +7,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ScalarComponent implements OnInit {
 
+  @Input()
+  public currency !: boolean;
+  @Input()
+  public title !: string;
+
+  @Output()
+  public scalar : EventEmitter<number> = new EventEmitter<number>()
+  
+  public rawInput : string = '';
+  public invalidInput : boolean = true;
+
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
+  public parseScalar(): void{
+    try{ 
+      let parsedInput = parseFloat(this.rawInput.trim()) 
+      this.scalar.emit(parsedInput);
+      this.rawInput = '';
+    }
+    catch(error){
+      console.log(error);
+      this.invalidInput = true;
+    }
+  }
 }
