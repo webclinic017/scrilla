@@ -25,8 +25,7 @@ export class StaticService {
     return [
       { name: 'Browsable Docs', route: '' },
       { name: 'PyPi Package', route: '' },
-      { name: 'Git Repository', route: ''},
-      { name: 'Docker Repostiry', route: ''}
+      { name: 'Source Code', route: ''},
     ]
   }
 }
