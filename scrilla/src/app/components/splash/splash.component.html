@@ -7,17 +7,36 @@
         <div class="content-pane">
             <button mat-icon-button
                 [@scale]="this.leftNavAnimationControl.scale"
-                (mouseenter)="this.leftNavAnimationControl = animator.animate()"
-                (mouseleave)="this.leftNavAnimationControl = animator.void()">
+                (mouseenter)="this.leftNavAnimationControl = animator.animateScale()"
+                (mouseleave)="this.leftNavAnimationControl = animator.initAnimation()"
+                (click)="this.decrementPaneIndex()">
                 <mat-icon>chevron_left</mat-icon>
             </button>
-            <div>
-                text goes here
+
+            <div class="translation-container">
+                <div class="item" [ngStyle]="paneIndex == 0 ? { 'opacity': '1' } : { opacity: '0' } "
+                    [@translateOn]="paneAnimationControls[0].translateOn"
+                    [@translateOff]="paneAnimationControls[0].translateOff">
+                    text 1 goes here
+                </div>
+                <div class="item"
+                    [ngStyle]="paneIndex == 1 ? { 'opacity': '1' } : { opacity: '0' } "
+                    [@translateOn]="paneAnimationControls[1].translateOn"
+                    [@translateOff]="paneAnimationControls[1].translateOff">
+                    text 2 goes here
+                </div>
+                <div class="item"
+                    [ngStyle]="paneIndex == 2 ? { 'opacity': '1' } : { opacity: '0' } "
+                    [@translateOn]="paneAnimationControls[2].translateOn"
+                    [@translateOff]="paneAnimationControls[2].translateOff">
+                    text 3 goes here
+                </div>
             </div>
             <button mat-icon-button
                 [@scale]="this.rightNavAnimationControl.scale"
-                (mouseenter)="this.rightNavAnimationControl = animator.animate()"
-                (mouseleave)="this.rightNavAnimationControl = animator.void()">
+                (mouseenter)="this.rightNavAnimationControl = animator.animateScale()"
+                (mouseleave)="this.rightNavAnimationControl = animator.initAnimation()"
+                (click)="this.incrementPaneIndex()">
                 <mat-icon>chevron_right</mat-icon>
             </button>
 
@@ -27,14 +46,14 @@
             <button mat-raised-button class="mat-elevation-z2" color="accent"
                 [@scale]="this.registerBtnAnimationControl.scale" 
                 [@highlight]="this.registerBtnAnimationControl.highlight"
-                (mouseenter)="this.registerBtnAnimationControl = animator.animate()" 
-                (mouseleave)="this.registerBtnAnimationControl = animator.void()">
+                (mouseenter)="this.registerBtnAnimationControl = this.animateButtons()" 
+                (mouseleave)="this.registerBtnAnimationControl = animator.initAnimation()">
                 Register</button>
             <button mat-raised-button class="mat-elevation-z2" color="accent"
                 [@scale]="this.tryBtnAnimationControl.scale" 
                 [@highlight]="this.tryBtnAnimationControl.highlight"
-                (mouseenter)="this.tryBtnAnimationControl = animator.animate()" 
-                (mouseleave)="this.tryBtnAnimationControl = animator.void()">Try It Out</button>
+                (mouseenter)="this.tryBtnAnimationControl = this.animateButtons()" 
+                (mouseleave)="this.tryBtnAnimationControl = animator.initAnimation()">Try It Out</button>
         </div>
 
     </div>

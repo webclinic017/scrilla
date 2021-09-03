@@ -26,3 +26,9 @@
     display: flex; flex-direction: row;
     align-items: center; justify-content: space-evenly;
 }
+.translation-container{ position: relative; width: 100%; }
+.translation-container .item { 
+    position: absolute; 
+    left: 25%; right: 25%;
+}
+.hidden{ opacity: 0; }
