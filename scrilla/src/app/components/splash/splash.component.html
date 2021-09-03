@@ -5,7 +5,7 @@
         <div class="title-pane"><h2>asset management made easy</h2></div>
 
         <div class="content-pane">
-            <button mat-icon-button
+            <button mat-icon-button color="primary"
                 [@scale]="this.leftNavAnimationControl.scale"
                 (mouseenter)="this.leftNavAnimationControl = animator.animateScale()"
                 (mouseleave)="this.leftNavAnimationControl = animator.initAnimation()"
@@ -14,25 +14,31 @@
             </button>
 
             <div class="translation-container">
-                <div class="item" [ngStyle]="paneIndex == 0 ? { 'opacity': '1' } : { opacity: '0' } "
+                <div class="translation-item" [ngStyle]="paneIndex == 0 ? { 'opacity': '1' } : { opacity: '0' } "
                     [@translateOn]="paneAnimationControls[0].translateOn"
                     [@translateOff]="paneAnimationControls[0].translateOff">
-                    text 1 goes here
+                    <div class="item-text">
+                        text 1 goes here
+                    </div>
                 </div>
-                <div class="item"
+                <div class="translation-item"
                     [ngStyle]="paneIndex == 1 ? { 'opacity': '1' } : { opacity: '0' } "
                     [@translateOn]="paneAnimationControls[1].translateOn"
                     [@translateOff]="paneAnimationControls[1].translateOff">
-                    text 2 goes here
+                    <div class="item-text">
+                        text 2 goes here
+                    </div>
                 </div>
-                <div class="item"
+                <div class="translation-item"
                     [ngStyle]="paneIndex == 2 ? { 'opacity': '1' } : { opacity: '0' } "
                     [@translateOn]="paneAnimationControls[2].translateOn"
                     [@translateOff]="paneAnimationControls[2].translateOff">
-                    text 3 goes here
+                    <div class="item-text">
+                        text 3 goes here
+                    </div>
                 </div>
             </div>
-            <button mat-icon-button
+            <button mat-icon-button color="accent"
                 [@scale]="this.rightNavAnimationControl.scale"
                 (mouseenter)="this.rightNavAnimationControl = animator.animateScale()"
                 (mouseleave)="this.rightNavAnimationControl = animator.initAnimation()"

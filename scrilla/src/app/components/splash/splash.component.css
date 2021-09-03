@@ -16,8 +16,7 @@
 }
 .splash-card .content-pane{
     background: none;
-    width: 50%; 
-    margin: auto;
+    width: 50%;  margin: auto;
     display: flex; flex-direction: row;
     justify-content:space-between; align-items:center;
 }
@@ -26,9 +25,15 @@
     display: flex; flex-direction: row;
     align-items: center; justify-content: space-evenly;
 }
-.translation-container{ position: relative; width: 100%; }
-.translation-container .item { 
-    position: absolute; 
-    left: 25%; right: 25%;
+.translation-container{ 
+    position: relative; 
+    width: 75%; height: 100%; 
 }
-.hidden{ opacity: 0; }
+.translation-container .translation-item { 
+    position: absolute; 
+    width:100%;
+}
+.translation-container .translation-item .item-text{
+    position: static; 
+    margin:auto; text-align:center;
+}

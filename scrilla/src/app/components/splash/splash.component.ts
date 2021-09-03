@@ -6,23 +6,28 @@ const scaleAnimationProperties : AnimationProperties = {
   delay: '', duration: '250ms', easing: ''
 }
 
+// separate duration from properties so it can be referenced by setTimeout when 
+// coordinating on and off translations in the incrementPaneIndex and decrementPaneIndex
+// methods. 
+const translationDuration = 250
 const translateAnimationProperties : AnimationProperties = {
-  delay: '', duration: '250ms', easing: ''
-}
+  delay: '', duration: `${translationDuration}ms`, easing: ''
+};
       // TODO: figure some way to pull hex color from theme palette instead of manually
       // passing it into the animation...
-const highlightHexColor='#81C784'
-
+const highlightHexColor='#81C784';
+const translateDistance='75%';
+const scaleFactor=1.5
 
 @Component({
   selector: 'app-splash',
   templateUrl: './splash.component.html',
   styleUrls: ['./splash.component.css'],
   animations: [
-    AnimationService.getScaleTrigger(1.5, scaleAnimationProperties),
+    AnimationService.getScaleTrigger(scaleFactor, scaleAnimationProperties),
     AnimationService.getHighlightTrigger(highlightHexColor),
-    AnimationService.getTranslateOffTrigger('100%', translateAnimationProperties),
-    AnimationService.getTranslateOnTrigger('100%', translateAnimationProperties)
+    AnimationService.getTranslateOffTrigger(translateDistance, translateAnimationProperties),
+    AnimationService.getTranslateOnTrigger(translateDistance, translateAnimationProperties)
   ]
 })
 export class SplashComponent implements OnInit {
@@ -45,24 +50,28 @@ export class SplashComponent implements OnInit {
   
   public incrementPaneIndex(){
     let previousIndex = this.paneIndex;
-    let bufferIndex = this.paneIndex
+    let bufferIndex = this.paneIndex;
     ++bufferIndex;
     if(bufferIndex==this.paneSize){ bufferIndex = 0 }
     this.paneAnimationControls[previousIndex] = this.animator.animateTranslateOffLeft();
-    let start = Date.now()
+    
     setTimeout(()=>{
-      console.log(Date.now() - start)
       this.paneIndex=bufferIndex;
       this.paneAnimationControls[this.paneIndex] = this.animator.animateTranslateOnRight();
-    }, 500)
+    }, translationDuration)
   }
 
   public decrementPaneIndex(){
     let previousIndex = this.paneIndex;
-    --this.paneIndex;
-    if(this.paneIndex==-1){ this.paneIndex = this.paneSize - 1}
-    //this.paneAnimationControls[previousIndex] = this.animator.animateTranslateOffRight();
-    //this.paneAnimationControls[this.paneIndex] = this.animator.animateTranslateOnLeft();
+    let bufferIndex = this.paneIndex
+    --bufferIndex;
+    if(bufferIndex==-1) { bufferIndex = this.paneSize - 1 }
+    this.paneAnimationControls[previousIndex] = this.animator.animateTranslateOffRight();
+
+    setTimeout(()=>{
+      this.paneIndex=bufferIndex
+      this.paneAnimationControls[this.paneIndex] = this.animator.animateTranslateOnLeft();
+    }, translationDuration)
   }
 
   public animateButtons() : AnimationControl{
