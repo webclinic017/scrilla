@@ -6,7 +6,7 @@ import { AnimationService } from 'src/app/services/animations.service';
   templateUrl: './portfolio-optimizer.component.html',
   styleUrls: ['./portfolio-optimizer.component.css'],
   animations: [
-    AnimationService.getScaleTrigger(1.5)
+    AnimationService.getScaleTrigger(1.25)
   ]
 })
 export class PortfolioOptimizerComponent implements OnInit {

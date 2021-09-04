@@ -2,10 +2,17 @@
 
 <div class="allocation-container fill-width">
     <div class="item side-item">
-        <div>ticker chip list</div>
-        <div>date range</div>
-        <div>total investment</div>
-        <div>target return</div>
+            <mat-card class="ticker-card">
+                <mat-card-title>chips</mat-card-title>
+                <mat-chip-list aria-label="Ticker Symbol Chip List">
+                    <mat-chip *ngFor="let chip of testChips"
+                                [removable]="true" 
+                                (removed)="removeTickerSymbol()">
+                        {{chip}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                </mat-chip-list>
+            </mat-card>
     </div>
 
     <div class="item main-item">
@@ -18,6 +25,12 @@
     </div>
     
     <div class="item secondary-item">
-        test test
+        <ngx-charts-pie-chart 
+            [results]="testAllocation"
+            [doughnut]="true"
+            [labels]="true"
+            >
+
+        </ngx-charts-pie-chart>
     </div>
 </div>
