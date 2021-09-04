@@ -19,6 +19,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { AllocationComponent } from './components/results/allocation/allocation.component';
 
 
 
@@ -29,7 +30,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     PortfolioOptimizerComponent,
     TickersComponent,
     ScalarComponent,
-    DateComponent
+    DateComponent,
+    AllocationComponent
   ],
   imports: [
     CommonModule,
