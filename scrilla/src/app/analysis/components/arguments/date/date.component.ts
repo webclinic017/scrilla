@@ -5,7 +5,7 @@ import { AnimationControl, AnimationService } from 'src/app/services/animations.
 @Component({
   selector: 'app-date',
   templateUrl: './date.component.html',
-  styleUrls: ['./date.component.css'],
+  styleUrls: ['../arguments.css'],
   animations: [
     AnimationService.getScaleTrigger(1.5)
   ]

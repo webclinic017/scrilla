@@ -1,13 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { AnimationService } from 'src/app/services/animations.service';
 
 @Component({
   selector: 'app-portfolio-optimizer',
   templateUrl: './portfolio-optimizer.component.html',
-  styleUrls: ['./portfolio-optimizer.component.css']
+  styleUrls: ['./portfolio-optimizer.component.css'],
+  animations: [
+    AnimationService.getScaleTrigger(1.5)
+  ]
 })
 export class PortfolioOptimizerComponent implements OnInit {
 
-  constructor() { }
+  public optimizeBtnAnimationControl = this.animator.initAnimation()
+  public clearBtnAnimationControl = this.animator.initAnimation();
+
+  constructor(public animator : AnimationService) { }
 
   ngOnInit(): void {
   }

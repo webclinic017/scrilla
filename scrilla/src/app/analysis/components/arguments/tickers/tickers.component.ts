@@ -4,7 +4,7 @@ import { AnimationControl, AnimationService } from 'src/app/services/animations.
 @Component({
   selector: 'app-tickers',
   templateUrl: './tickers.component.html',
-  styleUrls: ['./tickers.component.css'],
+  styleUrls: ['../arguments.css'],
   animations: [
     AnimationService.getScaleTrigger(1.5)
   ]

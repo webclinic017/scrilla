@@ -4,7 +4,7 @@ import { AnimationControl, AnimationService } from 'src/app/services/animations.
 @Component({
   selector: 'app-scalar',
   templateUrl: './scalar.component.html',
-  styleUrls: ['./scalar.component.css'],
+  styleUrls: [ '../arguments.css'],
   animations: [
     AnimationService.getScaleTrigger(1.5)
   ]

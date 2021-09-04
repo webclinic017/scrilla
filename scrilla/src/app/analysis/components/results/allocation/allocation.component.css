@@ -1,0 +1,14 @@
+.allocation-container{
+    width: 100%; height: 50%;
+    display: flex; flex-direction: row;
+    flex-wrap: wrap; justify-content: center;
+}
+.input-container{
+    display: flex; flex-direction: column;
+    flex-wrap: wrap; justify-content: flex-start;
+}
+.allocation-container .item{ padding: 1%; }
+.allocation-container .side-item{ width: 15%; }
+.allocation-container .main-item{ width: 55%; height: 50%; }
+.allocation-container .main-item .allocation-card { overflow: auto; max-height: 45%; }
+.allocation-container .secondary-item{ width: 20%; }

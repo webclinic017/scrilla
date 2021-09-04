@@ -1,8 +1,9 @@
 @use '~@angular/material' as mat;
 @use 'sass:map';
 
-@use './app/components/splash/splash.theme' as splash;
 @use './app/app.theme' as app;
+@use './app/components/splash/splash.theme' as splash;
+@use './app/analysis/components/widgets/portfolio-optimizer/portfolio-optimizer.theme' as optimizer;
 
 @import '~@angular/material/theming';
 
@@ -16,4 +17,5 @@ $theme: mat-dark-theme($primary, $accent, $warn);
 
 @include angular-material-theme($theme);
 @include app.theme($theme);
-@include splash.theme($theme)
+@include splash.theme($theme);
+@include optimizer.theme($theme);
