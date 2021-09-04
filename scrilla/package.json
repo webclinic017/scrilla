@@ -26,6 +26,7 @@
     "@angular/platform-server": "~12.2.3",
     "@angular/router": "~12.2.3",
     "@nguniversal/express-engine": "^12.1.0",
+    "@swimlane/ngx-charts": "^19.0.1",
     "express": "^4.15.2",
     "ngx-webstorage": "^8.0.0",
     "rxjs": "~6.6.0",

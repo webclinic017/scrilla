@@ -1,32 +1,26 @@
-<div class="scalar-container">
-    <div class="scalar-input">
-        <mat-card class="scalar-card">
-            <mat-card-title>{{title}}</mat-card-title>
-            <mat-card-subtitle>{{ currency ? 'Currency' : 'Decimal' }} Amount</mat-card-subtitle>
 
-            <mat-card-content>
-                <div>
-                    <mat-form-field appearance="fill" class="fill-width">
-                        <mat-label>Enter a number</mat-label>
-                        <input matInput type="text"  
-                            matTooltip="{{ currency ? 'Enter the investment total' : 'Enter the annualized rate' }}"
-                            [(ngModel)]="rawInput" 
-                            (keyup.enter)="rawInput = ''">
-                        <button *ngIf="rawInput" matSuffix mat-icon-button aria-label="Clear" 
-                            (click)="rawInput=''">
-                        <mat-icon>close</mat-icon>
-                        </button>
-                    </mat-form-field>
-                </div>
-            </mat-card-content>
+<mat-card id="scalar-card">
+    <mat-card-title>{{title}}</mat-card-title>
+    <mat-card-subtitle>{{ currency ? 'Currency' : 'Decimal' }} Amount</mat-card-subtitle>
 
-            <mat-card-actions align="end">
-                <button mat-icon-button color="accent" matTooltip="Add tickers"
-                    (click)="parseScalar()">
-                    <mat-icon>add</mat-icon>
-                </button>
-            </mat-card-actions>
-        </mat-card>
-    </div>
+    <mat-card-content>
+        <mat-form-field appearance="fill" class="fill-width">
+            <mat-label>Enter a number</mat-label>
+            <input matInput type="text"  
+                matTooltip="{{ currency ? 'Enter the investment total' : 'Enter the annualized rate' }}"
+                [(ngModel)]="rawInput" 
+                (keyup.enter)="rawInput = ''">
+            <button *ngIf="rawInput" matSuffix mat-icon-button aria-label="Clear" 
+                (click)="rawInput=''">
+            <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </mat-card-content>
 
-</div>
+    <mat-card-actions align="end">
+        <button mat-icon-button color="accent" matTooltip="Add tickers"
+            (click)="parseScalar()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </mat-card-actions>
+</mat-card>
