@@ -26,6 +26,9 @@
 
     <mat-card-actions align="end">
         <button mat-icon-button color="accent" matTooltip="{{ currency ? 'Add investment total' : 'Add annualized rate'}}"
+            [@scale]="addAnimationControl.scale"
+            (mouseenter)="addAnimationControl = this.animator.animateScale()"
+            (mouseleave)="addAnimationControl = this.animator.initAnimation()"
             (click)="parseScalar()">
             <mat-icon>add</mat-icon>
         </button>

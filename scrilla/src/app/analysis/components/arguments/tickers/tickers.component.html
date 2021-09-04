@@ -16,6 +16,9 @@
     </mat-card-content>
     <mat-card-actions align="end">
         <button mat-icon-button color="accent" matTooltip="Add tickers"
+            [@scale]="addAnimationControl.scale"
+            (mouseenter)="addAnimationControl = this.animator.animateScale()"
+            (mouseleave)="addAnimationControl = this.animator.initAnimation()"
             (click)="parseTickers()">
             <mat-icon>add</mat-icon>
         </button>

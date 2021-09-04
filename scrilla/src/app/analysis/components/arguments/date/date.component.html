@@ -18,7 +18,11 @@
     </mat-card-content>
     <mat-card-actions align="end">
         <button mat-icon-button color="accent" matTooltip="Add date range"
-            (click)="parseDates()">
+            [@scale]="addAnimationControl.scale"
+            (mouseenter)="addAnimationControl = this.animator.animateScale()"
+            (mouseleave)="addAnimationControl = this.animator.initAnimation()"
+            (click)="parseDates()"
+            >
             <mat-icon>add</mat-icon>
         </button>
     </mat-card-actions>

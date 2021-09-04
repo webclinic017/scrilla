@@ -1,9 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AnimationControl, AnimationService } from 'src/app/services/animations.service';
 
 @Component({
   selector: 'app-scalar',
   templateUrl: './scalar.component.html',
-  styleUrls: ['./scalar.component.css']
+  styleUrls: ['./scalar.component.css'],
+  animations: [
+    AnimationService.getScaleTrigger(1.5)
+  ]
 })
 export class ScalarComponent implements OnInit {
 
@@ -15,10 +19,12 @@ export class ScalarComponent implements OnInit {
   @Output()
   public scalar : EventEmitter<number> = new EventEmitter<number>()
   
+  public addAnimationControl : AnimationControl = this.animator.initAnimation()
+  
   public rawInput : string = '';
   public invalidInput : boolean = true;
 
-  constructor() { }
+  constructor(public animator : AnimationService) { }
 
   ngOnInit(): void { }
 

@@ -1,18 +1,23 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AnimationControl, AnimationService } from 'src/app/services/animations.service';
 
 @Component({
   selector: 'app-tickers',
   templateUrl: './tickers.component.html',
-  styleUrls: ['./tickers.component.css']
+  styleUrls: ['./tickers.component.css'],
+  animations: [
+    AnimationService.getScaleTrigger(1.5)
+  ]
 })
 export class TickersComponent implements OnInit {
 
   @Output()
   public tickers : EventEmitter<string[]> = new EventEmitter<string[]>();
 
-  public rawInput !: string;
+  public addAnimationControl : AnimationControl = this.animator.initAnimation()
+  public rawInput : string = '';
 
-  constructor() { }
+  constructor(public animator: AnimationService) { }
 
   ngOnInit(): void { }
 
