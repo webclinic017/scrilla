@@ -18,8 +18,7 @@ export class PortfolioOptimizerComponent implements OnInit {
   public tickers : string[] = [];
   public targetReturn ?: number;
   public totalInvestment ?: number;
-  public startDate ?: Date;
-  public endDate ?: Date;
+  public dates ?: string[]
 
   public optionalArguments : FormGroup;
   constructor(public animator : AnimationService, public formBuilder : FormBuilder) { 
@@ -40,5 +39,7 @@ export class PortfolioOptimizerComponent implements OnInit {
   public removeTicker(ticker : string): void{ 
     this.tickers.splice(this.tickers.indexOf(ticker), 1); 
   }
+
+  public setDates(dates : string []){ this.dates = dates; }
   
 }

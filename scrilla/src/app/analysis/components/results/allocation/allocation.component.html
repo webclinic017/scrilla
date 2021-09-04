@@ -13,8 +13,9 @@
                     </mat-chip>
                 </mat-chip-list>
             </mat-card>
-            <mat-card class="date-card mat-elevation-z2" *ngIf="startDate || endDate">
+            <mat-card class="date-card mat-elevation-z2" *ngIf="dates">
                 <mat-card-title>Dates</mat-card-title>
+                <mat-card-subtitle>{{dates[0]}} to {{dates[1]}}</mat-card-subtitle>
             </mat-card>
             <mat-card class="target-card mat-elevation-z2" *ngIf="target">
                 <mat-card-title>Target</mat-card-title>

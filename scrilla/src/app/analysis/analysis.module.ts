@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -56,6 +56,7 @@ import { ProfileComponent } from './components/results/profile/profile.component
     MatInputModule,
     MatNativeDateModule,
     MatTooltipModule,
-  ]
+  ],
+  providers: [ DatePipe ]
 })
 export class AnalysisModule { }

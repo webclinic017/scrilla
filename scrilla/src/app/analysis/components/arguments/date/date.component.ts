@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AnimationControl, AnimationService } from 'src/app/services/animations.service';
@@ -20,13 +21,15 @@ export class DateComponent implements OnInit {
     start: new FormControl(), end: new FormControl()
   });
 
-  constructor(public animator : AnimationService) { }
+  constructor(public animator : AnimationService, public datePipe : DatePipe) { }
 
   ngOnInit(): void {
   }
 
   public parseDates(): void{
-    // TODO: convert dates to YYYY-MM-DD format
+    let startDate : string | null = this.datePipe.transform(this.range.value.start, 'yyyy-MM-dd');
+    let endDate : string | null = this.datePipe.transform(this.range.value.end, 'yyyy-MM-dd');
+    if(startDate && endDate){ this.dates.emit([startDate, endDate]) }
 
   }
 }

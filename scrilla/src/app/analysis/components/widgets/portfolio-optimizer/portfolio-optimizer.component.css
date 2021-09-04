@@ -11,7 +11,6 @@
     flex-wrap: wrap;
     justify-content: flex-start;
 }
-
 .arguments-container .item{ padding: 1%;}
 .input-card, .output-card{ 
     overflow: auto;

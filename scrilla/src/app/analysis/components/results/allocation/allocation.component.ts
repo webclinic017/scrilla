@@ -29,11 +29,8 @@ export class AllocationComponent implements OnInit {
   public invest ?: number;
 
   @Input()
-  public startDate ?: Date;
-
-  @Input()
-  public endDate ?: Date;
-
+  public dates ?: string[];
+  
   constructor() { }
 
   ngOnInit(): void {
