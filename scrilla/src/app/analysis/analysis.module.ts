@@ -11,6 +11,8 @@ import { TickersComponent } from './components/arguments/tickers/tickers.compone
 import { ScalarComponent } from './components/arguments/scalar/scalar.component';
 import { DateComponent } from './components/arguments/date/date.component';
 
+import  {MatCurrencyFormatModule} from 'mat-currency-format';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -38,6 +40,8 @@ import { AllocationComponent } from './components/results/allocation/allocation.
     FormsModule,
     ReactiveFormsModule,
     AnalysisRoutingModule,
+
+    MatCurrencyFormatModule,
 
     MatCardModule,
     MatButtonModule,
