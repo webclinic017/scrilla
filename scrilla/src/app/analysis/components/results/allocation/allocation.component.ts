@@ -20,7 +20,19 @@ export class AllocationComponent implements OnInit {
   ]
 
   @Input()
-  public tickers !: string[];
+  public tickers: string[] = [];
+
+  @Input()
+  public target ?: number;
+
+  @Input()
+  public invest ?: number;
+
+  @Input()
+  public startDate ?: Date;
+
+  @Input()
+  public endDate ?: Date;
 
   constructor() { }
 

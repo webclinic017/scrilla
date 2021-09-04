@@ -7,6 +7,7 @@ import  { MatCurrencyFormatModule } from 'mat-currency-format';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -47,6 +48,7 @@ import { ProfileComponent } from './components/results/profile/profile.component
 
     MatCardModule,
     MatChipsModule,
+    MatCheckboxModule,
     MatButtonModule,
     MatDatepickerModule,
     MatFormFieldModule,

@@ -1,25 +1,29 @@
+
 .optimizer-container{
     width: 100%; height: 100%;
     display: flex; flex-direction: column;
     justify-content: space-evenly;
 }
+
 .arguments-container{
     height: 50%;
     display: flex; flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
 }
+
 .arguments-container .item{ padding: 1%;}
-.input-card, .output-card, .action-card{ 
+.input-card, .output-card{ 
     overflow: auto;
     padding: 8px;
     margin-right: 0.5%; margin-left: 0.5%;
-    max-height: 45%; 
+    max-height: 95%; 
 }
 .input-card{
     min-height: 47.5%
 }
 .output-card{ min-height: 42.5%; }
+.output-card .title{ display: flex; flex-direction: row; justify-content: space-between;}
 .output-card .mat-card-content{
     min-height: 57.5%;
 }

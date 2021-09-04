@@ -26,6 +26,7 @@ export class DateComponent implements OnInit {
   }
 
   public parseDates(): void{
+    // TODO: convert dates to YYYY-MM-DD format
 
   }
 }

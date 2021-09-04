@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { AnimationService } from 'src/app/services/animations.service';
 
 @Component({
@@ -20,7 +21,12 @@ export class PortfolioOptimizerComponent implements OnInit {
   public startDate ?: Date;
   public endDate ?: Date;
 
-  constructor(public animator : AnimationService) { }
+  public optionalArguments : FormGroup;
+  constructor(public animator : AnimationService, public formBuilder : FormBuilder) { 
+    this.optionalArguments = formBuilder.group({
+      returnEnabled: false, investEnabled: false, dateEnabled: false
+    })
+  }
 
   ngOnInit(): void { }
 
@@ -31,5 +37,8 @@ export class PortfolioOptimizerComponent implements OnInit {
     })
   }
 
-  public removeTicker(ticker : string): void{ this.tickers.splice(this.tickers.indexOf(ticker), 1); }
+  public removeTicker(ticker : string): void{ 
+    this.tickers.splice(this.tickers.indexOf(ticker), 1); 
+  }
+  
 }

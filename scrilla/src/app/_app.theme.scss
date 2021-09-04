@@ -10,6 +10,15 @@
     .content{
         background-color: map-get($primary-palette, 600);
     }
+    ::-webkit-scrollbar-track {
+      background: map-get($primary-palette, 100); 
+    }
+    ::-webkit-scrollbar-thumb {
+      background: map-get($primary-palette, 500);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: map-get($primary-palette, 700)
+    }
 }
 
 @mixin theme($theme) {
@@ -23,3 +32,4 @@
       @include typography($theme);
     }
   }
+  

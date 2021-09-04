@@ -1,52 +1,79 @@
 <div class="optimizer-container">
-
+    <div class="input-container">
     <mat-card class="input-card">
-        <mat-card-title>Input</mat-card-title>
+        <mat-card-subtitle>Input</mat-card-subtitle>
         <mat-card-content>
             <div class="arguments-container">
-                <span class="item mat-elevation-z2">
+                <section id="optional-arguments-toggle" [formGroup]="optionalArguments" class="item optional mat-elevation-z2">
+                    <h3>Optional Input:</h3>
+                    <p><mat-checkbox formControlName="returnEnabled"
+                            matTooltip="Portfolio volatility will be minimized if no target return is specified.">
+                            Target Return
+                    </mat-checkbox></p>
+                    <p><mat-checkbox formControlName="investEnabled"
+                            matTooltip="Portfolio allocations given in percentage terms if no investment is specified.">
+                        Total Investment
+                    </mat-checkbox></p>
+                    <p><mat-checkbox formControlName="dateEnabled"
+                            matTooltip="Sample data defaults to last 100 trading days if no date range is specified.">
+                            Date Range
+                    </mat-checkbox></p>
+                </section>
+                <span id="ticker-input" class="item mat-elevation-z2">
                     <app-tickers (tickers)="setTickers($event)"></app-tickers>
                 </span>
-                <span class="item mat-elevation-z2">
+                <span id="target-input" class="item mat-elevation-z2" *ngIf="optionalArguments.value.returnEnabled">
                     <app-scalar [currency]="false" 
                                 title="Target Return"></app-scalar>
                 </span>
-                <span class="item mat-elevation-z2">
+                <span id="invest-input" class="item mat-elevation-z2" *ngIf="optionalArguments.value.investEnabled">
                     <app-scalar [currency]="true"
                                 title="Total Investment"></app-scalar>
                 </span>
-                <span class="item mat-elevation-z3">
+                <span id="date-input" class="item mat-elevation-z3" *ngIf="optionalArguments.value.dateEnabled">
                     <app-date></app-date>
                 </span>
             </div>
         </mat-card-content>
     </mat-card>
+    </div>
     
 
     <mat-card class="output-card">
-        <mat-card-title>Output</mat-card-title>
+        <mat-card-subtitle>
+            <div class="title">
+                
+                <div>
+                    Output                    
+                </div>
+                
+            </div>
+        </mat-card-subtitle>
         <mat-card-content>
             <app-allocation [tickers]="this.tickers" (removeTicker)="removeTicker($event)"></app-allocation>
-
-            <div class="output-button-group">
-                <div class="output-button">
-                <button mat-raised-button color="accent" class="output-button"
-                    [@scale]="optimizeBtnAnimationControl.scale"
-                    (mouseenter)="optimizeBtnAnimationControl = animator.animateScale()"
-                    (mouseleave)="optimizeBtnAnimationControl = animator.initAnimation()">
-                    Optimize
-                </button>
-                </div>
-                <div class="output-button">
-                <button mat-raised-button color="warn" class="output-button"
-                    [@scale]="clearBtnAnimationControl.scale"
-                    (mouseenter)="clearBtnAnimationControl = animator.animateScale()"
-                    (mouseleave)="clearBtnAnimationControl = animator.initAnimation()">
-                    Clear
-                </button>
-                </div>
-        </div>
         </mat-card-content>
     </mat-card>
-    
+
 </div>
+
+<!--
+
+    <div class="output-button-group">
+                <div class="output-button">
+                    <button mat-raised-button color="accent" class="output-button"
+                        [@scale]="optimizeBtnAnimationControl.scale"
+                        (mouseenter)="optimizeBtnAnimationControl = animator.animateScale()"
+                        (mouseleave)="optimizeBtnAnimationControl = animator.initAnimation()">
+                        Optimize
+                    </button>
+                </div>
+                <div class="output-button">
+                    <button mat-raised-button color="warn" class="output-button"
+                        [@scale]="clearBtnAnimationControl.scale"
+                        (mouseenter)="clearBtnAnimationControl = animator.animateScale()"
+                        (mouseleave)="clearBtnAnimationControl = animator.initAnimation()">
+                        Clear
+                    </button>
+                </div>
+            </div>
+-->
