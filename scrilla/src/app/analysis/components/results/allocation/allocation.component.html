@@ -3,12 +3,12 @@
 <div class="allocation-container fill-width">
     <div class="item side-item">
             <mat-card class="ticker-card">
-                <mat-card-title>chips</mat-card-title>
+                <mat-card-title>Ticker Symbols</mat-card-title>
                 <mat-chip-list aria-label="Ticker Symbol Chip List">
-                    <mat-chip *ngFor="let chip of testChips"
+                    <mat-chip *ngFor="let ticker of tickers"
                                 [removable]="true" 
-                                (removed)="removeTickerSymbol()">
-                        {{chip}}
+                                (removed)="tickerRemoved(ticker)">
+                        {{ticker}}
                         <mat-icon matChipRemove>cancel</mat-icon>
                     </mat-chip>
                 </mat-chip-list>

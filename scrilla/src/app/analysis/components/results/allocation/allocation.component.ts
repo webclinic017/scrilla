@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-allocation',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./allocation.component.css']
 })
 export class AllocationComponent implements OnInit {
+
+  @Output()
+  public removeTicker : EventEmitter<string> = new EventEmitter<string>();
 
   public testAllocation = [
     { 'name': 'allocation 1',
@@ -16,17 +19,14 @@ export class AllocationComponent implements OnInit {
       'value': 0.2 }
   ]
 
-  public testChips = [
-    'ALLY', 'BX', 'SONY', 'DE', 'DIS'
-  ]
+  @Input()
+  public tickers !: string[];
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  public removeTickerSymbol() : void {
-    
-  }
+  public tickerRemoved(ticker : string) : void { this.removeTicker.emit(ticker) }
 
 }

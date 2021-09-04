@@ -32,6 +32,9 @@ export class TickersComponent implements OnInit {
     tickerArray = tickerArray.filter(function(element, index, arr){
       return index === arr.indexOf(element);
     });
+    // TODO: before emitting, call service to see if inputted tickers are valid tickers,
+    //  i.e. are the tickers listed on the stock exchange? 
+    //  If not, custom Validator needed.
     this.tickers.emit(tickerArray)
     this.rawInput = '';
   }
