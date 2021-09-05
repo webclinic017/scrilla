@@ -3,33 +3,47 @@
             <mat-card-subtitle>Input</mat-card-subtitle>
             <mat-card-content>
                 <div class="arguments-container">
-                    <section id="optional-toggle" [formGroup]="optionalArguments" class="item optional mat-elevation-z2">
+                    <section id="optional-toggle" [formGroup]="optionalArguments" class="item mat-elevation-z2">
                         <h3>Optional Input:</h3>
-                        <p><mat-checkbox formControlName="returnEnabled"
+                        <div formGroupName="target">
+                            <mat-checkbox formControlName="enabled"
                                 matTooltip="Portfolio volatility will be minimized if no target return is specified.">
                             Target Return
-                        </mat-checkbox></p>
-                        <p><mat-checkbox formControlName="investEnabled"
-                                matTooltip="Portfolio allocations given in percentage terms if no investment is specified.">
+                            </mat-checkbox>
+                        </div>
+                        <div formGroupName="invest">
+                            <mat-checkbox formControlName="enabled"
+                                matTooltip="Portfolio allocations will be given in percentage terms if no investment is specified.">
                             Total Investment
-                        </mat-checkbox></p>
-                        <p><mat-checkbox formControlName="dateEnabled"
+                            </mat-checkbox>
+                        </div>
+                        <div formGroupName="date">
+                            <mat-checkbox formControlName="enabled"
                                 matTooltip="Sample data defaults to last 100 trading days if no date range is specified.">
                             Date Range
-                        </mat-checkbox></p>
+                            </mat-checkbox>
+                        </div>
                     </section>
                     <span id="ticker-input" class="item mat-elevation-z2">
                         <app-tickers (tickers)="setTickers($event)"></app-tickers>
                     </span>
-                    <span id="target-input" class="item mat-elevation-z2" *ngIf="optionalArguments.value.returnEnabled">
-                        <app-scalar [currency]="false" 
-                                    title="Target Return"></app-scalar>
+                    <span id="target-input" class="item mat-elevation-z2" 
+                            *ngIf="optionalArguments.get('target.enabled')?.value"
+                            [@fold]>
+                        <app-scalar title="Target Return"
+                                    [currency]="false"
+                                    (scalar)="setTarget($event)" ></app-scalar>
                     </span>
-                    <span id="invest-input" class="item mat-elevation-z2" *ngIf="optionalArguments.value.investEnabled">
-                        <app-scalar [currency]="true"
-                                    title="Total Investment"></app-scalar>
+                    <span id="invest-input" class="item mat-elevation-z2" 
+                            *ngIf="optionalArguments.get('invest.enabled')?.value"
+                            [@fold]>
+                        <app-scalar title="Total Investment"
+                                    [currency]="true"
+                                    (scalar)="setInvestment($event)"></app-scalar>
                     </span>
-                    <span id="date-input" class="item mat-elevation-z3" *ngIf="optionalArguments.value.dateEnabled">
+                    <span id="date-input" class="item mat-elevation-z3" 
+                            *ngIf="optionalArguments.get('date.enabled')?.value"
+                            [@fold]>
                         <app-date (dates)="setDates($event)"></app-date>
                     </span>
                 </div>
@@ -48,7 +62,14 @@
             </div>
         </mat-card-subtitle>
         <mat-card-content>
-            <app-allocation [tickers]="this.tickers" [dates]="dates" (removeTicker)="removeTicker($event)"></app-allocation>
+            <app-allocation [tickers]="this.tickers" 
+                            [dates]="this.dates"
+                            [invest]="this.totalInvestment"
+                            [target]="this.targetReturn" 
+                            (removeTicker)="removeTicker($event)"
+                            (removeDates)="removeDates()"
+                            (removeTarget)="removeTarget()"
+                            (removeInvest)="removeInvestment()"></app-allocation>
         </mat-card-content>
     </mat-card>
 

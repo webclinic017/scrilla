@@ -7,7 +7,7 @@ export interface AnimationProperties{
 
 export interface AnimationControl{
     scale?: string, highlight?: string, 
-    translateOff?: string, translateOn?: string
+    translateOff?: string, translateOn?: string,
 }
 
 export const defaultAnimationProperties : AnimationProperties = {
@@ -36,26 +36,46 @@ const translateProperties = {
         left: 'left'
     }
 }
+const foldProperties = {
+    trigger: 'fold'
+}
 
 @Injectable({
     providedIn: 'root'
 })
 export class AnimationService{
+    /**
+     * Controls are only required for animations that triggered by user input, i.e. the cursor entering or leaving a certain position. Animations that are triggered directly by elements entering or leaving the DOM, i.e. when certain conditions are met, a div is inserted or cut from the DOM, do not require a state to manage their animation. They can be handled by the ':enter' and ':leave' transition triggers proscribed by Angular Animations. 
+     * 
+     * Animations that are controlled by user input require an AnimationControl. AnimationControls can be instantiated with AnimationService.initAnimation(). This returns an AnimationControl will all the animations set to disabled,
+     * 
+     * let myControl = animationService.initAnimation()
+     * 
+     * Once a control is created, the control trigger for an animation must be bound to the trigger in the DOM,
+     * 
+     * <div [@trigger]="myControl.trigger"></div>
+     * 
+     * To animation the element, use user events to make calls to the AnimationService to perform the specified animation. For example, a div binded to a 'scale' trigger can have its element animated when a mouse enters its boundaries with the following,
+     * 
+     * <div [@scale]="myControl.scale" (mouseenter)="myControl = animationService.animateScale()" (mouseleave)="animationSerice.initAnimation()">
+     * 
+     * The above element will scale up/down when a user cursor enters its boundaries and then scale back down when the user leaves.
+     */
 
     // SERVICE INSTANCE METHODS
     public animateScale() : AnimationControl{ return { scale: `${scaleProperties.states.scale}`} }
 
     public animateHighlight() : AnimationControl { return { highlight: `${highlightProperties.states.highlight}` }}
 
-    public animateTranslateOffLeft() : AnimationControl { return { translateOff: `${translateProperties.states.left}` }}
+    public animateTranslateOffLeft() : AnimationControl { return { translateOff: `${translateProperties.states.left}` } }
 
-    public animateTranslateOffRight() : AnimationControl { return { translateOff: `${translateProperties.states.right}`}}
+    public animateTranslateOffRight() : AnimationControl { return { translateOff: `${translateProperties.states.right}` } }
 
-    public animateTranslateOnLeft() : AnimationControl { return { translateOn: `${translateProperties.states.left}`}}
+    public animateTranslateOnLeft() : AnimationControl { return { translateOn: `${translateProperties.states.left}` } }
 
-    public animateTranslateOnRight() : AnimationControl { return { translateOn: `${translateProperties.states.right}`}}
+    public animateTranslateOnRight() : AnimationControl { return { translateOn: `${translateProperties.states.right}`} }
 
-    public initAnimation() : AnimationControl { return { scale: '', highlight: '', translateOff: '', translateOn: ''} }
+    public initAnimation() : AnimationControl { return { scale: '', highlight: '', translateOff: '', translateOn: '' } }
 
     // STATIC FACTORY METHODS
     public static getAnimationString(properties : AnimationProperties) : string{
@@ -109,6 +129,26 @@ export class AnimationService{
                     style({ transform: `translateX(${distance})`, opacity: '0', offset: 0}),
                     style({ transform: 'translateX(0)', opacity: '1', offset: 1})
                 ]))
+            ])
+        ])
+    }
+
+    public static getFoldTrigger(properties : AnimationProperties = defaultAnimationProperties)
+    : AnimationTriggerMetadata {
+        return trigger(`${foldProperties.trigger}`,[
+            transition(':enter', [
+                animate(this.getAnimationString(properties), keyframes([
+                    style({ transform: 'scale(0,0)', offset: 0}),
+                    style({ transform: 'scale(1, 1)', offset: 1})
+                ])),
+            ]),
+            
+            transition(`:leave`, [
+                animate(this.getAnimationString(properties), keyframes([
+                    style({ transform: 'scale(1, 1)', offset: 0}),
+                    style({ transform: 'scale(0, 0)', offset: 1}),
+                ]))
+
             ])
         ])
     }

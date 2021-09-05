@@ -8,12 +8,14 @@
     flex-wrap: wrap; justify-content: flex-start;
 }
 .allocation-container .item{ margin-left: 1%; margin-right: 1%; }
-.allocation-container .side-item{ width: 15%; }
-.allocation-container .main-item{ width: 50%; height: 50%; }
+.allocation-container .side-item{ width: 10%; }
+.allocation-container .main-item{ width: 55%; height: 50%; }
 .allocation-container .main-item .allocation-card { overflow: auto; max-height: 45%; }
 .allocation-container .secondary-item{ width: 25%; max-height: 50%;}
-.ticker-card .mat-card-title, 
-.target-card .mat-card-title, 
-.investment-card .mat-card-title, 
-.date-card .mat-card-title { font-size: 12px; }
+.constraint-card .mat-card-title { font-size: 12px; }
+.constraint-card .value-container{ 
+    display: flex; flex-direction: row;
+    justify-content: space-between;
+    align-items:center;
+}
 .ticker-card .mat-chip { font-size: 10px; }

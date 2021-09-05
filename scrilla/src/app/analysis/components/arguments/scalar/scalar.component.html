@@ -12,13 +12,13 @@
                 [currencyCode]="'USD'"
                 matTooltip="Enter the investment total" 
                 [(ngModel)]="rawInput" 
-                (keyup.enter)="rawInput = ''">
+                (keyup.enter)="parseScalar()">
             <input matInput type="number" *ngIf="!currency"
                 matTooltip="Enter annualized rate"
                 [(ngModel)]="rawInput"
-                (keyup.enter)="rawInput = ''">
+                (keyup.enter)="parseScalar()">
             <button *ngIf="rawInput" matSuffix mat-icon-button aria-label="Clear" 
-                (click)="rawInput=''">
+                (click)="rawInput= undefined">
             <mat-icon>close</mat-icon>
             </button>
         </mat-form-field>

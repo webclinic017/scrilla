@@ -20,23 +20,14 @@ export class ScalarComponent implements OnInit {
   public scalar : EventEmitter<number> = new EventEmitter<number>()
   
   public addAnimationControl : AnimationControl = this.animator.initAnimation()
-  
-  public rawInput : string = '';
-  public invalidInput : boolean = true;
+  public rawInput ?: number = undefined;
 
   constructor(public animator : AnimationService) { }
 
   ngOnInit(): void { }
 
   public parseScalar(): void{
-    try{ 
-      let parsedInput = parseFloat(this.rawInput.trim()) 
-      this.scalar.emit(parsedInput);
-      this.rawInput = '';
-    }
-    catch(error){
-      console.log(error);
-      this.invalidInput = true;
-    }
+      this.scalar.emit(this.rawInput);
+      this.rawInput = undefined;
   }
 }
