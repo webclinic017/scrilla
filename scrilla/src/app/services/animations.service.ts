@@ -45,7 +45,16 @@ const foldProperties = {
 })
 export class AnimationService{
     /**
-     * Controls are only required for animations that triggered by user input, i.e. the cursor entering or leaving a certain position. Animations that are triggered directly by elements entering or leaving the DOM, i.e. when certain conditions are met, a div is inserted or cut from the DOM, do not require a state to manage their animation. They can be handled by the ':enter' and ':leave' transition triggers proscribed by Angular Animations. 
+     * Controls are only required for animations that are triggered by user input, i.e. the cursor entering or leaving a certain position or similar action. Animations that are triggered directly by elements entering or leaving, i.e. when certain conditions are met, a div is inserted or cut from the DOM, do not require a state to manage their animation. They can be handled by the ':enter' and ':leave' transition triggers proscribed by Angular Animations. Their animations can be statically accessed and added to the animations metadata in a Component class and then the trigger bound to the corresponding element that is to be animated. For example, the 'fold' trigger can be added to the animations metadata,
+     * 
+     * animations [ AnimationService.getFoldTrigger()]
+     * 
+     * 
+     * And then an element whose presence in the DOM is conditional can be animated by binding a trigger to it,
+     * 
+     * <div *ngIf="someCondition" [@fold]></div>
+     * 
+     * This will animation will cause the element to "fold" open, by using the CSS scale function. 
      * 
      * Animations that are controlled by user input require an AnimationControl. AnimationControls can be instantiated with AnimationService.initAnimation(). This returns an AnimationControl will all the animations set to disabled,
      * 
