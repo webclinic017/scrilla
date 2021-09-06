@@ -23,7 +23,7 @@ export class DateComponent implements OnInit {
               public formBuilder: FormBuilder) { 
     this.range = this.formBuilder.group({
                   start: new FormControl('', [ this.futureDatesValidator()]), 
-                  end: new FormControl('', [])
+                  end: new FormControl('', [ this.futureDatesValidator()])
     });
 
   }
