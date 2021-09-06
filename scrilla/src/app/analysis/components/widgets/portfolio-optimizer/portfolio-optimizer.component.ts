@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { AnimationProperties, AnimationService } from 'src/app/services/animations.service';
 
 const foldAnimationProperties : AnimationProperties= {
   delay: '', duration: '250ms', easing: ''
+}
+
+const modes : any = {
+  minimizeVariance: 'Minimize Portfolio Volatility',
+  minimizeConditionalValueAtRisk: 'Minimize Portfolio Conditional Value At Risk',
+  maximizeSharpeRatio: 'Maximize Portfolio Sharpe Ratio'
 }
 
 @Component({
@@ -17,6 +23,8 @@ const foldAnimationProperties : AnimationProperties= {
 })
 export class PortfolioOptimizerComponent implements OnInit {
 
+  public modes : any = modes;
+
   public optimizeBtnAnimationControl = this.animator.initAnimation()
   public clearBtnAnimationControl = this.animator.initAnimation();
 
@@ -24,7 +32,11 @@ export class PortfolioOptimizerComponent implements OnInit {
   public targetReturn ?: number;
   public totalInvestment ?: number;
   public dates ?: string[]
+  public lossProbability ?: number;
+  public lossExpiry ?: number;
+
   public optionalArguments : FormGroup;
+  public modeSelection : FormControl;
 
   constructor(public animator : AnimationService, public formBuilder : FormBuilder) { 
     this.optionalArguments = this.formBuilder.group({
@@ -32,6 +44,8 @@ export class PortfolioOptimizerComponent implements OnInit {
       invest: this.formBuilder.group({ enabled: false }),
       date: this.formBuilder.group({ enabled: false })
     })
+    this.modeSelection = new FormControl(modes.minimizeVariance);
+    console.log(this.modeSelection.value)
   }
 
   ngOnInit(): void { }

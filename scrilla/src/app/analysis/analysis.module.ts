@@ -6,6 +6,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import  { MatCurrencyFormatModule } from 'mat-currency-format';
 
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
@@ -46,10 +47,11 @@ import { ProfileComponent } from './components/results/profile/profile.component
     MatCurrencyFormatModule,
     NgxChartsModule,
 
+    MatButtonModule,
+    MatButtonToggleModule,
     MatCardModule,
     MatChipsModule,
     MatCheckboxModule,
-    MatButtonModule,
     MatDatepickerModule,
     MatFormFieldModule,
     MatIconModule,
