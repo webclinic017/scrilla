@@ -1,6 +1,28 @@
 <div class="widget-container">
     <mat-card class="input-card">
+        <mat-card-title>Input</mat-card-title>
+        <mat-card-content>
+            <div class="arguments-container">
+                <section id="optional-toggle" [formGroup]="optionalArguments" class="item mat-elevation-z2">
+                    <h2>Optional Input</h2>
+                    <div formGroupName="date">
+                        <mat-checkbox formControlName="enabled" aria-label="Date Range Selection, Optional"
+                            matTooltip="Sample data defaults to last 100 trading days if no date range is specified.">
+                        Date Range
+                        </mat-checkbox>
+                    </div>
+                </section>
 
+                <span id="ticker-input" class="item mat-elevation-z2">
+                    <app-tickers (tickers)="setTickers($event)"></app-tickers>
+                </span>
+
+                <span id="date-input" class="item mat-elevation-z3" [@fold]
+                        *ngIf="optionalArguments.get('date.enabled')?.value">
+                    <app-date (dates)="setDates($event)"></app-date>
+                </span>
+            </div>
+        </mat-card-content>
     </mat-card>
 
     <mat-card class="output-card">

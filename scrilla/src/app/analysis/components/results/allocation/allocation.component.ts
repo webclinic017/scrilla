@@ -30,7 +30,6 @@ export class AllocationComponent implements OnInit {
 
   @Input()
   public allocation ?: any[];
-
   @Input()
   public tickers: string[] = [];
   @Input()
@@ -46,8 +45,7 @@ export class AllocationComponent implements OnInit {
   
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   public tickerRemoved(ticker : string) : void { this.removeTicker.emit(ticker) }
 

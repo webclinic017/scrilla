@@ -24,6 +24,9 @@
     </mat-card-content>
     <mat-card-actions align="end">
         <button mat-icon-button color="accent" matTooltip="Add date range"
+            *ngIf="(range.controls.start.value && !range.controls.start.invalid && (range.controls.start.dirty || range.controls.start.touched))
+                    && (range.controls.end.value && !range.controls.end.invalid && (range.controls.end.dirty || range.controls.end.touched))"
+
             [@scale]="addAnimationControl.scale"
             (mouseenter)="addAnimationControl = this.animator.animateScale()"
             (mouseleave)="addAnimationControl = this.animator.initAnimation()"
