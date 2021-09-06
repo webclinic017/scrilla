@@ -45,7 +45,6 @@ export class PortfolioOptimizerComponent implements OnInit {
       date: this.formBuilder.group({ enabled: false })
     })
     this.modeSelection = new FormControl(modes.minimizeVariance);
-    console.log(this.modeSelection.value)
   }
 
   ngOnInit(): void { }

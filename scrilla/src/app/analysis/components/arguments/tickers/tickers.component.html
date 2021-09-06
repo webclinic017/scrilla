@@ -14,12 +14,13 @@
             <mat-icon>close</mat-icon>
             </button>
             <mat-error *ngIf="tickerControl.invalid && (tickerControl.dirty || tickerControl.touched)">
-                tickers required</mat-error>
+                <div *ngIf="tickerControl.errors?.required">tickers required</div>
+            </mat-error>
         </mat-form-field>
     </mat-card-content>
     <mat-card-actions align="end">
         <button mat-icon-button color="accent" matTooltip="Add tickers"
-            *ngIf="!tickerControl.invalid && (tickerControl.dirty || tickerControl.touched)"
+            *ngIf="tickerControl.value && !tickerControl.invalid && (tickerControl.dirty || tickerControl.touched)"
             [@scale]="addAnimationControl.scale"
             (mouseenter)="addAnimationControl = this.animator.animateScale()"
             (mouseleave)="addAnimationControl = this.animator.initAnimation()"

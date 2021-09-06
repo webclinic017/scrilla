@@ -7,25 +7,31 @@
         <mat-form-field appearance="fill" class="fill-width">
             <mat-label>Enter a number</mat-label>
             <input matInput type="text" *ngIf="currency"
+                [formControl]="scalarControl"
                 mvndrMatCurrencyFormat 
                 [allowNegative]="false"
                 [currencyCode]="'USD'"
                 matTooltip="Enter the investment total" 
-                [(ngModel)]="rawInput" 
                 (keyup.enter)="parseScalar()">
             <input matInput type="number" *ngIf="!currency"
+                [formControl]="this.scalarControl"
                 matTooltip="Enter annualized rate"
-                [(ngModel)]="rawInput"
                 (keyup.enter)="parseScalar()">
-            <button *ngIf="rawInput" matSuffix mat-icon-button aria-label="Clear" 
-                (click)="rawInput= undefined">
-            <mat-icon>close</mat-icon>
+            <button matSuffix mat-icon-button aria-label="Clear"
+                *ngIf="scalarControl.value && scalarControl.touched" 
+                (click)="scalarControl.reset()">
+                <mat-icon>close</mat-icon>
             </button>
+        <mat-error *ngIf="scalarControl.invalid && (scalarControl.dirty || scalarControl.touched)">
+            <div *ngIf="bounds && scalarControl.errors?.min">Must be greater than {{bounds[0]}}</div>
+            <div *ngIf="bounds && scalarControl.errors?.max">Must be less than {{bounds[1]}}</div>
+        </mat-error>
         </mat-form-field>
     </mat-card-content>
 
     <mat-card-actions align="end">
         <button mat-icon-button color="accent" matTooltip="{{ currency ? 'Add investment total' : 'Add annualized rate'}}"
+            *ngIf="this.scalarControl.value && !this.scalarControl.invalid && (this.scalarControl.touched || this.scalarControl.dirty)"
             [@scale]="addAnimationControl.scale"
             (mouseenter)="addAnimationControl = this.animator.animateScale()"
             (mouseleave)="addAnimationControl = this.animator.initAnimation()"
