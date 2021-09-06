@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { AnimationControl, AnimationService } from 'src/app/services/animations.service';
 
 @Component({
@@ -17,11 +17,16 @@ export class DateComponent implements OnInit {
   public dates : EventEmitter<string[]> = new EventEmitter<string[]>();
 
   public addAnimationControl : AnimationControl= this.animator.initAnimation()
-  public range = new FormGroup({
-    start: new FormControl(), end: new FormControl()
-  });
+  public range : FormGroup;
 
-  constructor(public animator : AnimationService, public datePipe : DatePipe) { }
+  constructor(public animator : AnimationService, public datePipe : DatePipe,
+              public formBuilder: FormBuilder) { 
+    this.range = this.formBuilder.group({
+                  start: new FormControl('', [ this.futureDatesValidator()]), 
+                  end: new FormControl('', [])
+    });
+
+  }
 
   ngOnInit(): void {
   }
@@ -31,5 +36,18 @@ export class DateComponent implements OnInit {
     let endDate : string | null = this.datePipe.transform(this.range.value.end, 'yyyy-MM-dd');
     if(startDate && endDate){ this.dates.emit([startDate, endDate]) }
 
+  }
+
+  public futureDatesValidator(): ValidatorFn{
+    return (control: AbstractControl): ValidationErrors | null => {
+      if(control.value){
+        let controlDate : Date = control.value
+        controlDate.setHours(0,0,0,0);
+        let todaysDate : Date = new Date()
+        todaysDate.setHours(0,0,0,0)
+        if (controlDate > todaysDate){ return { futureDates: { value: control.value }} } 
+      }
+      return null;
+    }
   }
 }

@@ -31,9 +31,7 @@ export class ScalarComponent implements OnInit {
   public addAnimationControl : AnimationControl = this.animator.initAnimation()
   public scalarControl !: FormControl;
 
-  constructor(public animator : AnimationService) { 
-    
-  }
+  constructor(public animator : AnimationService) { }
 
   // @Input doesn't exist until after the constructor is called, so 
   // FormControl must be created here instead of constructor
