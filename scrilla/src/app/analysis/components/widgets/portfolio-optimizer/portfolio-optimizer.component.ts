@@ -28,12 +28,12 @@ export class PortfolioOptimizerComponent implements OnInit {
   public optimizeBtnAnimationControl = this.animator.initAnimation()
   public clearBtnAnimationControl = this.animator.initAnimation();
 
-  public tickers : string[] = [];
+  public tickers: string[] = [];
   public targetReturn ?: number;
   public totalInvestment ?: number;
   public dates ?: string[]
-  public lossProbability ?: number;
-  public lossExpiry ?: number;
+  public probability ?: number;
+  public expiry ?: number;
 
   public optionalArguments : FormGroup;
   public modeSelection : FormControl;
@@ -45,6 +45,11 @@ export class PortfolioOptimizerComponent implements OnInit {
       date: this.formBuilder.group({ enabled: false })
     })
     this.modeSelection = new FormControl(modes.minimizeVariance);
+    this.modeSelection.valueChanges.subscribe(__=>{
+      this.tickers = []; this.targetReturn = undefined;
+      this.totalInvestment = undefined; this.dates = undefined;
+      this.expiry = undefined; this.probability = undefined;
+    })
   }
 
   ngOnInit(): void { }
@@ -60,15 +65,23 @@ export class PortfolioOptimizerComponent implements OnInit {
     this.tickers.splice(this.tickers.indexOf(ticker), 1); 
   }
 
-  public setDates(dates : string []){ this.dates = dates; }
+  public setDates(dates : string []): void{ this.dates = dates; }
   
-  public removeDates(){ this.dates = [] }
+  public removeDates(): void{ this.dates = [] }
 
-  public setTarget(target : number){ this.targetReturn = target; }
+  public setTarget(target : number): void{ this.targetReturn = target; }
 
-  public removeTarget(){ this.targetReturn = undefined; }
+  public removeTarget(): void{ this.targetReturn = undefined; }
 
-  public setInvestment(investment: number){ this.totalInvestment = investment; }
+  public setInvestment(investment: number): void{ this.totalInvestment = investment; }
 
-  public removeInvestment() { this.totalInvestment = undefined;}
+  public removeInvestment(): void { this.totalInvestment = undefined;}
+
+  public setProbability(prob : number): void{ this.probability = prob;}
+
+  public removeProbability(){ this.probability = undefined; }
+
+  public setExpiry(expiry : number){ this.expiry = expiry; }
+
+  public removeExpiry(){ this.expiry = undefined; }
 }

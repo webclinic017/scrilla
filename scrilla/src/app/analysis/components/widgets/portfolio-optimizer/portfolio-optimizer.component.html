@@ -55,13 +55,15 @@
                             *ngIf="modeSelection.value === modes.minimizeConditionalValueAtRisk">
                         <app-scalar title="Probability of Loss"
                                     [currency]="false"
-                                    [bounds]="[0,1]"></app-scalar>
+                                    [bounds]="[0,1]"
+                                    (scalar)="setProbability($event)"></app-scalar>
                     </span>
 
                     <span id="expiry-input" class="item mat-elevation-z3" [@fold]
                             *ngIf="modeSelection.value === modes.minimizeConditionalValueAtRisk">
                         <app-scalar title="Time Until Loss"
-                                    [currency]="false"></app-scalar>
+                                    [currency]="false"
+                                    (scalar)="setExpiry($event)"></app-scalar>
                     </span>
 
                     <span id="target-input" class="item mat-elevation-z2" [@fold]
@@ -91,10 +93,14 @@
                             [dates]="this.dates"
                             [invest]="this.totalInvestment"
                             [target]="this.targetReturn" 
+                            [probability]="this.probability"
+                            [expiry]="this.expiry"
                             (removeTicker)="removeTicker($event)"
                             (removeDates)="removeDates()"
                             (removeTarget)="removeTarget()"
-                            (removeInvest)="removeInvestment()"></app-allocation>
+                            (removeInvest)="removeInvestment()"
+                            (removeProbability)="removeProbability()"
+                            (removeExpiry)="removeExpiry()"></app-allocation>
         </mat-card-content>
     </mat-card>
 

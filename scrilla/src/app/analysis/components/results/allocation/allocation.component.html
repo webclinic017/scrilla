@@ -2,7 +2,7 @@
 
 <div class="allocation-container fill-width">
     <div class="item side-item">
-            <mat-card class="constraint-card mat-elevation-z2" *ngIf="tickers.length>0">
+            <mat-card id="tickers-card" class="constraint-card mat-elevation-z2" *ngIf="tickers.length>0">
                 <mat-card-title> Tickers</mat-card-title>
                 <mat-chip-list aria-label="Ticker Symbol Chip List">
                     <mat-chip *ngFor="let ticker of tickers"
@@ -17,9 +17,7 @@
                 <mat-card-title>Dates</mat-card-title>
                 <mat-card-subtitle>
                     <div class="value-container">
-                        <div>
-                            {{dates[0]}}<br> to<br> {{dates[1]}}
-                        </div>
+                        <div> {{dates[0]}}<br> to<br> {{dates[1]}}</div>
                         <div>
                             <button mat-icon-button
                                     matTooltip="Remove date range"
@@ -35,9 +33,7 @@
                 <mat-card-title>Target</mat-card-title>
                 <mat-card-subtitle> 
                     <div class="value-container">
-                        <div>
-                            {{ target | percent : '1.2-4' }}
-                        </div>
+                        <div> {{ target | percent : '1.2-4' }} </div>
                         <div>
                             <button mat-icon-button
                                     matTooltip="Remove target return"
@@ -52,13 +48,41 @@
                 <mat-card-title>Investment</mat-card-title>
                 <mat-card-subtitle> 
                     <div class="value-container">
-                        <div>
-                            {{ invest | currency }} 
-                        </div>
+                        <div> {{ invest | currency }} </div>
                         <div>
                             <button mat-icon-button
                                     matTooltip="Remove total investment"
                                     (click)="investRemoved()">
+                                <mat-icon>cancel</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </mat-card-subtitle>
+            </mat-card>
+            <mat-card id="probability-card" class="constraint-card mat-elevation-z2" *ngIf="probability">
+                <mat-card-title>Loss Probability</mat-card-title>
+                <mat-card-subtitle>
+                    <div class="value-container">
+                        <div> {{ probability | percent : '1.2-4'}}</div>
+                        <div>
+                            <button mat-icon-button
+                                matTooltip="Remove loss probability"
+                                (click)="probabilityRemoved()">
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                        </div>
+                    </div>
+                </mat-card-subtitle>
+            </mat-card>
+            <mat-card id="expiry-card" class="constraint-card mat-elevation-z2" *ngIf="expiry">
+                <mat-card-title>Loss Expiry</mat-card-title>
+                <mat-card-subtitle>
+                    <div class="value-container">
+                        <div>{{ expiry }} years</div>
+                        <div>
+                            <button mat-icon-button
+                                    matTooltip="Remove loss expiry"
+                                    (click)="expiryRemoved()">
                                 <mat-icon>cancel</mat-icon>
                             </button>
                         </div>
@@ -77,8 +101,7 @@
     </div>
     
     <div class="item secondary-item mat-elevation-z2">
-        <ngx-charts-pie-chart [results]="testAllocation" [doughnut]="true"
-                                [labels]="true">
+        <ngx-charts-pie-chart [results]="testAllocation" [doughnut]="true" [labels]="true">
         </ngx-charts-pie-chart>
     </div>
 </div>
