@@ -16,7 +16,7 @@ const foldAnimationProperties : AnimationProperties= {
 })
 export class RiskProfileComponent implements OnInit {
 
-  public tickers ?: string[];
+  public tickers: string[] = [];
   public dates ?: string[]
 
   public optionalArguments : FormGroup;
@@ -32,7 +32,7 @@ export class RiskProfileComponent implements OnInit {
 
   public setTickers(tickers: string[]){ this.tickers = tickers; }
   
-  public removeTickers(){ this.tickers = []}
+  public removeTicker(ticker : string): void{  this.tickers.splice(this.tickers.indexOf(ticker), 1); }
 
   public setDates(dates : string[]){ this.dates = dates}
 

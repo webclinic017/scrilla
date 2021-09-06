@@ -1,1 +1,31 @@
-<p>profile works!</p>
+<div class="result-container">
+    <div class="item">
+        <mat-card id="tickers-card" class="card mat-elevation-z2" *ngIf="tickers.length>0">
+            <mat-card-title> Tickers</mat-card-title>
+            <mat-chip-list aria-label="Ticker Symbol Chip List">
+                <mat-chip *ngFor="let ticker of tickers"
+                            [removable]="true" 
+                            (removed)="tickerRemoved(ticker)">
+                    {{ticker}}
+                    <mat-icon matChipRemove matTooltip="Remove ticker symbol">cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+        </mat-card>
+        <mat-card id="date-card" class="card mat-elevation-z2" *ngIf="dates">
+            <mat-card-title>Dates</mat-card-title>
+            <mat-card-subtitle>
+                <div class="value-container">
+                    <div> {{dates[0]}}<br> to<br> {{dates[1]}}</div>
+                    <div>
+                        <button mat-icon-button
+                                matTooltip="Remove date range"
+                                (click)="datesRemoved()">
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                
+            </mat-card-subtitle>
+        </mat-card>
+    </div>
+</div>

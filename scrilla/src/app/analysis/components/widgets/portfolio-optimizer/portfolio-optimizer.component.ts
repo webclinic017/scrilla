@@ -70,9 +70,7 @@ export class PortfolioOptimizerComponent implements OnInit {
     })
   }
 
-  public removeTicker(ticker : string): void{ 
-    this.tickers.splice(this.tickers.indexOf(ticker), 1); 
-  }
+  public removeTicker(ticker : string): void{  this.tickers.splice(this.tickers.indexOf(ticker), 1); }
 
   public setDates(dates : string []): void{ this.dates = dates; }
   

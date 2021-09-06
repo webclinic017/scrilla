@@ -26,6 +26,12 @@
     </mat-card>
 
     <mat-card class="output-card">
-
+        <mat-card-title>Output</mat-card-title>
+        <mat-card-content>
+            <app-profile [tickers]="this.tickers"
+                         [dates]="this.dates"
+                        (removeTicker)="this.removeTicker($event)"
+                        (removeDates)="this.removeDates()"></app-profile>
+        </mat-card-content>
     </mat-card>
 </div>

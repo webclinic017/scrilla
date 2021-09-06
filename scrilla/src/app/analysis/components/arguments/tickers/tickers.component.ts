@@ -1,5 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AnimationControl, AnimationService } from 'src/app/services/animations.service';
 
 @Component({
@@ -12,17 +12,25 @@ import { AnimationControl, AnimationService } from 'src/app/services/animations.
 })
 export class TickersComponent implements OnInit {
 
+  @Input()
+  public single : boolean = false;
+
   @Output()
   public tickers : EventEmitter<string[]> = new EventEmitter<string[]>();
+  @Output()
+  public ticker : EventEmitter<string> = new EventEmitter<string>();
 
   public addAnimationControl : AnimationControl = this.animator.initAnimation()
-  public tickerControl : FormControl;
+  public tickerControl !: FormControl;
 
   constructor(public animator: AnimationService) { 
-    this.tickerControl = new FormControl('', [Validators.required])
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    let validators = [Validators.required]
+    if(this.single){ validators.push(this.multipleTickersValidator())}
+    this.tickerControl = new FormControl('', validators)
+  }
 
   public parseTickers(): void{
     let tickerArray = this.tickerControl.value.toUpperCase().split(',')
@@ -38,8 +46,21 @@ export class TickersComponent implements OnInit {
     // TODO: before emitting, call service to see if inputted tickers are valid tickers,
     //  i.e. are the tickers listed on the stock exchange? 
     //  If not, custom Validator needed.
-    this.tickers.emit(tickerArray)
+    if(this.single){ this.ticker.emit(tickerArray[0])}
+    else{ this.tickers.emit(tickerArray)}
     this.tickerControl.reset()
+  }
+
+  public multipleTickersValidator(): ValidatorFn {
+    return (control: AbstractControl) : ValidationErrors | null =>{
+      if(control.value){
+        let ticker_string : string = control.value;
+        if(ticker_string.includes(',')){
+          return { multipleTickers: { value: control.value } }
+        }
+      }
+      return null;
+    }
   }
 
 }

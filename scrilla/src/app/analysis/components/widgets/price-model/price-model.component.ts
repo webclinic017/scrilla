@@ -7,11 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PriceModelComponent implements OnInit {
 
-  // will need to require tickers arg component to accept argument that limits tickers to 1.
-  // since pricemodel will be applied to one ticker at a time!
+  public ticker ?: string; 
+
+
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
+  public setTicker(ticker: string){ this.ticker = ticker; }
+
+  public removeTicker() { this.ticker = undefined; }
 }

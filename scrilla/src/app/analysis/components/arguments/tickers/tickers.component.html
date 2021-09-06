@@ -1,20 +1,21 @@
 
 
 <mat-card id="tickers-card">
-    <mat-card-title>Tickers</mat-card-title>
+    <mat-card-title>{{ single ? 'Ticker' : 'Tickers' }}</mat-card-title>
     <mat-card-subtitle>Equity or Cryptocurrency</mat-card-subtitle>
     <mat-card-content>
         <mat-form-field appearance="fill" class="fill-width">
             <mat-label>Enter a list of tickers</mat-label>
             <input matInput type="text" [formControl]="tickerControl" 
-                    matTooltip="Separate ticker symbols with a comma"
+                    matTooltip="{{ single ? 'Enter a single ticker symbole' : 'Separate ticker symbols with a comma' }}"
                     (keyup.enter)="parseTickers()">
             <button *ngIf="tickerControl.value && tickerControl.touched" matSuffix mat-icon-button aria-label="Clear" 
                 (click)="tickerControl.reset()">
             <mat-icon>close</mat-icon>
             </button>
             <mat-error *ngIf="tickerControl.invalid && (tickerControl.dirty || tickerControl.touched)">
-                <div *ngIf="tickerControl.errors?.required">tickers required</div>
+                <div *ngIf="tickerControl.errors?.required">Tickers required!</div>
+                <div *ngIf="tickerControl.errors?.multipleTickers">This function only works for one ticker at a time</div>
             </mat-error>
         </mat-form-field>
     </mat-card-content>
