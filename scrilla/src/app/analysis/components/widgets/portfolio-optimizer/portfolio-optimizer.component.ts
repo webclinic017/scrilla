@@ -15,7 +15,7 @@ const modes : any = {
 @Component({
   selector: 'app-portfolio-optimizer',
   templateUrl: './portfolio-optimizer.component.html',
-  styleUrls: ['./portfolio-optimizer.component.css'],
+  styleUrls: ['../widgets.css'],
   animations: [
     AnimationService.getScaleTrigger(1.25),
     AnimationService.getFoldTrigger(foldAnimationProperties)
@@ -23,6 +23,15 @@ const modes : any = {
 })
 export class PortfolioOptimizerComponent implements OnInit {
 
+  public testAllocation = [
+    { 'name': 'allocation 1',
+      'value': 0.3 },
+    { 'name': 'allocation 2',
+      'value': 0.5 },
+    { 'name': 'allocation 3',
+      'value': 0.2 }
+  ]
+  
   public modes : any = modes;
 
   public optimizeBtnAnimationControl = this.animator.initAnimation()

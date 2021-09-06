@@ -1,93 +1,95 @@
-<div class="optimizer-container">
-        <mat-card class="input-card">
-            <mat-card-title>Input</mat-card-title>
-            <mat-card-subtitle>Mode: {{modeSelection.value}} </mat-card-subtitle>
-            <mat-card-content>
-                <div class="arguments-container">
-                    <section id="mode-selection" class="item mat-elevation-z3">
-                        <h2>Mode</h2>
-                        <mat-button-toggle-group vertical [formControl]="modeSelection" aria-label="Mode Selection">
-                        <mat-button-toggle [value]="modes.minimizeVariance"
-                                            matTooltip="Minimize Portfolio Variance"
-                                            aria-label="Minimize Portfolio Variance">
-                            <mat-icon [color]="modeSelection.value === modes.minimizeVariance ? 'accent' : 'primary'">filter_1</mat-icon>
-                        </mat-button-toggle>
-                        <mat-button-toggle [value]="modes.maximizeSharpeRatio"
-                                            matTooltip="Maximize Portfolio Sharpe Ratio"
-                                            aria-label="Maximize Portfolio Sharpe Ratio">
-                            <mat-icon [color]="modeSelection.value === modes.maximizeSharpeRatio ? 'accent' : 'primary' ">filter_2</mat-icon>
-                        </mat-button-toggle>
-                        <mat-button-toggle [value]="modes.minimizeConditionalValueAtRisk"
-                                            matTooltip="Minimize Portfolio Conditional Value At Risk"
-                                            aria-label="Minimize Portfolio Conditional Value at Risk">
-                            <mat-icon [color]="modeSelection.value === modes.minimizeConditionalValueAtRisk ?'accent' : 'primary' ">filter_3</mat-icon>
-                        </mat-button-toggle>
-                        </mat-button-toggle-group>
-                    </section>
+<div class="widget-container">
+    <mat-card class="input-card">
+        <mat-card-title>Input</mat-card-title>
+        <mat-card-subtitle>Mode: {{modeSelection.value}} </mat-card-subtitle>
+        <mat-card-content>
+            <div class="arguments-container">
+                <section id="mode-selection" class="item mat-elevation-z3">
+                    <h2>Mode</h2>
+                    <mat-button-toggle-group vertical [formControl]="modeSelection" aria-label="Mode Selection">
+                    <mat-button-toggle [value]="modes.minimizeVariance"
+                                        matTooltip="Minimize Portfolio Variance"
+                                        aria-label="Minimize Portfolio Variance">
+                        <mat-icon [color]="modeSelection.value === modes.minimizeVariance ? 'accent' : 'primary'">filter_1</mat-icon>
+                    </mat-button-toggle>
+                    <mat-button-toggle [value]="modes.maximizeSharpeRatio"
+                                        matTooltip="Maximize Portfolio Sharpe Ratio"
+                                        aria-label="Maximize Portfolio Sharpe Ratio">
+                        <mat-icon [color]="modeSelection.value === modes.maximizeSharpeRatio ? 'accent' : 'primary' ">filter_2</mat-icon>
+                    </mat-button-toggle>
+                    <mat-button-toggle [value]="modes.minimizeConditionalValueAtRisk"
+                                        matTooltip="Minimize Portfolio Conditional Value At Risk"
+                                        aria-label="Minimize Portfolio Conditional Value at Risk">
+                        <mat-icon [color]="modeSelection.value === modes.minimizeConditionalValueAtRisk ?'accent' : 'primary' ">filter_3</mat-icon>
+                    </mat-button-toggle>
+                    </mat-button-toggle-group>
+                </section>
 
-                    <section id="optional-toggle" [formGroup]="optionalArguments" class="item mat-elevation-z2">
-                        <h2>Optional Input</h2>
-                        <div formGroupName="target">
-                            <mat-checkbox formControlName="enabled" aria-label="Target Return Input, Optional"
-                                matTooltip="Portfolio volatility will be minimized if no target return is specified.">
-                            Target Return
-                            </mat-checkbox>
-                        </div>
-                        <div formGroupName="invest">
-                            <mat-checkbox formControlName="enabled" aria-label="Total Investent Input, Optional"
-                                matTooltip="Portfolio allocations will be given in percentage terms if no investment is specified.">
-                            Total Investment
-                            </mat-checkbox>
-                        </div>
-                        <div formGroupName="date">
-                            <mat-checkbox formControlName="enabled" aria-label="Date Range Selection, Optional"
-                                matTooltip="Sample data defaults to last 100 trading days if no date range is specified.">
-                            Date Range
-                            </mat-checkbox>
-                        </div>
-                    </section>
+                <section id="optional-toggle" [formGroup]="optionalArguments" class="item mat-elevation-z2">
+                    <h2>Optional Input</h2>
+                    <div formGroupName="target">
+                        <mat-checkbox formControlName="enabled" aria-label="Target Return Input, Optional"
+                            matTooltip="Portfolio volatility will be minimized if no target return is specified.">
+                        Target Return
+                        </mat-checkbox>
+                    </div>
+                    <div formGroupName="invest">
+                        <mat-checkbox formControlName="enabled" aria-label="Total Investent Input, Optional"
+                            matTooltip="Portfolio allocations will be given in percentage terms if no investment is specified.">
+                        Total Investment
+                        </mat-checkbox>
+                    </div>
+                    <div formGroupName="date">
+                        <mat-checkbox formControlName="enabled" aria-label="Date Range Selection, Optional"
+                            matTooltip="Sample data defaults to last 100 trading days if no date range is specified.">
+                        Date Range
+                        </mat-checkbox>
+                    </div>
+                </section>
 
-                    <span id="ticker-input" class="item mat-elevation-z2">
-                        <app-tickers (tickers)="setTickers($event)"></app-tickers>
-                    </span>
+                <span id="ticker-input" class="item mat-elevation-z2">
+                    <app-tickers (tickers)="setTickers($event)"></app-tickers>
+                </span>
 
-                    <span id="probability-input" class="item mat-elevation-z2" [@fold]
-                            *ngIf="modeSelection.value === modes.minimizeConditionalValueAtRisk">
-                        <app-scalar title="Probability of Loss"
-                                    [currency]="false"
-                                    [bounds]="[0,1]"
-                                    (scalar)="setProbability($event)"></app-scalar>
-                    </span>
+                <span id="probability-input" class="item mat-elevation-z2" [@fold]
+                        *ngIf="modeSelection.value === modes.minimizeConditionalValueAtRisk">
+                    <app-scalar title="Probability of Loss"
+                                [currency]="false"
+                                [bounds]="[0,1]"
+                                (scalar)="setProbability($event)"></app-scalar>
+                </span>
 
-                    <span id="expiry-input" class="item mat-elevation-z3" [@fold]
-                            *ngIf="modeSelection.value === modes.minimizeConditionalValueAtRisk">
-                        <app-scalar title="Time Until Loss"
-                                    [currency]="false"
-                                    (scalar)="setExpiry($event)"></app-scalar>
-                    </span>
+                <span id="expiry-input" class="item mat-elevation-z3" [@fold]
+                        *ngIf="modeSelection.value === modes.minimizeConditionalValueAtRisk">
+                    <app-scalar title="Time Until Loss"
+                                [currency]="false"
+                                (scalar)="setExpiry($event)"></app-scalar>
+                </span>
 
-                    <span id="target-input" class="item mat-elevation-z2" [@fold]
-                            *ngIf="optionalArguments.get('target.enabled')?.value">
-                        <app-scalar title="Target Return"
-                                    [currency]="false"
-                                    (scalar)="setTarget($event)" ></app-scalar>
-                    </span>
-                    <span id="invest-input" class="item mat-elevation-z2" [@fold]
-                            *ngIf="optionalArguments.get('invest.enabled')?.value">
-                        <app-scalar title="Total Investment"
-                                    [currency]="true"
-                                    (scalar)="setInvestment($event)"></app-scalar>
-                    </span>
-                    <span id="date-input" class="item mat-elevation-z3" [@fold]
-                            *ngIf="optionalArguments.get('date.enabled')?.value">
-                        <app-date (dates)="setDates($event)"></app-date>
-                    </span>
-                </div>
-            </mat-card-content>
-        </mat-card>
+                <span id="target-input" class="item mat-elevation-z2" [@fold]
+                        *ngIf="optionalArguments.get('target.enabled')?.value">
+                    <app-scalar title="Target Return"
+                                [currency]="false"
+                                (scalar)="setTarget($event)" ></app-scalar>
+                </span>
+
+                <span id="invest-input" class="item mat-elevation-z2" [@fold]
+                        *ngIf="optionalArguments.get('invest.enabled')?.value">
+                    <app-scalar title="Total Investment"
+                                [currency]="true"
+                                (scalar)="setInvestment($event)"></app-scalar>
+                </span>
+
+                <span id="date-input" class="item mat-elevation-z3" [@fold]
+                        *ngIf="optionalArguments.get('date.enabled')?.value">
+                    <app-date (dates)="setDates($event)"></app-date>
+                </span>
+            </div>
+        </mat-card-content>
+    </mat-card>
 
     <mat-card class="output-card">
-        <mat-card-subtitle>Output</mat-card-subtitle>
+        <mat-card-title>Output</mat-card-title>
         <mat-card-content>
             <app-allocation [tickers]="this.tickers" 
                             [dates]="this.dates"
@@ -95,6 +97,7 @@
                             [target]="this.targetReturn" 
                             [probability]="this.probability"
                             [expiry]="this.expiry"
+                            [allocation]="this.testAllocation"
                             (removeTicker)="removeTicker($event)"
                             (removeDates)="removeDates()"
                             (removeTarget)="removeTarget()"

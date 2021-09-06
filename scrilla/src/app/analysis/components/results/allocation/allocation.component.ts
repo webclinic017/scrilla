@@ -1,20 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AnimationProperties, AnimationService } from 'src/app/services/animations.service';
+
+const foldAnimationProperties : AnimationProperties= {
+  delay: '', duration: '250ms', easing: ''
+}
 
 @Component({
   selector: 'app-allocation',
   templateUrl: './allocation.component.html',
-  styleUrls: ['./allocation.component.css']
+  styleUrls: ['../results.css'],
+  animations:[
+    AnimationService.getFoldTrigger(foldAnimationProperties)
+  ]
 })
 export class AllocationComponent implements OnInit {
-
-  public testAllocation = [
-    { 'name': 'allocation 1',
-      'value': 0.3 },
-    { 'name': 'allocation 2',
-      'value': 0.5 },
-    { 'name': 'allocation 3',
-      'value': 0.2 }
-  ]
 
   @Output()
   public removeTicker : EventEmitter<string> = new EventEmitter<string>();
@@ -28,6 +27,9 @@ export class AllocationComponent implements OnInit {
   public removeLossProbability : EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output()
   public removeLossExpiry : EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  @Input()
+  public allocation ?: any[];
 
   @Input()
   public tickers: string[] = [];

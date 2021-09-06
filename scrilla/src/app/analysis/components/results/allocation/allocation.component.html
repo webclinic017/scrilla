@@ -1,8 +1,8 @@
 
 
-<div class="allocation-container fill-width">
+<div class="result-container">
     <div class="item side-item">
-            <mat-card id="tickers-card" class="constraint-card mat-elevation-z2" *ngIf="tickers.length>0">
+            <mat-card id="tickers-card" class="card mat-elevation-z2" *ngIf="tickers.length>0">
                 <mat-card-title> Tickers</mat-card-title>
                 <mat-chip-list aria-label="Ticker Symbol Chip List">
                     <mat-chip *ngFor="let ticker of tickers"
@@ -13,7 +13,7 @@
                     </mat-chip>
                 </mat-chip-list>
             </mat-card>
-            <mat-card id="date-card" class="constraint-card mat-elevation-z2" *ngIf="dates">
+            <mat-card id="date-card" class="card mat-elevation-z2" *ngIf="dates">
                 <mat-card-title>Dates</mat-card-title>
                 <mat-card-subtitle>
                     <div class="value-container">
@@ -29,7 +29,7 @@
                     
                 </mat-card-subtitle>
             </mat-card>
-            <mat-card id="target-card" class="constraint-card mat-elevation-z2" *ngIf="target">
+            <mat-card id="target-card" class="card mat-elevation-z2" *ngIf="target">
                 <mat-card-title>Target</mat-card-title>
                 <mat-card-subtitle> 
                     <div class="value-container">
@@ -44,7 +44,7 @@
                     </div>
                 </mat-card-subtitle>
             </mat-card>
-            <mat-card id="invest-card" class="constraint-card mat-elevation-z2" *ngIf="invest">
+            <mat-card id="invest-card" class="card mat-elevation-z2" *ngIf="invest">
                 <mat-card-title>Investment</mat-card-title>
                 <mat-card-subtitle> 
                     <div class="value-container">
@@ -59,7 +59,7 @@
                     </div>
                 </mat-card-subtitle>
             </mat-card>
-            <mat-card id="probability-card" class="constraint-card mat-elevation-z2" *ngIf="probability">
+            <mat-card id="probability-card" class="card mat-elevation-z2" *ngIf="probability">
                 <mat-card-title>Loss Probability</mat-card-title>
                 <mat-card-subtitle>
                     <div class="value-container">
@@ -74,7 +74,7 @@
                     </div>
                 </mat-card-subtitle>
             </mat-card>
-            <mat-card id="expiry-card" class="constraint-card mat-elevation-z2" *ngIf="expiry">
+            <mat-card id="expiry-card" class="card mat-elevation-z2" *ngIf="expiry">
                 <mat-card-title>Loss Expiry</mat-card-title>
                 <mat-card-subtitle>
                     <div class="value-container">
@@ -91,17 +91,17 @@
             </mat-card>
     </div>
 
-    <div class="item main-item">
-        <mat-card class="allocation-card mat-elevation-z2">
+    <div class="item main-item" *ngIf="allocation" [@fold]>
+        <mat-card class="card mat-elevation-z2">
             <mat-card-title>Portfolio Allocation</mat-card-title>
             <mat-card-content>
-                
+        
             </mat-card-content>
         </mat-card>
     </div>
     
-    <div class="item secondary-item mat-elevation-z2">
-        <ngx-charts-pie-chart [results]="testAllocation" [doughnut]="true" [labels]="true">
+    <div class="item secondary-item mat-elevation-z2" *ngIf="allocation" [@fold]>
+        <ngx-charts-pie-chart [results]="allocation" [doughnut]="true" [labels]="true">
         </ngx-charts-pie-chart>
     </div>
 </div>
