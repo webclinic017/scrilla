@@ -12,7 +12,8 @@
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-date-range-picker #picker></mat-date-range-picker>
             
-            <mat-error *ngIf="range.controls.start.invalid && (range.controls.start.dirty || range.controls.start.touched)">
+            <mat-error *ngIf="range.controls.start.invalid && (range.controls.start.dirty || range.controls.start.touched) ||
+                                range.controls.end.invalid && (range.controls.end.dirty || range.controls.start.dirty)">
                 <div *ngIf="range.controls.start.errors?.futureDates || range.controls.end.errors?.futureDates">
                     Historical sample cannot contain future dates!
                 </div>
