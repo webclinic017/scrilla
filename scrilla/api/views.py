@@ -52,11 +52,12 @@ def risk_profile(request):
     for ticker in params['tickers']:
         profiles[ticker] = statistics.calculate_risk_return(ticker=ticker, start_date=params['start_date'],
                                                             end_date=params['end_date'])
-        profiles[ticker]['sharpe_ratio'] = markets.sharpe_ratio(ticker=ticker, start_date=params['start_date'],
+        if not params['image']:
+            profiles[ticker]['sharpe_ratio'] = markets.sharpe_ratio(ticker=ticker, start_date=params['start_date'],
                                                             end_date=params['end_date'])
-        profiles[ticker]['asset_beta'] = markets.market_beta(ticker=ticker, start_date=params['start_date'],
+            profiles[ticker]['asset_beta'] = markets.market_beta(ticker=ticker, start_date=params['start_date'],
                                                             end_date=params['end_date'])
-        profiles[ticker]['equity_cost'] = markets.cost_of_equity(ticker=ticker, start_date=params['start_date'],
+            profiles[ticker]['equity_cost'] = markets.cost_of_equity(ticker=ticker, start_date=params['start_date'],
                                                                                 end_date=params['end_date'])
 
     if params['image']:
