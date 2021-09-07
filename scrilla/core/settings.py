@@ -52,6 +52,12 @@ SUPERUSER_USERNAME = str(os.getenv('DJANGO_SUPERUSER_USERNAME')).strip()
 SUPERUSER_PASSWORD = str(os.getenv('DJANGO_SUPERUSER_PASSWORD')).strip()
 SUPERUSER_EMAIL = str(os.getenv('DJANGO_SUPERUSER_EMAIL')).strip()
 
+OPTIMIZE_MODES = {
+    'sharpe': 'maximizeSharpeRatio',
+    'vol': 'minimizeVolatility',
+    'cvar': 'minimizeConditionalValueAtRisk'
+}
+
 INSTALLED_APPS = [
     'corsheaders',
     'django.contrib.admin',

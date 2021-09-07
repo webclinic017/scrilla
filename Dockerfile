@@ -12,7 +12,7 @@ RUN useradd -ms /bin/bash chinchalinchin && \
 
 WORKDIR /home/
 COPY /requirements.txt /home/requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install --compile --no-cache-dir --requirement requirements.txt
 
 COPY --chown=chinchalinchin:admin /app/ /home/app/
 COPY --chown=chinchalinchin:admin /scripts/ /home/scripts/

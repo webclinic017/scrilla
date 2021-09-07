@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from core import settings 
+
 from scrilla import files, services
 from scrilla.analysis import optimizer, statistics, markets
 from scrilla.util import plotter
@@ -16,9 +18,11 @@ def parse_query_params(request):
         'end_date': request.query_params.get('end_date'),
         'invest': request.query_params.get('invest'),
         'target': request.query_params.get('target'),
-        'sharpe': str(request.query_params.get('sharpe')).lower() == 'true',
+        'mode': str(request.query_params.get('mode')).lower(),
         'image': str(request.query_params.get('image')).lower() == 'true',
-        'discount': request.query_params.get('discount')
+        'discount': request.query_params.get('discount'),
+        'prob': request.query_params.get('prob'),
+        'expiry': request.query_params.get('expiry')
     }
 
 @api_view(['GET'])
@@ -27,8 +31,13 @@ def optimize_portfolio(request):
     
     portfolio = Portfolio(tickers=params['tickers'], start_date=params['start_date'], end_date=params['end_date'])
 
-    if params['sharpe']:
+    if params['mode'] == settings.OPTIMIZE_MODES['sharpe']:
         optimal_allocation = optimizer.maximize_sharpe_ratio(portfolio=portfolio, target_return=params['target'])
+    elif params['mode'] == settings.OPTIMIZE_MODES['cvar']:
+        optimal_allocation = optimizer.optimize_conditional_value_at_risk(portfolio=portfolio,
+                                                                            prob=params['prob'],
+                                                                            expiry=params['expiry'],
+                                                                            target_return=params['target'])
     else:
         optimal_allocation = optimizer.optimize_portfolio_variance(portfolio=portfolio, target_return=params['target'])
 
