@@ -1,9 +1,45 @@
 import { Injectable } from '@angular/core';
+import { HostService } from './host.service';
+
+export interface QueryParams{
+  tickers: string[],
+  start?: string, end?: string,
+  target?: number, invest?:number,
+  mode?: string, prob?: number, 
+  expiry?: number
+}
+
+export const endpoints = {
+  api:{
+    optimize: 'api/optimize',
+    risk_profile: 'api/risk-return',
+    correlation: 'api/correlation',
+    efficient_fronter: 'api/efficient-frontier',
+    discount_dividend: 'api/discount-dividend'
+  }
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  constructor() { }
+  constructor(private host : HostService) { }
+
+  private constructQuery(params : QueryParams): string{
+    let query = "";
+    params.tickers.forEach(ticker=>{
+      if(query){ query = query.concat(`&`)}
+      query = query.concat(`tickers=${ticker}`)
+    })
+    if(params.start){ query = query.concat(`&start=${params.start}`)}
+    if(params.end){ query = query.concat(`&end=${params.end}`)}
+    if(params.target){ query = query.concat(`&target=${params.target}`)}
+    if(params.invest){ query = query.concat(`&invest=${params.invest}`)}
+    if(params.mode){ query = query.concat(`&mode=${params.mode}`)}
+    if(params.prob) { query = query.concat(`&prob=${params.prob}`)}
+    if(params.expiry) { query = query.concat(`&expiry=${params.expiry}`)}
+    return query;
+  }
+
 }

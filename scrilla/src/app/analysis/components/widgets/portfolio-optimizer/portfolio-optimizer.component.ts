@@ -7,9 +7,18 @@ const foldAnimationProperties : AnimationProperties= {
 }
 
 const modes : any = {
-  minimizeVariance: 'Minimize Portfolio Volatility',
-  minimizeConditionalValueAtRisk: 'Minimize Portfolio Conditional Value At Risk',
-  maximizeSharpeRatio: 'Maximize Portfolio Sharpe Ratio'
+  minimizeVariance: {
+    title: 'Minimize Portfolio Volatility',
+    param: 'vol'
+  },
+  minimizeConditionalValueAtRisk: {
+    title: 'Minimize Portfolio Conditional Value At Risk',
+    param: 'cvar'
+  },
+  maximizeSharpeRatio: {
+    title: 'Maximize Portfolio Sharpe Ratio',
+    param: 'sharpe'
+  }
 }
 
 @Component({
@@ -55,6 +64,7 @@ export class PortfolioOptimizerComponent implements OnInit {
     })
     this.modeSelection = new FormControl(modes.minimizeVariance);
     this.modeSelection.valueChanges.subscribe(__=>{
+      // may not want to wipe EVERYTHING out. some arguments could carry over...
       this.tickers = []; this.targetReturn = undefined;
       this.totalInvestment = undefined; this.dates = undefined;
       this.expiry = undefined; this.probability = undefined;

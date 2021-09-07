@@ -24,8 +24,8 @@ export class StaticService {
   public getDocInfo() : staticInfo[]{
     return [
       { name: 'Browsable Docs', route: '' },
-      { name: 'PyPi Package', route: '' },
-      { name: 'Source Code', route: ''},
+      { name: 'PyPi Package', route: 'https://pypi.org/project/scrilla/' },
+      { name: 'Source Code', route: 'https://github.com/chinchalinchin/scrilla'},
     ]
   }
 }
