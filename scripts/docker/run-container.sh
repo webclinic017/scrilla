@@ -26,6 +26,6 @@ else
     docker run \
     --name $CONTAINER_NAME \
     --publish $APP_PORT:$APP_PORT \
-    --env-file "$ENV_DIR/runtime.env" \
+    --env-file "$ENV_DIR/.env" \
     $IMG_NAME:$IMG_TAG
 fi

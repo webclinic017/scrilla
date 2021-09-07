@@ -1,6 +1,9 @@
 # application dependencies
 scrilla==1.0.11
 
+# database dependencies
+psycopg2==2.8.2
+
 # framework dependencies
 django==3.2.6
 djangorestframework==3.12.4
