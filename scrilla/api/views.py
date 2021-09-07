@@ -56,6 +56,8 @@ def risk_profile(request):
                                                             end_date=params['end_date'])
         profiles[ticker]['asset_beta'] = markets.market_beta(ticker=ticker, start_date=params['start_date'],
                                                             end_date=params['end_date'])
+        profiles[ticker]['equity_cost'] = markets.cost_of_equity(ticker=ticker, start_date=params['start_date'],
+                                                                                end_date=params['end_date'])
 
     if params['image']:
         graph = plotter.plot_profiles(symbols=params['tickers'], profiles=profiles, show=False)
@@ -63,6 +65,7 @@ def risk_profile(request):
         graph.print_png(response)
         return response
 
+    response = files.format_profiles(profiles=profiles)
     return Response(data=profiles)
 
 @api_view(['GET'])
