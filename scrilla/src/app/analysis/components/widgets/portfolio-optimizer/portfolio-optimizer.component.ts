@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Portfolio } from 'src/app/models/holding';
 import { AnimationProperties, AnimationService } from 'src/app/services/animations.service';
+import { ApiService, QueryParams } from 'src/app/services/api.service';
 
 const foldAnimationProperties : AnimationProperties= {
   delay: '', duration: '250ms', easing: ''
@@ -53,10 +55,13 @@ export class PortfolioOptimizerComponent implements OnInit {
   public probability ?: number;
   public expiry ?: number;
 
+  public portfolio?: Portfolio;
+
   public optionalArguments : FormGroup;
   public modeSelection : FormControl;
 
-  constructor(public animator : AnimationService, public formBuilder : FormBuilder) { 
+  constructor(public animator : AnimationService, public api: ApiService,
+              public formBuilder : FormBuilder) { 
     this.optionalArguments = this.formBuilder.group({
       target: this.formBuilder.group({ enabled: false }),
       invest: this.formBuilder.group({ enabled: false }),
@@ -72,6 +77,20 @@ export class PortfolioOptimizerComponent implements OnInit {
   }
 
   ngOnInit(): void { }
+
+  public optimize(){
+    let params : QueryParams = {
+      tickers: this.tickers,
+      start: this.dates ? this.dates[0] : undefined,
+      end: this.dates ? this.dates[1] : undefined,
+      target: this.targetReturn, invest: this.totalInvestment,
+      mode: this.modeSelection.value.param,
+      prob: this.probability, expiry: this.expiry
+    }
+    this.api.optimize(params).subscribe(data=>{
+      console.log(data);
+    })
+  }
 
   public setTickers(tickers: string[]): void{ 
     this.tickers = [...this.tickers, ...tickers];

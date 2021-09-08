@@ -1,9 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Portfolio } from '../models/holding';
 import { HostService } from './host.service';
 
 export interface QueryParams{
   tickers: string[],
-  start?: string, end?: string,
+  start: string | undefined, end?: string,
   target?: number, invest?:number,
   mode?: string, prob?: number, 
   expiry?: number
@@ -24,7 +27,7 @@ export const endpoints = {
 })
 export class ApiService {
 
-  constructor(private host : HostService) { }
+  constructor(private host : HostService, private http: HttpClient) { }
 
   private constructQuery(params : QueryParams): string{
     let query = "";
@@ -40,6 +43,11 @@ export class ApiService {
     if(params.prob) { query = query.concat(`&prob=${params.prob}`)}
     if(params.expiry) { query = query.concat(`&expiry=${params.expiry}`)}
     return query;
+  }
+
+  public optimize(params: QueryParams): Observable<Portfolio>{
+    let url = `${this.host.getHost()}/${endpoints.api.optimize}?${this.constructQuery(params)}`
+    return this.http.get<Portfolio>(url)
   }
 
 }

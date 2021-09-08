@@ -25,14 +25,14 @@
     min-height: 47.5%
 }
 .output-card{ min-height: 42.5%; }
-.output-card .title{ display: flex; flex-direction: row; justify-content: space-between;}
+.output-card .title, .input-card .title{ display: flex; flex-direction: row; justify-content: space-between;}
 .output-card .mat-card-content{
     min-height: 57.5%;
 }
-.output-card .output-button-group{
+.action-group{
     display: flex; flex-direction: row;
     justify-content: flex-end;
 }
-.output-card .output-button-group .output-button{
-    padding-left: 1%; padding-right: 1%;
+.action-group .action-button{
+    padding-left: 5%; padding-right: 5%;
 }

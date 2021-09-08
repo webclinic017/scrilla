@@ -16,8 +16,9 @@ export class StaticService {
   public getWidgetInfo() : staticInfo[]{
     return [
       { name: 'Risk Analysis', route: 'analysis/risk' }, 
+      { name: 'Price Modelling', route: 'analysis/pricing'},
+      { name: 'Correlation Estimation', route: 'analysis/correlation' },
       { name: 'Portfolio Optimization', route: 'analysis/optimizer'},
-      { name: 'Price Modelling', route: 'analysis/pricing'}
     ];
   }
 

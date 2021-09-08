@@ -1,6 +1,33 @@
 <div class="widget-container">
     <mat-card class="input-card">
-        <mat-card-title>Input</mat-card-title>
+        <mat-card-title>
+            <div class="title">
+                <div>Input</div>
+                <div class="action-group">
+                    <div class="action-button">
+                        <button mat-raised-button color="accent"
+                            matTooltip="Optimize the current portfolio of tickers"
+                            [disabled]="tickers.length === 0"
+                            [@scale]="optimizeBtnAnimationControl.scale"
+                            (mouseenter)="optimizeBtnAnimationControl = animator.animateScale()"
+                            (mouseleave)="optimizeBtnAnimationControl = animator.initAnimation()"
+                            (click)="optimize()">
+                            Optimize
+                        </button>
+                    </div>
+                    <div class="action-button">
+                        <button mat-raised-button color="warn"
+                            [@scale]="clearBtnAnimationControl.scale"
+                            (mouseenter)="clearBtnAnimationControl = animator.animateScale()"
+                            (mouseleave)="clearBtnAnimationControl = animator.initAnimation()">
+                            Clear
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            
+        </mat-card-title>
         <mat-card-subtitle>Mode: {{modeSelection.value.title}} </mat-card-subtitle>
         <mat-card-content>
             <div class="arguments-container">
@@ -108,25 +135,3 @@
     </mat-card>
 
 </div>
-
-<!--
-
-    <div class="output-button-group">
-                <div class="output-button">
-                    <button mat-raised-button color="accent" class="output-button"
-                        [@scale]="optimizeBtnAnimationControl.scale"
-                        (mouseenter)="optimizeBtnAnimationControl = animator.animateScale()"
-                        (mouseleave)="optimizeBtnAnimationControl = animator.initAnimation()">
-                        Optimize
-                    </button>
-                </div>
-                <div class="output-button">
-                    <button mat-raised-button color="warn" class="output-button"
-                        [@scale]="clearBtnAnimationControl.scale"
-                        (mouseenter)="clearBtnAnimationControl = animator.animateScale()"
-                        (mouseleave)="clearBtnAnimationControl = animator.initAnimation()">
-                        Clear
-                    </button>
-                </div>
-            </div>
--->

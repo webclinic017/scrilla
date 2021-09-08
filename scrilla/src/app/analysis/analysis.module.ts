@@ -26,6 +26,7 @@ import { TickersComponent } from './components/arguments/tickers/tickers.compone
 import { ScalarComponent } from './components/arguments/scalar/scalar.component';
 import { DateComponent } from './components/arguments/date/date.component';
 import { ProfileComponent } from './components/results/profile/profile.component';
+import { CorrelationMatrixComponent } from './components/widgets/correlation-matrix/correlation-matrix.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ProfileComponent } from './components/results/profile/profile.component
     ScalarComponent,
     DateComponent,
     AllocationComponent,
-    ProfileComponent
+    ProfileComponent,
+    CorrelationMatrixComponent
   ],
   imports: [
     CommonModule,
