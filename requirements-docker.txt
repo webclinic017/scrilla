@@ -1,5 +1,5 @@
 # application dependencies
-scrilla==1.0.12
+scrilla==1.1.0
 
 # database dependencies
 psycopg2==2.8.2
