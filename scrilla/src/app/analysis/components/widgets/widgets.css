@@ -7,6 +7,7 @@
 .widget-container .mat-card-title{ font-size: 14px;}
 .widget-container .mat-card-subtitle, 
 .widget-container h2{ margin-left: 2.5%; font-size: 12px; margin-bottom: 0;}
+
 .arguments-container{
     height: 50%;
     display: flex; flex-direction: row;
@@ -15,6 +16,7 @@
 }
 .arguments-container .item{ padding: 0.5%; margin:0.5%;}
 .arguments-container .mat-button-toggle{ font-size: 10px;}
+
 .input-card, .output-card{ 
     overflow: auto;
     padding: 8px;
@@ -35,4 +37,19 @@
 }
 .action-group .action-button{
     padding-left: 5%; padding-right: 5%;
+}
+
+.result-container{
+    width: 100%; height: 50%;
+    display: flex; flex-direction: row;
+    flex-wrap: wrap; justify-content: flex-start;
+}
+.result-container .item{
+    padding: 0.5%; margin:0.5%;
+}
+.result-container .side-item{
+    max-width: 15%;
+}
+.result-container .main-item{
+    width: 80%;
 }

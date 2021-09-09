@@ -4,30 +4,30 @@
     <mat-card-content>
         <mat-form-field appearance="fill">
             <mat-label>Enter a date range</mat-label>
-            <mat-date-range-input [formGroup]="range" [rangePicker]="picker"
-                matTooltip="Select a date range to use as a historical sample">
+            <mat-date-range-input [formGroup]="rangeGroup" [rangePicker]="picker"
+                 matTooltip="Select a date range to use as a historical sample">
               <input matStartDate formControlName="start" placeholder="Start date">
               <input matEndDate formControlName="end" placeholder="End date">
             </mat-date-range-input>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-date-range-picker #picker></mat-date-range-picker>
             
-            <mat-error *ngIf="range.controls.start.invalid && (range.controls.start.dirty || range.controls.start.touched) ||
-                                range.controls.end.invalid && (range.controls.end.dirty || range.controls.start.dirty)">
-                <div *ngIf="range.controls.start.errors?.futureDates || range.controls.end.errors?.futureDates">
+            <mat-error *ngIf="rangeGroup.controls.start.invalid && (rangeGroup.controls.start.dirty || rangeGroup.controls.start.touched) ||
+                                rangeGroup.controls.end.invalid && (rangeGroup.controls.end.dirty || rangeGroup.controls.start.dirty)">
+                <div *ngIf="rangeGroup.controls.start.errors?.futureDates || rangeGroup.controls.end.errors?.futureDates">
                     Historical sample cannot contain future dates!
                 </div>
             </mat-error>
-            <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
-            <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+            <mat-error *ngIf="rangeGroup.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+            <mat-error *ngIf="rangeGroup.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
         </mat-form-field>
     </mat-card-content>
     <mat-card-actions align="end">
         <button mat-icon-button color="accent" matTooltip="Add date range"
-            *ngIf="(range.controls.start.value && !range.controls.start.invalid && (range.controls.start.dirty || range.controls.start.touched))
-                    && (range.controls.end.value && !range.controls.end.invalid && (range.controls.end.dirty || range.controls.end.touched))"
+            *ngIf="(rangeGroup.controls.start.value && !rangeGroup.controls.start.invalid && (rangeGroup.controls.start.dirty || rangeGroup.controls.start.touched))
+                    && (rangeGroup.controls.end.value && !rangeGroup.controls.end.invalid && (rangeGroup.controls.end.dirty || rangeGroup.controls.end.touched))"
 
-            [@scale]="addAnimationControl.scale"
+            [@scale]="addAnimationControl.scale" [disabled]="this.disabled"
             (mouseenter)="addAnimationControl = this.animator.animateScale()"
             (mouseleave)="addAnimationControl = this.animator.initAnimation()"
             (click)="parseDates()">

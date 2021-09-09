@@ -1,107 +1,46 @@
 
 
-<div class="result-container">
-    <div class="item side-item">
-            <mat-card id="tickers-card" class="card mat-elevation-z2" *ngIf="tickers.length>0">
-                <mat-card-title> Tickers</mat-card-title>
-                <mat-chip-list aria-label="Ticker Symbol Chip List">
-                    <mat-chip *ngFor="let ticker of tickers"
-                                [removable]="true" 
-                                (removed)="tickerRemoved(ticker)">
-                        {{ticker}}
-                        <mat-icon matChipRemove matTooltip="Remove ticker symbol">cancel</mat-icon>
-                    </mat-chip>
-                </mat-chip-list>
-            </mat-card>
-            <mat-card id="date-card" class="card mat-elevation-z2" *ngIf="dates">
-                <mat-card-title>Dates</mat-card-title>
-                <mat-card-subtitle>
-                    <div class="value-container">
-                        <div> {{dates[0]}}<br> to<br> {{dates[1]}}</div>
-                        <div>
-                            <button mat-icon-button
-                                    matTooltip="Remove date range"
-                                    (click)="datesRemoved()">
-                                <mat-icon>cancel</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                    
-                </mat-card-subtitle>
-            </mat-card>
-            <mat-card id="target-card" class="card mat-elevation-z2" *ngIf="target">
-                <mat-card-title>Target</mat-card-title>
-                <mat-card-subtitle> 
-                    <div class="value-container">
-                        <div> {{ target | percent : '1.2-4' }} </div>
-                        <div>
-                            <button mat-icon-button
-                                    matTooltip="Remove target return"
-                                    (click)="targetRemoved()">
-                                <mat-icon>cancel</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                </mat-card-subtitle>
-            </mat-card>
-            <mat-card id="invest-card" class="card mat-elevation-z2" *ngIf="invest">
-                <mat-card-title>Investment</mat-card-title>
-                <mat-card-subtitle> 
-                    <div class="value-container">
-                        <div> {{ invest | currency }} </div>
-                        <div>
-                            <button mat-icon-button
-                                    matTooltip="Remove total investment"
-                                    (click)="investRemoved()">
-                                <mat-icon>cancel</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                </mat-card-subtitle>
-            </mat-card>
-            <mat-card id="probability-card" class="card mat-elevation-z2" *ngIf="probability">
-                <mat-card-title>Loss Probability</mat-card-title>
-                <mat-card-subtitle>
-                    <div class="value-container">
-                        <div> {{ probability | percent : '1.2-4'}}</div>
-                        <div>
-                            <button mat-icon-button
-                                matTooltip="Remove loss probability"
-                                (click)="probabilityRemoved()">
-                            <mat-icon>cancel</mat-icon>
-                        </button>
-                        </div>
-                    </div>
-                </mat-card-subtitle>
-            </mat-card>
-            <mat-card id="expiry-card" class="card mat-elevation-z2" *ngIf="expiry">
-                <mat-card-title>Loss Expiry</mat-card-title>
-                <mat-card-subtitle>
-                    <div class="value-container">
-                        <div>{{ expiry }} years</div>
-                        <div>
-                            <button mat-icon-button
-                                    matTooltip="Remove loss expiry"
-                                    (click)="expiryRemoved()">
-                                <mat-icon>cancel</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                </mat-card-subtitle>
-            </mat-card>
-    </div>
 
-    <div class="item main-item" *ngIf="allocation" [@fold]>
-        <mat-card class="card mat-elevation-z2">
+<div class="row-container">
+    <div class="data-table" [@fold]>
+        <mat-card class="card mat-elevation-z2" *ngIf="holdings && holdings.length > 0">
             <mat-card-title>Portfolio Allocation</mat-card-title>
             <mat-card-content>
-        
+                <table mat-table [dataSource]="holdings">
+                    <ng-container matColumnDef="ticker">
+                        <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                        <td mat-cell *matCellDef="let holding"> {{holding.ticker}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="allocation">
+                        <th mat-header-cell *matHeaderCellDef> Allocation </th>
+                        <td mat-cell *matCellDef="let holding"> {{holding.allocation | percent : '1.2-4'}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="shares">
+                        <th mat-header-cell *matHeaderCellDef> Shares </th>
+                        <td mat-cell *matCellDef="let holding"> {{holding.shares}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="annual_return">
+                        <th mat-header-cell *matHeaderCellDef
+                            matTooltip="Annualized Percent Rate">Return </th>
+                        <td mat-cell *matCellDef="let holding"> {{holding.annual_return | percent: '1.2-4' }} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="annual_volatility">
+                        <th mat-header-cell *matHeaderCellDef
+                            matTooltip="Annualized Percent Rage"> Volatility </th>
+                        <td mat-cell *matCellDef="let holding"> {{holding.annual_volatility | percent: '1.2-4'}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
             </mat-card-content>
         </mat-card>
     </div>
     
-    <div class="item secondary-item mat-elevation-z2" *ngIf="allocation" [@fold]>
-        <ngx-charts-pie-chart [results]="allocation" [doughnut]="true" [labels]="true">
+    <div class="pie-chart mat-elevation-z2">
+        <ngx-charts-pie-chart [@fold] *ngIf="holdings && holdings.length > 0" 
+                [results]="chartArgs" [doughnut]="true" [labels]="true">
         </ngx-charts-pie-chart>
     </div>
+    
 </div>

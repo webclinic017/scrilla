@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { AnimationControl, AnimationService } from 'src/app/services/animations.service';
 
@@ -24,6 +24,8 @@ export class ScalarComponent implements OnInit {
   public title !: string;
   @Input()
   public bounds !: number[];
+  @Input()
+  public disabled : boolean = false;
 
   @Output()
   public scalar : EventEmitter<number> = new EventEmitter<number>()
@@ -37,11 +39,20 @@ export class ScalarComponent implements OnInit {
   // FormControl must be created here instead of constructor
   ngOnInit(): void { 
     if(this.bounds){
-      this.scalarControl = new FormControl('', [
-        Validators.min(this.bounds[0]), Validators.max(this.bounds[1])
-      ])
+      this.scalarControl = new FormControl({
+        value: '', disabled: this.disabled},
+        [ Validators.min(this.bounds[0]), Validators.max(this.bounds[1])],)
     }
-    else{ this.scalarControl = new FormControl('', []) }
+    else{ this.scalarControl = new FormControl({ value: '', disabled: this.disabled }, []) }
+  }
+
+  ngOnChanges(changes: SimpleChanges){
+    if(changes.disabled){ 
+      if(this.scalarControl){
+        if(changes.disabled.currentValue) { this.scalarControl.disable()}
+        else{ this.scalarControl.enable(); }
+      }
+    }
   }
 
   public parseScalar(): void{

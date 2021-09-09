@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AnimationControl, AnimationService } from 'src/app/services/animations.service';
 
@@ -14,6 +14,8 @@ export class TickersComponent implements OnInit {
 
   @Input()
   public single : boolean = false;
+  @Input()
+  public disabled : boolean = false;
 
   @Output()
   public tickers : EventEmitter<string[]> = new EventEmitter<string[]>();
@@ -30,6 +32,15 @@ export class TickersComponent implements OnInit {
     let validators = [Validators.required]
     if(this.single){ validators.push(this.multipleTickersValidator())}
     this.tickerControl = new FormControl('', validators)
+  }
+
+  ngOnChanges(changes: SimpleChanges){
+    if(changes.disabled){ 
+      if(this.tickerControl){
+        if(changes.disabled.currentValue) { this.tickerControl.disable()}
+        else{ this.tickerControl.enable(); }
+      }
+    }
   }
 
   public parseTickers(): void{

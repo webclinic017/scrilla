@@ -87,9 +87,23 @@ export class PortfolioOptimizerComponent implements OnInit {
       mode: this.modeSelection.value.param,
       prob: this.probability, expiry: this.expiry
     }
-    this.api.optimize(params).subscribe(data=>{
-      console.log(data);
+    this.api.optimize(params).subscribe(
+      data=>{ 
+        this.portfolio = data;  
+        this.modeSelection.disable(); this.optionalArguments.disable();
+      },
+      err =>{
+        console.log(err);
+        // TODO: display error
     })
+  }
+
+  public clear(){
+    this.portfolio = undefined;
+    this.tickers = []; this.targetReturn = undefined;
+    this.totalInvestment = undefined; this.dates = undefined;
+    this.expiry = undefined; this.probability = undefined;
+    this.modeSelection.enable(); this.optionalArguments.enable();
   }
 
   public setTickers(tickers: string[]): void{ 

@@ -15,6 +15,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AllocationComponent } from './components/results/allocation/allocation.component';
 
@@ -27,6 +28,7 @@ import { ScalarComponent } from './components/arguments/scalar/scalar.component'
 import { DateComponent } from './components/arguments/date/date.component';
 import { ProfileComponent } from './components/results/profile/profile.component';
 import { CorrelationMatrixComponent } from './components/widgets/correlation-matrix/correlation-matrix.component';
+import { ConstraintsComponent } from './components/results/constraints/constraints.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { CorrelationMatrixComponent } from './components/widgets/correlation-mat
     DateComponent,
     AllocationComponent,
     ProfileComponent,
-    CorrelationMatrixComponent
+    CorrelationMatrixComponent,
+    ConstraintsComponent
   ],
   imports: [
     CommonModule,
@@ -59,6 +62,7 @@ import { CorrelationMatrixComponent } from './components/widgets/correlation-mat
     MatIconModule,
     MatInputModule,
     MatNativeDateModule,
+    MatTableModule,
     MatTooltipModule,
   ],
   providers: [ DatePipe ]
