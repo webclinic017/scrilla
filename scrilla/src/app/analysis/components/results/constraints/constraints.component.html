@@ -1,8 +1,8 @@
-<div class="item side-item">
+<div cdkScrollable class="fill">
     <mat-card id="tickers-card" class="card mat-elevation-z2" *ngIf="tickers.length>0">
         <mat-card-title> Tickers</mat-card-title>
         <mat-chip-list aria-label="Ticker Symbol Chip List">
-            <mat-chip *ngFor="let ticker of tickers"
+            <mat-chip *ngFor="let ticker of tickers" [disabled]="disabled"
                         [removable]="true" 
                         (removed)="tickerRemoved(ticker)">
                 {{ticker}}
@@ -16,14 +16,13 @@
             <div class="value-container">
                 <div> {{dates[0]}}<br> to<br> {{dates[1]}}</div>
                 <div>
-                    <button mat-icon-button
+                    <button mat-icon-button [disabled]="disabled"
                             matTooltip="Remove date range"
                             (click)="datesRemoved()">
                         <mat-icon>cancel</mat-icon>
                     </button>
                 </div>
             </div>
-            
         </mat-card-subtitle>
     </mat-card>
     <mat-card id="target-card" class="card mat-elevation-z2" *ngIf="target">
@@ -32,7 +31,7 @@
             <div class="value-container">
                 <div> {{ target | percent : '1.2-4' }} </div>
                 <div>
-                    <button mat-icon-button
+                    <button mat-icon-button [disabled]="disabled"
                             matTooltip="Remove target return"
                             (click)="targetRemoved()">
                         <mat-icon>cancel</mat-icon>
@@ -47,7 +46,7 @@
             <div class="value-container">
                 <div> {{ invest | currency }} </div>
                 <div>
-                    <button mat-icon-button
+                    <button mat-icon-button [disabled]="disabled"
                             matTooltip="Remove total investment"
                             (click)="investRemoved()">
                         <mat-icon>cancel</mat-icon>
@@ -62,7 +61,7 @@
             <div class="value-container">
                 <div> {{ probability | percent : '1.2-4'}}</div>
                 <div>
-                    <button mat-icon-button
+                    <button mat-icon-button [disabled]="disabled"
                         matTooltip="Remove loss probability"
                         (click)="probabilityRemoved()">
                     <mat-icon>cancel</mat-icon>
@@ -77,7 +76,7 @@
             <div class="value-container">
                 <div>{{ expiry }} years</div>
                 <div>
-                    <button mat-icon-button
+                    <button mat-icon-button [disabled]="disabled"
                             matTooltip="Remove loss expiry"
                             (click)="expiryRemoved()">
                         <mat-icon>cancel</mat-icon>

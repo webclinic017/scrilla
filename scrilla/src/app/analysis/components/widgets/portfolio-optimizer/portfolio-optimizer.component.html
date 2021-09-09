@@ -1,5 +1,5 @@
 <div class="widget-container">
-    <mat-card class="input-card">
+    <mat-card class="input-card" [@collapse]="this.inputCardAnimationControl.collapse">
         <mat-card-title>
             <div class="title">
                 <div>Input</div>
@@ -7,22 +7,13 @@
                     <div class="action-button">
                         <button mat-raised-button color="accent"
                             matTooltip="Optimize the current portfolio of tickers"
-                            [disabled]="tickers.length === 0 || (tickers.length > 0 && portfolio !== undefined)"
+                            [disabled]="tickers.length === 0 || (tickers.length > 0 && portfolio !== undefined) ||
+                                        ( modeSelection.value === modes.minimizeConditionalValueAtRisk && (!probability || !expiry)) "
                             [@scale]="optimizeBtnAnimationControl.scale"
                             (mouseenter)="optimizeBtnAnimationControl = animator.animateScale()"
                             (mouseleave)="optimizeBtnAnimationControl = animator.initAnimation()"
                             (click)="optimize()">
                             Optimize
-                        </button>
-                    </div>
-                    <div class="action-button">
-                        <button mat-raised-button color="warn"
-                            [disabled]="!portfolio"
-                            [@scale]="clearBtnAnimationControl.scale"
-                            (mouseenter)="clearBtnAnimationControl = animator.animateScale()"
-                            (mouseleave)="clearBtnAnimationControl = animator.initAnimation()"
-                            (click)="clear()">
-                            Clear
                         </button>
                     </div>
                 </div>
@@ -124,26 +115,43 @@
         </mat-card-content>
     </mat-card>
 
-    <mat-card class="output-card">
-        <mat-card-title>Output</mat-card-title>
+    <mat-card class="output-card" 
+        [@toHeight_Double]="this.outputCardDoubleAnimationControl.toHeight"
+        [@toHeight_Half]="this.outputCardHalfAnimationControl.toHeight">
+        <mat-card-title>
+            <div class="title">
+                <div>
+                    Output
+                </div>
+                <div class="action-button-group">
+                    <div class="action-button">
+                        <button mat-raised-button color="warn"
+                            [disabled]="!portfolio"
+                            [@scale]="clearBtnAnimationControl.scale"
+                            (mouseenter)="clearBtnAnimationControl = animator.animateScale()"
+                            (mouseleave)="clearBtnAnimationControl = animator.initAnimation()"
+                            (click)="clear()">
+                            Clear
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </mat-card-title>
         <mat-card-content>
             <div class="result-container">
                 <div class="item side-item">
-                    <app-constraints [tickers]="this.tickers" 
-                                 [dates]="this.dates"
-                                 [invest]="this.totalInvestment"
-                                 [target]="this.targetReturn" 
-                                 [probability]="this.probability"
-                                 [expiry]="this.expiry"
-                                 (removeTicker)="removeTicker($event)"
-                                 (removeDates)="removeDates()"
-                                 (removeTarget)="removeTarget()"
-                                 (removeInvest)="removeInvestment()"
-                                 (removeProbability)="removeProbability()"
-                                 (removeExpiry)="removeExpiry()"></app-constraints>
+                    <app-constraints [disabled]="portfolio !== undefined"
+                                     [tickers]="this.tickers" [dates]="this.dates"
+                                     [invest]="this.totalInvestment" [target]="this.targetReturn" 
+                                     [probability]="this.probability" [expiry]="this.expiry"
+                                     (removeTicker)="removeTicker($event)" (removeDates)="removeDates()"
+                                     (removeTarget)="removeTarget()" (removeInvest)="removeInvestment()"
+                                     (removeProbability)="removeProbability()" (removeExpiry)="removeExpiry()">
+                    </app-constraints>
                 </div>
                 <div class="item main-item">
-                    <app-allocation *ngIf="this.portfolio" [holdings]="this.portfolio.holdings"></app-allocation>
+                    <app-allocation *ngIf="this.portfolio" [holdings]="this.portfolio.holdings">
+                    </app-allocation>
                 </div>
             </div>
         </mat-card-content>

@@ -2,7 +2,7 @@
 .widget-container{
     width: 100%; height: 100%;
     display: flex; flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: flex-start;
 }
 .widget-container .mat-card-title{ font-size: 14px;}
 .widget-container .mat-card-subtitle, 
@@ -16,20 +16,15 @@
 }
 .arguments-container .item{ padding: 0.5%; margin:0.5%;}
 .arguments-container .mat-button-toggle{ font-size: 10px;}
-
-.input-card, .output-card{ 
+.input-card, .output-card{
     overflow: auto;
     padding: 8px;
     margin-right: 0.5%; margin-left: 0.5%;
-    max-height: 95%; 
+    height: 50%;
 }
-.input-card{
-    min-height: 47.5%
-}
-.output-card{ min-height: 42.5%; }
 .output-card .title, .input-card .title{ display: flex; flex-direction: row; justify-content: space-between;}
 .output-card .mat-card-content{
-    min-height: 57.5%;
+    min-height: 50%;
 }
 .action-group{
     display: flex; flex-direction: row;
@@ -40,7 +35,7 @@
 }
 
 .result-container{
-    width: 100%; height: 50%;
+    width: 100%; 
     display: flex; flex-direction: row;
     flex-wrap: wrap; justify-content: flex-start;
 }
@@ -48,8 +43,9 @@
     padding: 0.5%; margin:0.5%;
 }
 .result-container .side-item{
-    max-width: 15%;
+    max-width: 20%;
+    min-width: 15%;
 }
 .result-container .main-item{
-    width: 80%;
+    min-width: 75%;
 }

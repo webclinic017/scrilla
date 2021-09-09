@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BannerComponent } from './components/banner/banner.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SplashComponent } from './components/splash/splash.component';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -33,6 +34,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     HttpClientModule,
 
+    ScrollingModule,
+    
     MatButtonModule,
     MatDividerModule,
     MatIconModule,

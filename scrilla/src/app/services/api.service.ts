@@ -47,6 +47,7 @@ export class ApiService {
 
   public optimize(params: QueryParams): Observable<Portfolio>{
     let url = `${this.host.getHost()}/${endpoints.api.optimize}?${this.constructQuery(params)}`
+    console.log(url);
     return this.http.get<Portfolio>(url)
   }
 

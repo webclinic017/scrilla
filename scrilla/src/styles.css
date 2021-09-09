@@ -25,7 +25,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; overflow-x:
 .fill{ width: 100%; height: 100%;}
 .fill-width{ width:100%; }
 .fill-height{ height: 100%; }
-.spacer {
-    flex: 1 1 auto;
-}
+.spacer { flex: 1 1 auto; }
+.scroller{ overflow: auto; }
+
 ::-webkit-scrollbar { width: 10px;}

@@ -1,4 +1,4 @@
-import { animate, animateChild, keyframes, style, query, state, transition, trigger, AnimationTriggerMetadata } from '@angular/animations';
+import { animate, animateChild, keyframes, style, query, state, transition, trigger, AnimationTriggerMetadata, AnimationMetadata } from '@angular/animations';
 import { Injectable } from '@angular/core';
 
 export interface AnimationProperties{
@@ -6,8 +6,8 @@ export interface AnimationProperties{
 }
 
 export interface AnimationControl{
-    scale?: string, highlight?: string, 
-    translateOff?: string, translateOn?: string,
+    scale?: string, highlight?: string, collapse?: string,
+    translateOff?: string, translateOn?: string, toHeight?: string
 }
 
 export const defaultAnimationProperties : AnimationProperties = {
@@ -38,6 +38,19 @@ const translateProperties = {
 }
 const foldProperties = {
     trigger: 'fold'
+}
+const collapseProperties = {
+    trigger: 'collapse', 
+    states: {
+        open: 'open',
+        close: 'close'
+    }
+}
+const toHeightProperties = {
+    trigger: 'toHeight',
+    states: {
+        go: 'go'
+    }
 }
 
 @Injectable({
@@ -83,6 +96,12 @@ export class AnimationService{
     public animateTranslateOnLeft() : AnimationControl { return { translateOn: `${translateProperties.states.left}` } }
 
     public animateTranslateOnRight() : AnimationControl { return { translateOn: `${translateProperties.states.right}`} }
+
+    public animateCollapseOpen() : AnimationControl { return { collapse: `${collapseProperties.states.open}`} }
+
+    public animateCollapseClose() : AnimationControl { return { collapse: `${collapseProperties.states.close}`}}
+
+    public animateToHeight() : AnimationControl { return { toHeight: `${toHeightProperties.states.go}`}}
 
     public initAnimation() : AnimationControl { return { scale: '', highlight: '', translateOff: '', translateOn: '' } }
 
@@ -142,6 +161,25 @@ export class AnimationService{
         ])
     }
 
+    public static getCollapseTrigger(properties: AnimationProperties = defaultAnimationProperties)
+    : AnimationTriggerMetadata{
+        return trigger(`${collapseProperties.trigger}`,[
+            state(`${collapseProperties.states.open}`, style({ transform: 'scale(1, 1)', display: 'relative'})),
+            state(`${collapseProperties.states.close}`, style({ transform: 'scale(0, 0)', display: 'none'})),
+            transition(`*=>${collapseProperties.states.open}`, animate(this.getAnimationString(properties))),
+            transition(`*=>${collapseProperties.states.close}`, animate(this.getAnimationString(properties))),
+        ])
+    }
+
+    public static getToHeightTrigger(cssHeight: string, triggerName: string, 
+                                        properties: AnimationProperties = defaultAnimationProperties)
+    : AnimationTriggerMetadata{
+        return trigger(`${toHeightProperties.trigger}_${triggerName}`,[
+            state(`${toHeightProperties.states.go}`, style({ height: `${cssHeight}`})),
+            transition(`*=>${toHeightProperties.states.go}`, [ animate(this.getAnimationString(properties))])
+        ])
+    }
+
     public static getFoldTrigger(properties : AnimationProperties = defaultAnimationProperties)
     : AnimationTriggerMetadata {
         return trigger(`${foldProperties.trigger}`,[
@@ -151,7 +189,6 @@ export class AnimationService{
                     style({ transform: 'scale(1, 1)', offset: 1})
                 ])),
             ]),
-            
             transition(`:leave`, [
                 animate(this.getAnimationString(properties), keyframes([
                     style({ transform: 'scale(1, 1)', offset: 0}),

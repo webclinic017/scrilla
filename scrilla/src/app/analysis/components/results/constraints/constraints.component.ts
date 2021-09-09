@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AnimationProperties, AnimationService } from 'src/app/services/animations.service';
 
 const foldAnimationProperties : AnimationProperties= {
@@ -39,12 +39,19 @@ export class ConstraintsComponent implements OnInit {
   public probability ?: number;
   @Input()
   public expiry ?: number;
+
+  // disabled prevents removal of constraints
+  @Input()
+  public disabled: boolean = false;
   
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  ngOnChanges(changes : SimpleChanges){
+    console.log(changes);
+  }
   public tickerRemoved(ticker : string) : void { this.removeTicker.emit(ticker) }
 
   public targetRemoved(): void { this.removeTarget.emit(true); }
