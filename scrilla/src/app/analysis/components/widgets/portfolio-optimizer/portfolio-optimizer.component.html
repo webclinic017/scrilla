@@ -58,7 +58,9 @@
                     </mat-button-toggle-group>
                 </section>
 
-                <section id="optional-toggle" class="item mat-elevation-z2" [formGroup]="optionalArguments">
+                <section id="optional-toggle" class="item mat-elevation-z2" [formGroup]="optionalArguments"
+                    #tutorialTooltip="matTooltip" matTooltipPosition="above"
+                    matTooltip="Select any optional constraints you want to impose on your portfolio.">
                     <h2>Optional Input</h2>
                     <div formGroupName="target">
                         <mat-checkbox formControlName="enabled" aria-label="Target Return Input, Optional"
@@ -105,6 +107,8 @@
                 </span>
 
                 <span id="target-input" class="item mat-elevation-z2" [@fold]
+                        #tutorialTooltip="matTooltip"
+                        matTooltip="If you selected an optional input, enter a value."
                         *ngIf="optionalArguments.get('target.enabled')?.value">
                     <app-scalar title="Target Return"
                                 [disabled]="portfolio !== undefined"

@@ -4,6 +4,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { Portfolio } from 'src/app/models/holding';
 import { AnimationProperties, AnimationService, animationControls } from 'src/app/services/animations.service';
 import { ApiService, QueryParams } from 'src/app/services/api.service';
+import { TickersComponent } from '../../arguments/tickers/tickers.component';
 
 const foldAnimationProperties : AnimationProperties= {
   delay: '', duration: '250ms', easing: ''
@@ -40,6 +41,8 @@ const modes : any = {
 export class PortfolioOptimizerComponent implements OnInit {
   @ViewChildren('tutorialTooltip')
   public tutorialTooltips !: QueryList<MatTooltip>;
+  @ViewChild(TickersComponent)
+  public tickerComponent !: TickersComponent;
   
   public modes : any = modes;
 
@@ -79,7 +82,6 @@ export class PortfolioOptimizerComponent implements OnInit {
   ngOnInit(): void { }
 
   public step(){
-    console.log(this.whichStep)
     if(this.whichStep === undefined){ this.whichStep = 0;}
     else{ 
       this.whichStep++;
@@ -91,8 +93,19 @@ export class PortfolioOptimizerComponent implements OnInit {
     if(this.whichStep !== undefined){
       this.tutorialTooltips.forEach(element=>{ element.hide(); })
       this.tutorialTooltips.toArray()[this.whichStep].show()
+      switch(this.whichStep){
+        case 1:
+          this.optionalArguments.controls['target'].get('enabled')?.setValue(true)
+          break;
+        case 2: 
+          this.tickerComponent.tickerControl.setValue('ALLY, BX')
+      }
     }
-    console.log(this.whichStep)
+    else{
+      this.optionalArguments.controls['target'].get('enabled')?.setValue(false);
+      this.tickerComponent.tickerControl.setValue('');
+
+    }
   }
 
   public optimize(){
