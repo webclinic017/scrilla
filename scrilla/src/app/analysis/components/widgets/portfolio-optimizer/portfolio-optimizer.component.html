@@ -1,5 +1,5 @@
 <div class="widget-container">
-    <mat-card class="input-card" [@collapse]="this.inputCardAnimationControl.collapse">
+    <mat-card class="input-card" [@toHeight]="this.inputCardAnimationControl.toHeight">
         <mat-card-title>
             <div class="title">
                 <div>Input</div>
@@ -115,9 +115,7 @@
         </mat-card-content>
     </mat-card>
 
-    <mat-card class="output-card" 
-        [@toHeight_Double]="this.outputCardDoubleAnimationControl.toHeight"
-        [@toHeight_Half]="this.outputCardHalfAnimationControl.toHeight">
+    <mat-card class="output-card" [@toHeight]="this.outputCardAnimationControl.toHeight">
         <mat-card-title>
             <div class="title">
                 <div>

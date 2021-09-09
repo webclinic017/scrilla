@@ -1,6 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
-import { AnimationProperties, AnimationControl, AnimationService } from '../../services/animations.service';
+import { AnimationProperties, AnimationControl, AnimationService, animationControls } from '../../services/animations.service';
 
 const scaleAnimationProperties : AnimationProperties = {
   delay: '', duration: '250ms', easing: ''
@@ -53,11 +54,11 @@ export class SplashComponent implements OnInit {
     let bufferIndex = this.paneIndex;
     ++bufferIndex;
     if(bufferIndex==this.paneSize){ bufferIndex = 0 }
-    this.paneAnimationControls[previousIndex] = this.animator.animateTranslateOffLeft();
+    this.paneAnimationControls[previousIndex] = this.animator.animateTranslateOff(animationControls.translate.states.left)
     
     setTimeout(()=>{
       this.paneIndex=bufferIndex;
-      this.paneAnimationControls[this.paneIndex] = this.animator.animateTranslateOnRight();
+      this.paneAnimationControls[this.paneIndex] = this.animator.animateTranslateOn(animationControls.translate.states.right)
     }, translationDuration)
   }
 
@@ -66,11 +67,11 @@ export class SplashComponent implements OnInit {
     let bufferIndex = this.paneIndex
     --bufferIndex;
     if(bufferIndex==-1) { bufferIndex = this.paneSize - 1 }
-    this.paneAnimationControls[previousIndex] = this.animator.animateTranslateOffRight();
+    this.paneAnimationControls[previousIndex] = this.animator.animateTranslateOff(animationControls.translate.states.right)
 
     setTimeout(()=>{
       this.paneIndex=bufferIndex
-      this.paneAnimationControls[this.paneIndex] = this.animator.animateTranslateOnLeft();
+      this.paneAnimationControls[this.paneIndex] = this.animator.animateTranslateOn(animationControls.translate.states.left)
     }, translationDuration)
   }
 

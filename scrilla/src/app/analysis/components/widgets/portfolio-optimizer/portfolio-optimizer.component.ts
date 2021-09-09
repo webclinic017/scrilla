@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Portfolio } from 'src/app/models/holding';
-import { AnimationProperties, AnimationService } from 'src/app/services/animations.service';
+import { AnimationProperties, AnimationService, animationControls } from 'src/app/services/animations.service';
 import { ApiService, QueryParams } from 'src/app/services/api.service';
 
 const foldAnimationProperties : AnimationProperties= {
   delay: '', duration: '250ms', easing: ''
 }
-const collapseAnimationProperties: AnimationProperties = {
-  delay: '', duration: '500ms', easing: ''
-}
+const toHeightDuration=500
 const toHeightAnimationProperties: AnimationProperties = {
-  delay: '', duration: '500ms', easing: ''
+  delay: '', duration: `${toHeightDuration}ms`, easing: ''
 }
 const modes : any = {
   minimizeVariance: {
@@ -35,9 +33,7 @@ const modes : any = {
   animations: [
     AnimationService.getScaleTrigger(1.25),
     AnimationService.getFoldTrigger(foldAnimationProperties),
-    AnimationService.getCollapseTrigger(collapseAnimationProperties),
-    AnimationService.getToHeightTrigger('200%', 'Double', toHeightAnimationProperties),
-    AnimationService.getToHeightTrigger('100%', 'Half', toHeightAnimationProperties)
+    AnimationService.getToHeightTrigger(toHeightAnimationProperties),
   ]
 })
 export class PortfolioOptimizerComponent implements OnInit {
@@ -56,8 +52,7 @@ export class PortfolioOptimizerComponent implements OnInit {
   public optimizeBtnAnimationControl = this.animator.initAnimation()
   public clearBtnAnimationControl = this.animator.initAnimation();
   public inputCardAnimationControl = this.animator.initAnimation();
-  public outputCardDoubleAnimationControl = this.animator.initAnimation();
-  public outputCardHalfAnimationControl = this.animator.initAnimation();
+  public outputCardAnimationControl = this.animator.initAnimation();
 
   public tickers: string[] = [];
   public targetReturn ?: number;
@@ -96,19 +91,19 @@ export class PortfolioOptimizerComponent implements OnInit {
       mode: this.modeSelection.value.param,
       prob: this.probability, expiry: this.expiry
     }
-    console.log(this.tickers)
     this.api.optimize(params).subscribe(
       data=>{ 
         this.portfolio = data;  
         this.modeSelection.disable(); this.optionalArguments.disable();
-        this.inputCardAnimationControl = this.animator.animateCollapseClose();
-        this.outputCardDoubleAnimationControl = this.animator.animateToHeight();
+        this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.toHeight.states.none);
+        setTimeout(()=>{
+          this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.toHeight.states.full);
+        }, toHeightDuration)
       },
       err =>{
         console.log(err);
         // TODO: display error
     })
-    console.log(this.tickers)
   }
 
   public clear(){
@@ -117,9 +112,10 @@ export class PortfolioOptimizerComponent implements OnInit {
     this.totalInvestment = undefined; this.dates = undefined;
     this.expiry = undefined; this.probability = undefined;
     this.modeSelection.enable(); this.optionalArguments.enable();
-    this.inputCardAnimationControl = this.animator.animateCollapseOpen();
-    this.outputCardHalfAnimationControl = this.animator.animateToHeight();
-    this.outputCardDoubleAnimationControl = this.animator.initAnimation();
+    this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.toHeight.states.half);
+    setTimeout(()=>{
+      this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.toHeight.states.half)
+    }, toHeightDuration)
   }
 
   public setTickers(tickers: string[]): void{ 

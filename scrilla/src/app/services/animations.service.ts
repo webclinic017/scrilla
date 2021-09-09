@@ -6,7 +6,7 @@ export interface AnimationProperties{
 }
 
 export interface AnimationControl{
-    scale?: string, highlight?: string, collapse?: string,
+    scale?: string, highlight?: string, opacity?: string,
     translateOff?: string, translateOn?: string, toHeight?: string
 }
 
@@ -14,43 +14,50 @@ export const defaultAnimationProperties : AnimationProperties = {
     delay: '25ms', duration: '500ms', easing: ''
 }
 
-const scaleProperties = {
-    trigger: 'scale',
-    states: {
-        scale: 'scale'
-    }
-};
-const highlightProperties = {
-    trigger: 'highlight',
-    states: {
-        highlight: 'highlight'
-    }
-};
-const translateProperties = {
-    triggers: {
-        on: 'translateOn',
-        off: 'translateOff'
+export const animationControls = {
+    // STATE ANIMATIONS
+    scale:{
+        trigger: 'scale',
+        states: {
+            scale: 'scale'
+        }
     },
-    states: {
-        right: 'right',
-        left: 'left'
-    }
-}
-const foldProperties = {
-    trigger: 'fold'
-}
-const collapseProperties = {
-    trigger: 'collapse', 
-    states: {
-        open: 'open',
-        close: 'close'
-    }
-}
-const toHeightProperties = {
-    trigger: 'toHeight',
-    states: {
-        go: 'go'
-    }
+    opacity:{
+        trigger: 'opacity',
+        states: {
+            opaque: 'opague'
+        }
+    },
+    highlight:{
+        trigger: 'highlight',
+        states: {
+            highlight: 'highlight'
+        }
+    },
+    translate:{
+        triggers: {
+            on: 'translateOn',
+            off: 'translateOff'
+        },
+        states: {
+            right: 'right',
+            left: 'left'
+        }
+    },
+    toHeight: {
+        trigger: 'toHeight',
+        states: {
+            none: 'none',
+            quarter: 'quarter',
+            half: 'half',
+            full: 'full',
+            double: 'double'
+        }
+    },
+    // COMPONENT LIFE CYCLE ANIMATIONS
+    fold:{
+        trigger: 'fold'
+    },
 }
 
 @Injectable({
@@ -85,27 +92,24 @@ export class AnimationService{
      */
 
     // SERVICE INSTANCE METHODS
-    public animateScale() : AnimationControl{ return { scale: `${scaleProperties.states.scale}`} }
+    public animateScale() : AnimationControl{ return { scale: `${animationControls.scale.states.scale}`} }
 
-    public animateHighlight() : AnimationControl { return { highlight: `${highlightProperties.states.highlight}` }}
+    public animateHighlight() : AnimationControl { return { highlight: `${animationControls.highlight.states.highlight}` }}
 
-    public animateTranslateOffLeft() : AnimationControl { return { translateOff: `${translateProperties.states.left}` } }
+    public animateOpacity() : AnimationControl  { return { opacity: `${animationControls.opacity.states.opaque}`}}
 
-    public animateTranslateOffRight() : AnimationControl { return { translateOff: `${translateProperties.states.right}` } }
+    public animateTranslateOff(state : string) : AnimationControl { return { translateOff: `${state}` } }
 
-    public animateTranslateOnLeft() : AnimationControl { return { translateOn: `${translateProperties.states.left}` } }
+    public animateTranslateOn(state: string) : AnimationControl { return { translateOn: `${state}` } }
 
-    public animateTranslateOnRight() : AnimationControl { return { translateOn: `${translateProperties.states.right}`} }
-
-    public animateCollapseOpen() : AnimationControl { return { collapse: `${collapseProperties.states.open}`} }
-
-    public animateCollapseClose() : AnimationControl { return { collapse: `${collapseProperties.states.close}`}}
-
-    public animateToHeight() : AnimationControl { return { toHeight: `${toHeightProperties.states.go}`}}
+    public animateToHeight(state: string) : AnimationControl { return { toHeight: `${state}`}}
 
     public initAnimation() : AnimationControl { return { scale: '', highlight: '', translateOff: '', translateOn: '' } }
 
     // STATIC FACTORY METHODS
+
+    public static animateChildren(){ return query('@*', animateChild(), {optional: true})}
+
     public static getAnimationString(properties : AnimationProperties) : string{
         let animation_string = properties.duration;
         if(properties.delay){ animation_string = animation_string + ' ' + properties.delay}
@@ -116,9 +120,9 @@ export class AnimationService{
     public static getScaleTrigger( scaleFactor: number,
                                         properties : AnimationProperties = defaultAnimationProperties) 
     : AnimationTriggerMetadata{
-        return trigger(`${scaleProperties.trigger}`, [
-            state(`${scaleProperties.states.scale}`, style({ transform: `scale(${scaleFactor})`,})),
-            transition(`void <=> ${scaleProperties.states.scale}`, [ animate(this.getAnimationString(properties))])
+        return trigger(`${animationControls.scale.trigger}`, [
+            state(`${animationControls.scale.states.scale}`, style({ transform: `scale(${scaleFactor})`,})),
+            transition(`void <=> ${animationControls.scale.states.scale}`, [ animate(this.getAnimationString(properties))])
         ]);
     }
 
@@ -126,18 +130,18 @@ export class AnimationService{
                                         properties : AnimationProperties = defaultAnimationProperties)
     : AnimationTriggerMetadata{
     
-        return trigger(`${highlightProperties.trigger}`, [
-            state(`${highlightProperties.states.highlight}`, style({ backgroundColor: `${cssColor}`})),
-            transition(`void <=> ${highlightProperties.states.highlight}`, [ animate(this.getAnimationString(properties))])
+        return trigger(`${animationControls.highlight.trigger}`, [
+            state(`${animationControls.highlight.states.highlight}`, style({ backgroundColor: `${cssColor}`})),
+            transition(`void <=> ${animationControls.highlight.states.highlight}`, [ animate(this.getAnimationString(properties))])
         ])                                   
     }
 
     public static getTranslateOffTrigger(distance: string, 
                                             properties: AnimationProperties = defaultAnimationProperties) 
     : AnimationTriggerMetadata {
-        return trigger(`${translateProperties.triggers.off}`, [
-            state(`${translateProperties.states.left}`, style({ transform: `translateX(-${distance})`, opacity: '0'})),
-            state(`${translateProperties.states.right}`, style({ transform: `translateX(${distance})`, opacity: '0'})),
+        return trigger(`${animationControls.translate.triggers.off}`, [
+            state(`${animationControls.translate.states.left}`, style({ transform: `translateX(-${distance})`, opacity: '0'})),
+            state(`${animationControls.translate.states.right}`, style({ transform: `translateX(${distance})`, opacity: '0'})),
             transition('* => *', animate(this.getAnimationString(properties)))
         ])
     }
@@ -145,14 +149,14 @@ export class AnimationService{
     public static getTranslateOnTrigger(distance: string,
                                             properties: AnimationProperties = defaultAnimationProperties)
     : AnimationTriggerMetadata{
-        return trigger(`${translateProperties.triggers.on}`, [
-            transition(`* => ${translateProperties.states.left}`, [
+        return trigger(`${animationControls.translate.triggers.on}`, [
+            transition(`* => ${animationControls.translate.states.left}`, [
                 animate(this.getAnimationString(properties), keyframes([
                     style({ transform: `translateX(-${distance})`, opacity: '0', offset: 0}),
                     style({ transform: 'translateX(0)', opacity: '1', offset: 1})
                 ]))
             ]),
-            transition(`* => ${translateProperties.states.right}`,[
+            transition(`* => ${animationControls.translate.states.right}`,[
                 animate(this.getAnimationString(properties), keyframes([
                     style({ transform: `translateX(${distance})`, opacity: '0', offset: 0}),
                     style({ transform: 'translateX(0)', opacity: '1', offset: 1})
@@ -161,40 +165,53 @@ export class AnimationService{
         ])
     }
 
-    public static getCollapseTrigger(properties: AnimationProperties = defaultAnimationProperties)
+    public static getToHeightTrigger(properties: AnimationProperties = defaultAnimationProperties)
     : AnimationTriggerMetadata{
-        return trigger(`${collapseProperties.trigger}`,[
-            state(`${collapseProperties.states.open}`, style({ transform: 'scale(1, 1)', display: 'relative'})),
-            state(`${collapseProperties.states.close}`, style({ transform: 'scale(0, 0)', display: 'none'})),
-            transition(`*=>${collapseProperties.states.open}`, animate(this.getAnimationString(properties))),
-            transition(`*=>${collapseProperties.states.close}`, animate(this.getAnimationString(properties))),
-        ])
-    }
-
-    public static getToHeightTrigger(cssHeight: string, triggerName: string, 
-                                        properties: AnimationProperties = defaultAnimationProperties)
-    : AnimationTriggerMetadata{
-        return trigger(`${toHeightProperties.trigger}_${triggerName}`,[
-            state(`${toHeightProperties.states.go}`, style({ height: `${cssHeight}`})),
-            transition(`*=>${toHeightProperties.states.go}`, [ animate(this.getAnimationString(properties))])
+        return trigger(`${animationControls.toHeight.trigger}`,[
+            state(`${animationControls.toHeight.states.none}`, style({ height: "0%", opacity: 0})),
+            state(`${animationControls.toHeight.states.quarter}`, style({ height: "25%", opacity: 1})),
+            state(`${animationControls.toHeight.states.half}`, style({ height: "50%", opacity: 1})),
+            state(`${animationControls.toHeight.states.full}`, style({ height: "100%", opacity: 1})),
+            state(`${animationControls.toHeight.states.double}`, style({ height: "200%", opacity: 1})),
+            transition(`*=>*`, [ 
+                animate(this.getAnimationString(properties)),
+            ])
         ])
     }
 
     public static getFoldTrigger(properties : AnimationProperties = defaultAnimationProperties)
     : AnimationTriggerMetadata {
-        return trigger(`${foldProperties.trigger}`,[
+        return trigger(`${animationControls.fold.trigger}`,[
             transition(':enter', [
                 animate(this.getAnimationString(properties), keyframes([
                     style({ transform: 'scale(0,0)', offset: 0}),
                     style({ transform: 'scale(1, 1)', offset: 1})
                 ])),
+                this.animateChildren()
             ]),
             transition(`:leave`, [
                 animate(this.getAnimationString(properties), keyframes([
                     style({ transform: 'scale(1, 1)', offset: 0}),
                     style({ transform: 'scale(0, 0)', offset: 1}),
-                ]))
+                ])),
+            ])
+        ])
+    }
 
+    public static getOpacityTrigger(properties: AnimationProperties = defaultAnimationProperties){
+        return trigger(`${animationControls.opacity.trigger}`,[
+            transition(':enter', [
+                animate(this.getAnimationString(properties), keyframes([
+                    style({ opacity: 0, offset: 0}),
+                    style({ opacity: 1, offset: 1})
+                ])),
+                this.animateChildren()
+            ]),
+            transition(`:leave`, [
+                animate(this.getAnimationString(properties), keyframes([
+                    style({ opacity: 1, offset: 0}),
+                    style({ opacity: 0, offset: 1}),
+                ])),
             ])
         ])
     }
