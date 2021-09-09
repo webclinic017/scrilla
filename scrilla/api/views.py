@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 
+from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -12,28 +13,35 @@ from scrilla.objects.portfolio import Portfolio
 from scrilla.objects.cashflow import Cashflow
 
 def parse_query_params(request):
-    return {
-        'tickers': request.query_params.getlist('tickers', []),
-        'start_date': request.query_params.get('start_date'),
-        'end_date': request.query_params.get('end_date'),
-        'invest': request.query_params.get('invest'),
-        'target': request.query_params.get('target'),
-        'mode': str(request.query_params.get('mode')).lower(),
-        'image': str(request.query_params.get('image')).lower() == 'true',
-        'discount': request.query_params.get('discount'),
-        'prob': request.query_params.get('prob'),
-        'expiry': request.query_params.get('expiry')
-    }
+    try: 
+        return {
+            'tickers': request.query_params.getlist('tickers', []),
+            'start_date': request.query_params.get('start_date'),
+            'end_date': request.query_params.get('end_date'),
+            'invest': float(request.query_params.get('invest')) if request.query_params.get('invest') else None,
+            'target': float(request.query_params.get('target')) if request.query_params.get('target') else None,
+            'mode': str(request.query_params.get('mode')).lower(),
+            'image': str(request.query_params.get('image')).lower() == 'true',
+            'discount': float(request.query_params.get('discount')) if request.query_params.get('discount') else None, 
+            'prob': float(request.query_params.get('prob')) if request.query_params.get('prob') else None,
+            'expiry': float(request.query_params.get('expiry')) if request.query_params.get('expiry') else None
+        }
+    except ValueError as ve:
+        raise ve
 
 @api_view(['GET'])
 def optimize_portfolio(request):
-    params = parse_query_params(request)
-    
+    try:
+        params = parse_query_params(request)
+    except ValueError:
+        return Response(data={ 'message': 'invalid query parameters'}, status=status.HTTP_400_BAD_REQUEST)
+
     portfolio = Portfolio(tickers=params['tickers'], start_date=params['start_date'], end_date=params['end_date'])
 
-    if params['mode'] == settings.OPTIMIZE_MODES['sharpe']:
+    if params['mode'] == settings.OPTIMIZE_MODES['maximizeSharpeRatio']:
         optimal_allocation = optimizer.maximize_sharpe_ratio(portfolio=portfolio, target_return=params['target'])
-    elif params['mode'] == settings.OPTIMIZE_MODES['cvar']:
+    elif params['mode'] == settings.OPTIMIZE_MODES['minimizeConditionalValueAtRisk']:
+        print(type(params['expiry']))
         optimal_allocation = optimizer.optimize_conditional_value_at_risk(portfolio=portfolio,
                                                                             prob=params['prob'],
                                                                             expiry=params['expiry'],
@@ -47,7 +55,10 @@ def optimize_portfolio(request):
 
 @api_view(['GET'])
 def risk_profile(request):
-    params, profiles = parse_query_params(request), {}
+    try:
+        params, profiles = parse_query_params(request), {}
+    except ValueError as ve:
+        return Response(data={ 'message': 'invalid query parameters'}, status=status.HTTP_400_BAD_REQUEST)
 
     for ticker in params['tickers']:
         profiles[ticker] = statistics.calculate_risk_return(ticker=ticker, start_date=params['start_date'],
@@ -71,7 +82,10 @@ def risk_profile(request):
 
 @api_view(['GET'])
 def correlation_matrix(request):
-    params = parse_query_params(request)
+    try:
+        params = parse_query_params(request)
+    except ValueError:
+        return Response(data={ 'message': 'invalid query parameters'}, status=status.HTTP_400_BAD_REQUEST)
 
     matrix = statistics.ito_correlation_matrix(tickers=params['tickers'], start_date=params['start_date'], end_date=params['end_date'])
 
@@ -81,7 +95,10 @@ def correlation_matrix(request):
 
 @api_view(['GET'])
 def efficient_frontier(request):
-    params = parse_query_params(request)
+    try:
+        params = parse_query_params(request)
+    except ValueError:
+        return Response(data={ 'message': 'invalid query parameters'}, status=status.HTTP_400_BAD_REQUEST)
     
     portfolio = Portfolio(tickers=params['tickers'], start_date=params['start_date'], end_date=params['end_date'])
 
@@ -98,7 +115,10 @@ def efficient_frontier(request):
 
 @api_view(['GET'])
 def discount_dividend(request):
-    params, response, cashflow_to_plot = parse_query_params(request), {}, None
+    try:
+        params, response, cashflow_to_plot = parse_query_params(request), {}, None
+    except ValueError:
+        return Response(data={ 'message': 'invalid query parameters'}, status=status.HTTP_400_BAD_REQUEST)
 
     for ticker in params['tickers']:
         if params['discount']:

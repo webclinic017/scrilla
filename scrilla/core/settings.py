@@ -53,9 +53,9 @@ SUPERUSER_PASSWORD = str(os.getenv('DJANGO_SUPERUSER_PASSWORD')).strip()
 SUPERUSER_EMAIL = str(os.getenv('DJANGO_SUPERUSER_EMAIL')).strip()
 
 OPTIMIZE_MODES = {
-    'sharpe': 'maximizeSharpeRatio',
-    'vol': 'minimizeVolatility',
-    'cvar': 'minimizeConditionalValueAtRisk'
+    'maximizeSharpeRatio': 'sharpe',
+    'minimizeVolatility': 'vol',
+    'minimizeConditionalValueAtRisk': 'cvar'
 }
 
 INSTALLED_APPS = [
