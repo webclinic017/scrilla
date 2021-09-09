@@ -4,6 +4,16 @@
             <div class="title">
                 <div>Input</div>
                 <div class="action-group">
+                    <div class="action=button">
+                        <button mat-raised-button color="primary"
+                                matTooltip="Take a tour of the Portfolio Optimization app"
+                                [@scale]="tutorialBtnAnimationControl.scale"
+                                (mouseenter)="tutorialBtnAnimationControl = animator.animateScale()"
+                                (mouseleave)="tutorialBtnAnimationControl = animator.initAnimation()"
+                                (click)="step()">
+                            {{ whichStep ? 'Show Next' : 'Tutorial'}}
+                        </button>
+                    </div>
                     <div class="action-button">
                         <button mat-raised-button color="accent"
                             matTooltip="Optimize the current portfolio of tickers"
@@ -24,7 +34,9 @@
         <mat-card-subtitle>Mode: {{modeSelection.value.title}} </mat-card-subtitle>
         <mat-card-content>
             <div class="arguments-container">
-                <section id="mode-selection" class="item mat-elevation-z3">
+                <section id="mode-selection" class="item mat-elevation-z3"
+                    #tutorialTooltip="matTooltip"
+                    matTooltip="Select an optimization mode. You can choose from a strategy that will either minimize your portfolio volatility, maximize your portfolio's sharpe ratio, or minimize your portfolio's conditional value at risk">
                     <h2>Mode</h2>
                     <mat-button-toggle-group aria-label="Mode Selection" vertical 
                                             [formControl]="modeSelection">
@@ -70,6 +82,8 @@
 
                 <span id="ticker-input" class="item mat-elevation-z2">
                     <app-tickers [disabled]="portfolio !== undefined"
+                                #tutorialTooltip="matTooltip"
+                                matTooltip="Enter a basket of assets separated by a comma. Equities should be specified by ticker symbols from the NYSE Listing Directory and cryptocurrencies should be specified by their corresponding tickers from Coinbase. "
                                 (tickers)="setTickers($event)"></app-tickers>
                 </span>
 

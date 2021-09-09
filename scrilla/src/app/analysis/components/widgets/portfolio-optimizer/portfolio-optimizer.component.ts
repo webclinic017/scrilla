@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatTooltip } from '@angular/material/tooltip';
 import { Portfolio } from 'src/app/models/holding';
 import { AnimationProperties, AnimationService, animationControls } from 'src/app/services/animations.service';
 import { ApiService, QueryParams } from 'src/app/services/api.service';
@@ -37,19 +38,13 @@ const modes : any = {
   ]
 })
 export class PortfolioOptimizerComponent implements OnInit {
-
-  public testAllocation = [
-    { 'name': 'allocation 1',
-      'value': 0.3 },
-    { 'name': 'allocation 2',
-      'value': 0.5 },
-    { 'name': 'allocation 3',
-      'value': 0.2 }
-  ]
+  @ViewChildren('tutorialTooltip')
+  public tutorialTooltips !: QueryList<MatTooltip>;
   
   public modes : any = modes;
 
-  public optimizeBtnAnimationControl = this.animator.initAnimation()
+  public optimizeBtnAnimationControl = this.animator.initAnimation();
+  public tutorialBtnAnimationControl = this.animator.initAnimation();
   public clearBtnAnimationControl = this.animator.initAnimation();
   public inputCardAnimationControl = this.animator.initAnimation();
   public outputCardAnimationControl = this.animator.initAnimation();
@@ -62,6 +57,7 @@ export class PortfolioOptimizerComponent implements OnInit {
   public expiry ?: number;
 
   public portfolio?: Portfolio;
+  public whichStep?: number;
 
   public optionalArguments : FormGroup;
   public modeSelection : FormControl;
@@ -81,6 +77,23 @@ export class PortfolioOptimizerComponent implements OnInit {
   }
 
   ngOnInit(): void { }
+
+  public step(){
+    console.log(this.whichStep)
+    if(this.whichStep === undefined){ this.whichStep = 0;}
+    else{ 
+      this.whichStep++;
+      if(this.whichStep > this.tutorialTooltips.toArray().length - 1){
+        this.whichStep = undefined!;
+      } 
+    }
+    console.log(this.whichStep)
+    if(this.whichStep !== undefined){
+      this.tutorialTooltips.forEach(element=>{ element.hide(); })
+      this.tutorialTooltips.toArray()[this.whichStep].show()
+    }
+    console.log(this.whichStep)
+  }
 
   public optimize(){
     let params : QueryParams = {
