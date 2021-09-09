@@ -7,7 +7,7 @@ import { ApiService, QueryParams } from 'src/app/services/api.service';
 const foldAnimationProperties : AnimationProperties= {
   delay: '', duration: '250ms', easing: ''
 }
-const toHeightDuration=500
+const toHeightDuration=350
 const toHeightAnimationProperties: AnimationProperties = {
   delay: '', duration: `${toHeightDuration}ms`, easing: ''
 }
@@ -112,9 +112,9 @@ export class PortfolioOptimizerComponent implements OnInit {
     this.totalInvestment = undefined; this.dates = undefined;
     this.expiry = undefined; this.probability = undefined;
     this.modeSelection.enable(); this.optionalArguments.enable();
-    this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.toHeight.states.half);
+    this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.toHeight.states.forty);
     setTimeout(()=>{
-      this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.toHeight.states.half)
+      this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.toHeight.states.sixty)
     }, toHeightDuration)
   }
 

@@ -49,7 +49,10 @@ export const animationControls = {
         states: {
             none: 'none',
             quarter: 'quarter',
+            forty: 'forty',
             half: 'half',
+            sixty: 'sixty',
+            seventyfive: 'seventyfive',
             full: 'full',
             double: 'double'
         }
@@ -170,7 +173,9 @@ export class AnimationService{
         return trigger(`${animationControls.toHeight.trigger}`,[
             state(`${animationControls.toHeight.states.none}`, style({ height: "0%", opacity: 0})),
             state(`${animationControls.toHeight.states.quarter}`, style({ height: "25%", opacity: 1})),
+            state(`${animationControls.toHeight.states.forty}`, style({ height: "40%", opacity: 1})),
             state(`${animationControls.toHeight.states.half}`, style({ height: "50%", opacity: 1})),
+            state(`${animationControls.toHeight.states.sixty}`, style({ height: "60%", opacity: 1})),
             state(`${animationControls.toHeight.states.full}`, style({ height: "100%", opacity: 1})),
             state(`${animationControls.toHeight.states.double}`, style({ height: "200%", opacity: 1})),
             transition(`*=>*`, [ 

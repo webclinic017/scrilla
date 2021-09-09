@@ -20,7 +20,12 @@
     overflow: auto;
     padding: 8px;
     margin-right: 0.5%; margin-left: 0.5%;
-    height: 50%;
+}
+.input-card{
+    height: 60%;
+}
+.output-card{
+    height: 40%;
 }
 .output-card .title, .input-card .title{ display: flex; flex-direction: row; justify-content: space-between;}
 .output-card .mat-card-content{
