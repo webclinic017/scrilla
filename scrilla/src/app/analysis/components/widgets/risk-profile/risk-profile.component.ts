@@ -56,9 +56,9 @@ export class RiskProfileComponent implements OnInit {
       this.holdings = data;
       this.optionalArguments.disable();
       this.loading = false;
-      this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.toHeight.states.none);
+      this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.none);
       setTimeout(()=>{
-        this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.toHeight.states.full);
+        this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.full);
       }, toHeightDuration)
     })
   }
@@ -66,9 +66,9 @@ export class RiskProfileComponent implements OnInit {
   public clear() : void {
     this.holdings = undefined; this.tickers = []; this.dates = undefined;
     this.optionalArguments.enable()
-    this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.toHeight.states.forty);
+    this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.forty);
     setTimeout(()=>{
-      this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.toHeight.states.sixty)
+      this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.sixty)
     }, toHeightDuration)
   }
 

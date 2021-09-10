@@ -6,7 +6,7 @@
                         [removable]="true" 
                         (removed)="tickerRemoved(ticker)">
                 {{ticker}}
-                <mat-icon matChipRemove matTooltip="Remove ticker symbol">cancel</mat-icon>
+                <mat-icon matChipRemove matTooltip="Remove ticker symbol" [matTooltipDisabled]="disabled">cancel</mat-icon>
             </mat-chip>
         </mat-chip-list>
     </mat-card>
@@ -17,7 +17,7 @@
                 <div> {{dates[0]}}<br> to<br> {{dates[1]}}</div>
                 <div>
                     <button mat-icon-button [disabled]="disabled"
-                            matTooltip="Remove date range"
+                            matTooltip="Remove date range" [matTooltipDisabled]="disabled"
                             (click)="datesRemoved()">
                         <mat-icon>cancel</mat-icon>
                     </button>
@@ -32,7 +32,7 @@
                 <div> {{ target | percent : '1.2-4' }} </div>
                 <div>
                     <button mat-icon-button [disabled]="disabled"
-                            matTooltip="Remove target return"
+                            matTooltip="Remove target return" [matTooltipDisabled]="disabled"
                             (click)="targetRemoved()">
                         <mat-icon>cancel</mat-icon>
                     </button>
@@ -47,7 +47,7 @@
                 <div> {{ invest | currency }} </div>
                 <div>
                     <button mat-icon-button [disabled]="disabled"
-                            matTooltip="Remove total investment"
+                            matTooltip="Remove total investment" [matTooltipDisabled]="disabled"
                             (click)="investRemoved()">
                         <mat-icon>cancel</mat-icon>
                     </button>
@@ -62,7 +62,7 @@
                 <div> {{ probability | percent : '1.2-4'}}</div>
                 <div>
                     <button mat-icon-button [disabled]="disabled"
-                        matTooltip="Remove loss probability"
+                        matTooltip="Remove loss probability" [matTooltipDisabled]="disabled"
                         (click)="probabilityRemoved()">
                     <mat-icon>cancel</mat-icon>
                 </button>
@@ -77,7 +77,7 @@
                 <div>{{ expiry }} years</div>
                 <div>
                     <button mat-icon-button [disabled]="disabled"
-                            matTooltip="Remove loss expiry"
+                            matTooltip="Remove loss expiry" [matTooltipDisabled]="disabled"
                             (click)="expiryRemoved()">
                         <mat-icon>cancel</mat-icon>
                     </button>

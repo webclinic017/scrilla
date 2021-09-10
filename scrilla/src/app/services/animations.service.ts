@@ -7,7 +7,8 @@ export interface AnimationProperties{
 
 export interface AnimationControl{
     scale?: string, highlight?: string, opacity?: string,
-    translateOff?: string, translateOn?: string, toHeight?: string
+    translateOff?: string, translateOn?: string, 
+    toHeight?: string, toWidth?: string, toDimensions?:string,
 }
 
 export const defaultDuration = 500
@@ -44,13 +45,22 @@ export const animationControls = {
         states: {
             right: 'right',
             left: 'left'
-        }
+      }
     },
-    toHeight: {
-        trigger: 'toHeight',
+    to:{
+        height:{
+            trigger: "toHeight"
+        },
+        width:{
+            trigger: "toWidth"
+        },
+        dimensions: {
+            trigger: "toDimensions"
+        },
         states: {
             none: 'none',
             quarter: 'quarter',
+            thirtyfive: 'thirtyfive',
             forty: 'forty',
             half: 'half',
             sixty: 'sixty',
@@ -58,7 +68,7 @@ export const animationControls = {
             full: 'full',
             double: 'double'
         }
-    },
+    },  
     // COMPONENT LIFE CYCLE ANIMATIONS
     fold:{
         trigger: 'fold'
@@ -107,7 +117,11 @@ export class AnimationService{
 
     public animateTranslateOn(state: string) : AnimationControl { return { translateOn: `${state}` } }
 
-    public animateToHeight(state: string) : AnimationControl { return { toHeight: `${state}`}}
+    public animateToHeight(state: string) : AnimationControl { return { toHeight: `${state}` } }
+
+    public animateToWidth(state: string) : AnimationControl { return { toWidth: `${state}` } }
+
+    public animateToDimensions(state: string) : AnimationControl { return { toDimensions: `${state}` } }
 
     public initAnimation() : AnimationControl { return { scale: '', highlight: '', translateOff: '', translateOn: '' } }
 
@@ -170,16 +184,54 @@ export class AnimationService{
         ])
     }
 
+    public static getToDimensionsTrigger(properties: AnimationProperties = defaultAnimationProperties)
+    : AnimationTriggerMetadata{
+        return trigger(`${animationControls.to.dimensions.trigger}`,[
+            state(`${animationControls.to.states.none}`, style({ height: "0%", width: "0%", opacity: 0})),
+            state(`${animationControls.to.states.quarter}`, style({ height: "25%", width: "25%", opacity: 1})),
+            state(`${animationControls.to.states.thirtyfive}`, style({ height: "35%", width: "35%", opacity: 1})),
+            state(`${animationControls.to.states.forty}`, style({ height: "40%", width: "40%", opacity: 1})),
+            state(`${animationControls.to.states.half}`, style({ height: "50%", width: "50%", opacity: 1})),
+            state(`${animationControls.to.states.sixty}`, style({ height: "60%", width: "60%", opacity: 1})),
+            state(`${animationControls.to.states.seventyfive}`, style({ height: "75%", width: "75%", opacity: 1})),
+            state(`${animationControls.to.states.full}`, style({ height: "100%", width: "100%", opacity: 1})),
+            state(`${animationControls.to.states.double}`, style({ height: "200%", width: "200%", opacity: 1})),
+            transition(`*=>*`, [ 
+                animate(this.getAnimationString(properties)),
+            ])
+        ])
+    }
+
     public static getToHeightTrigger(properties: AnimationProperties = defaultAnimationProperties)
     : AnimationTriggerMetadata{
-        return trigger(`${animationControls.toHeight.trigger}`,[
-            state(`${animationControls.toHeight.states.none}`, style({ height: "0%", opacity: 0})),
-            state(`${animationControls.toHeight.states.quarter}`, style({ height: "25%", opacity: 1})),
-            state(`${animationControls.toHeight.states.forty}`, style({ height: "40%", opacity: 1})),
-            state(`${animationControls.toHeight.states.half}`, style({ height: "50%", opacity: 1})),
-            state(`${animationControls.toHeight.states.sixty}`, style({ height: "60%", opacity: 1})),
-            state(`${animationControls.toHeight.states.full}`, style({ height: "100%", opacity: 1})),
-            state(`${animationControls.toHeight.states.double}`, style({ height: "200%", opacity: 1})),
+        return trigger(`${animationControls.to.height.trigger}`,[
+            state(`${animationControls.to.states.none}`, style({ height: "0%", opacity: 0})),
+            state(`${animationControls.to.states.quarter}`, style({ height: "25%", opacity: 1})),
+            state(`${animationControls.to.states.thirtyfive}`, style({ height: "35%", opacity: 1})),
+            state(`${animationControls.to.states.forty}`, style({ height: "40%", opacity: 1})),
+            state(`${animationControls.to.states.half}`, style({ height: "50%", opacity: 1})),
+            state(`${animationControls.to.states.sixty}`, style({ height: "60%", opacity: 1})),
+            state(`${animationControls.to.states.seventyfive}`, style({ height: "75%", opacity: 1})),
+            state(`${animationControls.to.states.full}`, style({ height: "100%", opacity: 1})),
+            state(`${animationControls.to.states.double}`, style({ height: "200%", opacity: 1})),
+            transition(`*=>*`, [ 
+                animate(this.getAnimationString(properties)),
+            ])
+        ])
+    }
+
+    public static getToWidthTrigger(properties: AnimationProperties = defaultAnimationProperties)
+    : AnimationTriggerMetadata{
+        return trigger(`${animationControls.to.width.trigger}`,[
+            state(`${animationControls.to.states.none}`, style({ width: "0%", opacity: 0})),
+            state(`${animationControls.to.states.quarter}`, style({ width: "25%", opacity: 1})),
+            state(`${animationControls.to.states.thirtyfive}`, style({ width: "35%", opacity: 1})),
+            state(`${animationControls.to.states.forty}`, style({ width: "40%", opacity: 1})),
+            state(`${animationControls.to.states.half}`, style({ width: "50%", opacity: 1})),
+            state(`${animationControls.to.states.sixty}`, style({ width: "60%", opacity: 1})),
+            state(`${animationControls.to.states.seventyfive}`, style({ width: "75%", opacity: 1})),
+            state(`${animationControls.to.states.full}`, style({ width: "100%", opacity: 1})),
+            state(`${animationControls.to.states.double}`, style({ width: "200%", opacity: 1})),
             transition(`*=>*`, [ 
                 animate(this.getAnimationString(properties)),
             ])

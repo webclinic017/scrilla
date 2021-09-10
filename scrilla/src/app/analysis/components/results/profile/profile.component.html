@@ -1,5 +1,6 @@
-<div class="row-container">
-    <div class="data-table-container" [@fold] *ngIf="this.holdings && this.holdings.length > 0">
+<div class="row-container flex-wrap">
+    <div class="data-table-container" *ngIf="this.holdings && this.holdings.length > 0"
+            [@toDimensions]="this.tableAnimationControl.toDimensions">
         <mat-card class="card mat-elevation-z2">
             <mat-card-title>
                 <div class="title-container">
@@ -45,8 +46,22 @@
         </mat-card>
     </div>
 
-    <div class="chart-container mat-elevation-z2">
-        <div class="title-container">Risk Return Profile</div>
+    <div class="chart-container mat-elevation-z2" [@toDimensions]="this.chartAnimationControl.toDimensions">
+        <div class="title-container">
+            <div>Risk Return Profile</div> 
+            <button *ngIf="!this.chartExpanded" mat-icon-button matTooltip="Expand graph"
+                    (click)="expand()" [@scale]="this.graphToggleAnimationControl.scale"
+                    (mouseenter)="this.graphToggleAnimationControl = this.animator.animateScale()"
+                    (mouseleave)="this.graphToggleAnimationControl = this.animator.initAnimation()">
+                <mat-icon>expand_more</mat-icon>
+            </button>
+            <button *ngIf="this.chartExpanded" mat-icon-button matTooltip="Collapse graph"
+                    (click)="collapse()" [@scale]="this.graphToggleAnimationControl.scale"
+                    (mouseenter)="this.graphToggleAnimationControl = this.animator.animateScale()"
+                    (mouseleave)="this.graphToggleAnimationControl = this.animator.initAnimation()">
+                <mat-icon>expand_less</mat-icon>
+            </button>
+        </div>
         <div class="display-container">
             <div>
                 <canvas baseChart chartType="scatter" [legend]="true"

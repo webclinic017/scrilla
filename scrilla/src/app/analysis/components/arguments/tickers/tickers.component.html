@@ -7,7 +7,7 @@
         <mat-form-field appearance="fill" class="fill-width">
             <mat-label>Enter a list of tickers</mat-label>
             <input matInput type="text" [formControl]="tickerControl"
-                    matTooltip="{{ single ? 'Enter a single ticker symbole' : 'Separate ticker symbols with a comma' }}"
+                    matTooltip="{{ single ? 'Enter a single ticker symbol' : 'Separate ticker symbols with a comma' }}"
                     (keyup.enter)="parseTickers()">
             <button *ngIf="tickerControl.value && tickerControl.touched" matSuffix mat-icon-button aria-label="Clear" 
                 (click)="tickerControl.reset()">

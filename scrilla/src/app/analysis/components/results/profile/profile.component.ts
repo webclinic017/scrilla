@@ -1,11 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { animation } from '@angular/animations';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ChartDataSets, ChartOptions } from 'chart.js';
-import { Color } from 'ng2-charts';
+import { BaseChartDirective, Color } from 'ng2-charts';
 import { Holding } from 'src/app/models/holding';
-import { AnimationProperties, AnimationService } from 'src/app/services/animations.service';
+import { AnimationControl, animationControls, AnimationProperties, AnimationService } from 'src/app/services/animations.service';
 
-const foldAnimationProperties : AnimationProperties= {
-  delay: '', duration: '250ms', easing: ''
+const toDimensionsDuration = 500
+const toDimensionsAnimationProperties : AnimationProperties= {
+  delay: '', duration: `${toDimensionsDuration}ms`, easing: 'ease-in'
 }
 
 const chartFontColor : string = 'rgb(232, 245, 233, 0.50)'
@@ -16,42 +18,39 @@ const chartBorderColor : string = 'rgb(185, 237, 237, 0.35)'
   templateUrl: './profile.component.html',
   styleUrls: ['../results.css'],
   animations: [
-    AnimationService.getFoldTrigger(foldAnimationProperties)
+    AnimationService.getToDimensionsTrigger(toDimensionsAnimationProperties),
+    AnimationService.getScaleTrigger(1.25)
   ]
 })
 export class ProfileComponent implements OnInit {
+  @ViewChild(BaseChartDirective) public chart!: BaseChartDirective;
 
   @Input() holdings !: Holding[];
 
   public displayedColumns : string[] = [];
+
+  public tableAnimationControl : AnimationControl = this.animator.initAnimation();
+  public chartAnimationControl : AnimationControl = this.animator.initAnimation();
+  public graphToggleAnimationControl : AnimationControl = this.animator.initAnimation();
   
+
+  public chartExpanded : boolean = false;
   public chartOptions : ChartOptions={ 
     responsive: true,
-    legend:{
-      labels: { fontColor: [`${chartFontColor}`], }
-    },
+    legend: { labels: { fontColor: [`${chartFontColor}`], } },
     scales: {
       xAxes:[{ 
-        ticks:{
-          stepSize: 0.1,
-          beginAtZero: true,
-          fontColor: `${chartFontColor}`
-        },
-        scaleLabel: { display: true, labelString: 'Volatility', fontColor:`${chartFontColor}`},   
+        ticks:{ stepSize: 15, beginAtZero: true, fontColor: `${chartFontColor}` },
+        scaleLabel: { display: true, labelString: 'Volatility %', fontColor:`${chartFontColor}`},   
         gridLines: { color: `${chartFontColor}` }  
       }],
       yAxes:[{ 
-        ticks: {
-          fontColor: `${chartFontColor}`,
-          stepSize: 0.1,
-          beginAtZero: true
-        },
-        scaleLabel: { display: true, labelString: 'Return', fontColor:`${chartFontColor}` },
+        ticks: { fontColor: `${chartFontColor}`, stepSize: 15, beginAtZero: true },
+        scaleLabel: { display: true, labelString: 'Return %', fontColor:`${chartFontColor}` },
         gridLines: { color:  `${chartFontColor}`},
       }],
     }
   };
-
   public chartData: ChartDataSets[] = [];
   public chartColors: Color[] = [
     { backgroundColor: '#a0439b', borderColor: `${chartBorderColor}`}, 
@@ -61,17 +60,20 @@ export class ProfileComponent implements OnInit {
     { backgroundColor: '#4843a0', borderColor: `${chartBorderColor}`}, 
   ]
 
-  constructor() { }
+  constructor(public animator : AnimationService) { }
 
   ngOnInit(): void {
     console.log(this.holdings)
     if(this.holdings.length > 0){
       this.holdings.forEach(holding=>{
-        this.chartData.push({
-          data: [{ x: holding.annual_volatility, y: holding.annual_return }],
-          label: holding.ticker,
-          pointRadius: 5,
-        })
+        if(holding.annual_volatility && holding.annual_return){
+          this.chartData.push({
+            data: [{ x: Math.round(holding.annual_volatility*10000)/100, 
+                      y: Math.round(holding.annual_return*10000)/100 }],
+            label: holding.ticker,
+            pointRadius: 5,
+          })
+        }
       });
       this.displayedColumns = [ 'ticker']
       if(this.holdings[0].annual_return !== undefined){ this.displayedColumns.push('annual_return')}
@@ -83,5 +85,25 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  public expand(){
+    this.chartExpanded = true;
+    this.tableAnimationControl = this.animator.animateToDimensions(animationControls.to.states.none);
+    setTimeout(()=>{
+      this.chartAnimationControl = this.animator.animateToDimensions(animationControls.to.states.seventyfive);
+      setTimeout(()=>{
+        this.chart.chart.resize();
+      }, toDimensionsDuration+10)
+    }, toDimensionsDuration+10);
+  }
 
+  public collapse(){
+    this.chartExpanded = false;
+    this.chartAnimationControl = this.animator.animateToDimensions(animationControls.to.states.thirtyfive);
+    setTimeout(()=>{
+      this.tableAnimationControl = this.animator.animateToDimensions(animationControls.to.states.sixty);
+      setTimeout(()=>{
+        this.chart.chart.resize();
+      }, toDimensionsDuration+10)
+    }, toDimensionsDuration+10)
+  }
 }

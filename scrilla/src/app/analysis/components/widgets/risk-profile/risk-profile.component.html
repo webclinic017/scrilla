@@ -66,7 +66,7 @@
         <mat-card-content>
             <div class="result-container">
                 <div class="item side-item">
-                    <app-constraints [tickers]="this.tickers" [dates]="this.dates"
+                    <app-constraints [tickers]="this.tickers" [dates]="this.dates" [disabled]="this.holdings !== undefined"
                                     (removeTicker)="this.removeTicker($event)" (removeDates)="this.removeDates()">
                     </app-constraints>
                 </div>

@@ -174,10 +174,10 @@ export class PortfolioOptimizerComponent implements OnInit {
         this.portfolio = data;  
         this.modeSelection.disable(); this.optionalArguments.disable();
         this.loading = false;
-        this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.toHeight.states.none);
+        this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.none);
         setTimeout(()=>{
-          this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.toHeight.states.full);
-        }, toHeightDuration)
+          this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.full);
+        }, toHeightDuration+10)
       },
       err =>{
         console.log(err);
@@ -191,10 +191,10 @@ export class PortfolioOptimizerComponent implements OnInit {
     this.totalInvestment = undefined; this.dates = undefined;
     this.expiry = undefined; this.probability = undefined;
     this.modeSelection.enable(); this.optionalArguments.enable();
-    this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.toHeight.states.forty);
+    this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.forty);
     setTimeout(()=>{
-      this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.toHeight.states.sixty)
-    }, toHeightDuration)
+      this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.sixty)
+    }, toHeightDuration+10)
   }
 
   public setTickers(tickers: string[]): void{ 

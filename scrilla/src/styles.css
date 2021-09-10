@@ -36,5 +36,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; overflow-x:
     display: flex; flex-direction: row;
     justify-content:space-evenly;
 }
+.flex-wrap{
+    flex-wrap: wrap;
+}
 
 ::-webkit-scrollbar { width: 10px;}
