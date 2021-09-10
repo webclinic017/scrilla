@@ -1,9 +1,25 @@
 <div class="widget-container">
-    <mat-card class="input-card">
-        <mat-card-title>Input</mat-card-title>
+    <mat-card class="input-card" [@toHeight]="this.inputCardAnimationControl.toHeight">
+        <mat-card-title>
+            <div class="title">
+                <div>Input</div>
+                <div class="action-group">
+                    <div class="action-button">
+                        <button mat-raised-button color="accent"
+                            [@scale]="calcBtnAnimationControl.scale"
+                            [disabled]="this.tickers.length === 0 || (this.tickers.length > 0 && this.holdings !== undefined)"
+                            (mouseenter)="this.calcBtnAnimationControl = this.animator.animateScale()"
+                            (mouseleave)="this.calcBtnAnimationControl = this.animator.initAnimation()"
+                            (click)="this.calculate()">
+                            Calculate
+                        </button>
+                    </div>
+                </div>
+            </div>
+            </mat-card-title>
         <mat-card-content>
             <div class="arguments-container">
-                <section id="optional-toggle" [formGroup]="optionalArguments" class="item mat-elevation-z2">
+                <section id="optional-toggle" [formGroup]="this.optionalArguments" class="item mat-elevation-z2">
                     <h2>Optional Input</h2>
                     <div formGroupName="date">
                         <mat-checkbox formControlName="enabled" aria-label="Date Range Selection, Optional"
@@ -14,24 +30,50 @@
                 </section>
 
                 <span id="ticker-input" class="item mat-elevation-z2">
-                    <app-tickers (tickers)="setTickers($event)"></app-tickers>
+                    <app-tickers (tickers)="this.setTickers($event)"></app-tickers>
                 </span>
 
                 <span id="date-input" class="item mat-elevation-z3" [@fold]
                         *ngIf="optionalArguments.get('date.enabled')?.value">
-                    <app-date (dates)="setDates($event)"></app-date>
+                    <app-date (dates)="this.setDates($event)"></app-date>
                 </span>
             </div>
         </mat-card-content>
     </mat-card>
 
-    <mat-card class="output-card">
-        <mat-card-title>Output</mat-card-title>
+    <mat-progress-bar *ngIf="loading" mode="buffer" color="accent"></mat-progress-bar>
+
+    <mat-card class="output-card" [@toHeight]="this.outputCardAnimationControl.toHeight">
+        <mat-card-title>
+            <div class="title">
+                <div>
+                    Output
+                </div>
+                <div class="action-button-group">
+                    <div class="action-button">
+                        <button mat-raised-button color="warn"
+                            [@scale]="this.clearBtnAnimationControl.scale"
+                            [disabled]="!this.holdings"
+                            (mouseenter)="this.clearBtnAnimationControl = this.animator.animateScale()"
+                            (mouseleave)="this.clearBtnAnimationControl = this.animator.initAnimation()"
+                            (click)="this.clear()">
+                            Clear
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </mat-card-title>
         <mat-card-content>
-            <app-profile [tickers]="this.tickers"
-                         [dates]="this.dates"
-                        (removeTicker)="this.removeTicker($event)"
-                        (removeDates)="this.removeDates()"></app-profile>
+            <div class="result-container">
+                <div class="item side-item">
+                    <app-constraints [tickers]="this.tickers" [dates]="this.dates"
+                                    (removeTicker)="this.removeTicker($event)" (removeDates)="this.removeDates()">
+                    </app-constraints>
+                </div>
+                <div class="item main-item">
+                    <app-profile *ngIf="this.holdings" [holdings]="this.holdings"></app-profile>
+                </div>
+            </div>
         </mat-card-content>
     </mat-card>
 </div>

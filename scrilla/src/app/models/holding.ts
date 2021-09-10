@@ -4,6 +4,7 @@ export interface Holding{
     annual_volatility ?: number,
     asset_beta ?: number,
     sharpe_ratio ?: number,
+    equity_cost ?: number,
     allocation ?: number,
     shares ?: number
 }

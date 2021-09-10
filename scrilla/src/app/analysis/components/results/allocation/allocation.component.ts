@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Holding, Portfolio } from 'src/app/models/holding';
+import { Component,Input, OnInit } from '@angular/core';
+import { ChartOptions, ChartType } from 'chart.js';
+import { Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, SingleDataSet } from 'ng2-charts';
+import {Portfolio } from 'src/app/models/holding';
 import { AnimationProperties, AnimationService } from 'src/app/services/animations.service';
 
 const foldAnimationProperties : AnimationProperties= {
@@ -23,11 +25,27 @@ export class AllocationComponent implements OnInit {
   @Input()
   public portfolio!: Portfolio;
   
-  public chartArgs: PieArgs[] = [];
+  public chartOptions : ChartOptions={ 
+    responsive: true,
+    legend:{
+      labels: { fontColor: ['#e8f5e9'] }
+    } 
+  };
+  public chartLabels : Label[] = [];
+  public chartData: SingleDataSet = [];
+  public chartColors: any = [
+    {
+      // TODO: would really like to generate these from the theme palette somehow...
+      backgroundColor: ['#a0439b','#6da043','#43a076','#439ba0','#4843a0']
+    }
+  ]
 
   public displayedColumns: string[] = [ ];
 
-  constructor() { }
+  constructor() { 
+    monkeyPatchChartJsTooltip();
+    monkeyPatchChartJsLegend();
+  }
 
   // comparisons are made against undefined instead of directly against variables, 
   // since some of the values can equal 0 (which is Falsy)
@@ -35,7 +53,8 @@ export class AllocationComponent implements OnInit {
     if(this.portfolio.holdings.length > 0){
       this.portfolio.holdings.forEach(holding=>{
         if(holding.allocation !== undefined){
-          this.chartArgs.push({ name: holding.ticker, value: holding.allocation })
+          this.chartLabels.push(holding.ticker)
+          this.chartData.push(holding.allocation)
         }
       })
       this.displayedColumns = [ 'ticker']

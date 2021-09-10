@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ChartsModule } from 'ng2-charts';
+
 import  { MatCurrencyFormatModule } from 'mat-currency-format';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -51,7 +52,7 @@ import { ConstraintsComponent } from './components/results/constraints/constrain
     AnalysisRoutingModule,
 
     MatCurrencyFormatModule,
-    NgxChartsModule,
+    ChartsModule,
 
     MatButtonModule,
     MatButtonToggleModule,

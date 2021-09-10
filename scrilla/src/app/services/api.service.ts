@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Portfolio } from '../models/holding';
+import { Holding, Portfolio } from '../models/holding';
 import { HostService } from './host.service';
 
 export interface QueryParams{
@@ -47,8 +47,12 @@ export class ApiService {
 
   public optimize(params: QueryParams): Observable<Portfolio>{
     let url = `${this.host.getHost()}/${endpoints.api.optimize}?${this.constructQuery(params)}`
-    console.log(url);
     return this.http.get<Portfolio>(url)
+  }
+
+  public profile(params: QueryParams): Observable<Holding[]>{
+    let url =`${this.host.getHost()}/${endpoints.api.risk_profile}?${this.constructQuery(params)}`
+    return this.http.get<Holding[]>(url)
   }
 
 }

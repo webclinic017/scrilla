@@ -1,31 +1,59 @@
-<div class="result-container">
-    <div class="item">
-        <mat-card id="tickers-card" class="card mat-elevation-z2" *ngIf="tickers.length>0">
-            <mat-card-title> Tickers</mat-card-title>
-            <mat-chip-list aria-label="Ticker Symbol Chip List">
-                <mat-chip *ngFor="let ticker of tickers"
-                            [removable]="true" 
-                            (removed)="tickerRemoved(ticker)">
-                    {{ticker}}
-                    <mat-icon matChipRemove matTooltip="Remove ticker symbol">cancel</mat-icon>
-                </mat-chip>
-            </mat-chip-list>
-        </mat-card>
-        <mat-card id="date-card" class="card mat-elevation-z2" *ngIf="dates">
-            <mat-card-title>Dates</mat-card-title>
-            <mat-card-subtitle>
-                <div class="value-container">
-                    <div> {{dates[0]}}<br> to<br> {{dates[1]}}</div>
-                    <div>
-                        <button mat-icon-button
-                                matTooltip="Remove date range"
-                                (click)="datesRemoved()">
-                            <mat-icon>cancel</mat-icon>
-                        </button>
-                    </div>
+<div class="row-container">
+    <div class="data-table-container" [@fold] *ngIf="this.holdings && this.holdings.length > 0">
+        <mat-card class="card mat-elevation-z2">
+            <mat-card-title>
+                <div class="title-container">
+                    <div class="title">Risk Summary</div>
                 </div>
-                
-            </mat-card-subtitle>
+            </mat-card-title>
+            <mat-card-content>
+                <table mat-table [dataSource]="holdings">
+                    <ng-container matColumnDef="ticker">
+                        <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                        <td mat-cell *matCellDef="let holding"> {{holding.ticker}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="annual_return">
+                        <th mat-header-cell *matHeaderCellDef
+                            matTooltip="Annualized Percent Rate">Return </th>
+                        <td mat-cell *matCellDef="let holding"> {{holding.annual_return | percent: '1.2-4' }} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="annual_volatility">
+                        <th mat-header-cell *matHeaderCellDef
+                            matTooltip="Annualized Percent Rate"> Volatility </th>
+                        <td mat-cell *matCellDef="let holding"> {{holding.annual_volatility | percent: '1.2-4'}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="sharpe_ratio">
+                        <th mat-header-cell *matHeaderCellDef
+                            matTooltip="Annualized Percent Rate"> Sharpe Ratio</th>
+                        <td mat-cell *matCellDef="let holding"> {{holding.sharpe_ratio | percent: '1.2-4'}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="equity_cost">
+                        <th mat-header-cell *matHeaderCellDef
+                            matTooltip="Annualized Percent Rate"> Cost of Equity</th>
+                        <td mat-cell *matCellDef="let holding"> {{holding.equity_cost| percent: '1.2-4'}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="asset_beta">
+                        <th mat-header-cell *matHeaderCellDef
+                            matTooltip="Annualized Rate"> Asset Beta </th>
+                        <td mat-cell *matCellDef="let holding"> {{holding.asset_beta | number: '1.2-4'}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </mat-card-content>
         </mat-card>
+    </div>
+
+    <div class="chart-container mat-elevation-z2">
+        <div class="title-container">Risk Return Profile</div>
+        <div class="display-container">
+            <div>
+                <canvas baseChart chartType="scatter" [legend]="true"
+                            [options]="chartOptions" [datasets]="chartData" [colors]="chartColors">
+                </canvas>
+
+            </div>
+        </div>
     </div>
 </div>

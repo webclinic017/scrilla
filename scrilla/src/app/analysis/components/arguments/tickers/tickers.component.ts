@@ -55,7 +55,7 @@ export class TickersComponent implements OnInit {
     // filter out duplicate values. Note: indexOf returns *first* element 
     // that equals its argument. 
     tickerArray = tickerArray.filter(function(element: any, index: any, arr: any){
-      return index === arr.indexOf(element);
+      return index === arr.indexOf(element) && element.length > 0;
     });
     // TODO: before emitting, call service to see if inputted tickers are valid tickers,
     //  i.e. are the tickers listed on the stock exchange? 
