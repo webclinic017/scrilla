@@ -12,3 +12,4 @@
 1. ticker arg validation based on user role: nonAccountHolder -> five tickers per request, five requests per day.
     - form validation on angular side for five tickers, but also on backend.
     - throttling on backend, obviously.
+2. need to set translateOn and translateOff positions before animating since the positiosn will be altered by the animation itself. 
