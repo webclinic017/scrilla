@@ -28,4 +28,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; overflow-x:
 .spacer { flex: 1 1 auto; }
 .scroller{ overflow: auto; }
 
+.vertical-container{
+    display: flex; flex-direction: column;
+    justify-content: center;
+}
+.row-container{
+    display: flex; flex-direction: row;
+    justify-content:space-evenly;
+}
+
 ::-webkit-scrollbar { width: 10px;}

@@ -1,12 +1,19 @@
 
-
-
 <div class="row-container">
-    <div class="data-table" [@fold]>
-        <mat-card class="card mat-elevation-z2" *ngIf="holdings && holdings.length > 0">
-            <mat-card-title>Portfolio Allocation</mat-card-title>
+    <div class="data-table" [@fold] *ngIf="portfolio && portfolio.holdings && portfolio.holdings.length > 0">
+        <mat-card class="card mat-elevation-z2" >
+            <mat-card-title>
+                <div class="title-container">
+
+                <div>Portfolio Allocation</div>
+                <div class="chip-row-container">
+                    <mat-chip class="chip mat-elevation-z3">Portfolio Return: {{this.portfolio.portfolio_return | percent: '1.2-4'}}</mat-chip>
+                    <mat-chip class="chip mat-elevation-z3">Portfolio Volatility: {{this.portfolio.portfolio_volatility | percent: '1.2-4'}}</mat-chip>
+                </div>
+                </div>
+            </mat-card-title>
             <mat-card-content>
-                <table mat-table [dataSource]="holdings">
+                <table mat-table [dataSource]="portfolio.holdings">
                     <ng-container matColumnDef="ticker">
                         <th mat-header-cell *matHeaderCellDef> Symbol </th>
                         <td mat-cell *matCellDef="let holding"> {{holding.ticker}} </td>
@@ -38,7 +45,7 @@
     </div>
     
     <div class="pie-chart mat-elevation-z2">
-        <ngx-charts-pie-chart [@fold] *ngIf="holdings && holdings.length > 0" 
+        <ngx-charts-pie-chart [@fold] *ngIf="portfolio && portfolio.holdings && portfolio.holdings.length > 0" 
                 [results]="chartArgs" [doughnut]="true" [labels]="true">
         </ngx-charts-pie-chart>
     </div>

@@ -120,7 +120,7 @@ export class PortfolioOptimizerComponent implements OnInit {
           this.tutorialTooltips.toArray()[2].disabled = true;
           this.tutorialTooltips.toArray()[3].disabled = false;
           this.tutorialTooltips.toArray()[3].show()
-          this.tickerComponent.tickerControl.setValue('TSLA, MSFT')
+          this.tickerComponent.tickerControl.setValue('SPY, GLD, BTC')
           this.tickerComponent.tickerControl.markAsTouched();
           break;
         case 3:
@@ -135,7 +135,7 @@ export class PortfolioOptimizerComponent implements OnInit {
           this.tickerComponent.tickerTutorial.disabled = true;
           this.tutorialTooltips.toArray()[4].disabled = false;
           this.tutorialTooltips.toArray()[4].show()
-          this.targetComponent.scalarControl.setValue(0.25)
+          this.targetComponent.scalarControl.setValue(0.18)
           this.targetComponent.scalarControl.markAsTouched();
           this.targetComponent.addAnimationControl = this.animator.animateScale();
           break;
