@@ -78,7 +78,7 @@ def risk_profile(request):
         return response
 
     response = files.format_profiles(profiles=profiles)
-    return Response(data=profiles)
+    return Response(data=response)
 
 @api_view(['GET'])
 def correlation_matrix(request):
