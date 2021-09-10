@@ -116,7 +116,7 @@ def efficient_frontier(request):
 @api_view(['GET'])
 def discount_dividend(request):
     try:
-        params, response, cashflow_to_plot = parse_query_params(request), {}, None
+        params, response, cashflow_to_plot = parse_query_params(request), [], None
     except ValueError:
         return Response(data={ 'message': 'invalid query parameters'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -127,16 +127,22 @@ def discount_dividend(request):
             discount = markets.cost_of_equity(ticker=ticker, start_date=params['start_date'], end_date=params['end_date'])
         
         sample = services.get_dividend_history(ticker=ticker)
-        present_value = Cashflow(sample=sample,discount_rate=discount).calculate_net_present_value()
 
-        if present_value:
-            response[ticker]={ 'discount_dividend_model': present_value }
-        else: 
-            response[ticker]={ 'error': 'discount dividend price cannot be computed for this equity' }
-        
         if params['image']:
             cashflow_to_plot = Cashflow(sample=sample,discount_rate=discount)
             break
+
+        present_value = Cashflow(sample=sample,discount_rate=discount).calculate_net_present_value()
+        subresponse = {}
+        
+        if present_value:
+            subresponse['ticker']=ticker
+            subresponse['discount_dividend_model'] = present_value
+            subresponse['data'] = sample
+        else: 
+            subresponse['error']= "discount dividend price cannot be computed for this equity"
+        
+        response.append(subresponse)
     
     if params['image']:
         graph = plotter.plot_cashflow(ticker=params['tickers'][0], cashflow=cashflow_to_plot, show=False)
