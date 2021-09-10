@@ -132,15 +132,19 @@ def discount_dividend(request):
             cashflow_to_plot = Cashflow(sample=sample,discount_rate=discount)
             break
 
-        present_value = Cashflow(sample=sample,discount_rate=discount).calculate_net_present_value()
+        cashflow = Cashflow(sample=sample,discount_rate=discount)
+        present_value = cashflow.calculate_net_present_value()
         subresponse = {}
         
         if present_value:
             subresponse['ticker']=ticker
-            subresponse['discount_dividend_model'] = present_value
-            subresponse['data'] = sample
+            subresponse['net_present_value'] = present_value
+            subresponse['model_alpha'] = cashflow.alpha
+            subresponse['model_beta'] = cashflow.beta
+            subresponse['model_discount'] = discount
+            subresponse['model_data'] = sample
         else: 
-            subresponse['error']= "discount dividend price cannot be computed for this equity"
+            subresponse['error']= "discount dividend modelprice cannot be computed for this equity"
         
         response.append(subresponse)
     
