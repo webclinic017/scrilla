@@ -1,20 +1,13 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { Portfolio } from 'src/app/models/holding';
 import { AnimationProperties, AnimationService, animationControls } from 'src/app/services/animations.service';
 import { ApiService, QueryParams } from 'src/app/services/api.service';
 import { ScalarComponent } from '../../arguments/scalar/scalar.component';
 import { TickersComponent } from '../../arguments/tickers/tickers.component';
+import { Widget } from '../../widget';
 
-const foldAnimationProperties : AnimationProperties= {
-  delay: '', duration: '250ms', easing: ''
-}
-const toHeightDuration=350
-const toHeightAnimationProperties: AnimationProperties = {
-  delay: '', duration: `${toHeightDuration}ms`, easing: ''
-}
 const modes : any = {
   minimizeVariance: {
     title: 'Minimize Portfolio Volatility',
@@ -35,12 +28,13 @@ const modes : any = {
   templateUrl: './portfolio-optimizer.component.html',
   styleUrls: ['../widgets.css'],
   animations: [
-    AnimationService.getScaleTrigger(1.25),
-    AnimationService.getFoldTrigger(foldAnimationProperties),
-    AnimationService.getToHeightTrigger(toHeightAnimationProperties),
+    AnimationService.getScaleTrigger(Widget.scaleFactor),
+    AnimationService.getFoldTrigger(Widget.foldAnimationProperties),
+    AnimationService.getToHeightTrigger(Widget.toHeightAnimationProperties),
   ]
 })
-export class PortfolioOptimizerComponent implements OnInit {
+export class PortfolioOptimizerComponent extends Widget implements OnInit {
+  
   @ViewChildren('tutorialTooltip')
   public tutorialTooltips !: QueryList<MatTooltip>;
 
@@ -54,35 +48,17 @@ export class PortfolioOptimizerComponent implements OnInit {
   public optimizeBtnAnimationControl = this.animator.initAnimation();
   public tutorialBtnAnimationControl = this.animator.initAnimation();
   public clearBtnAnimationControl = this.animator.initAnimation();
-  public inputCardAnimationControl = this.animator.initAnimation();
-  public outputCardAnimationControl = this.animator.initAnimation();
-
-  public tickers: string[] = [];
-  public targetReturn ?: number;
-  public totalInvestment ?: number;
-  public dates ?: string[]
-  public probability ?: number;
-  public expiry ?: number;
 
   public portfolio?: Portfolio;
   public whichStep?: number;
 
   public loading : boolean = false;
-  public optionalArguments : FormGroup;
   public modeSelection : FormControl;
 
   constructor(public animator : AnimationService, public api: ApiService,
               public formBuilder : FormBuilder) { 
-    this.optionalArguments = this.formBuilder.group({
-      target: this.formBuilder.group({ enabled: false }),
-      invest: this.formBuilder.group({ enabled: false }),
-      date: this.formBuilder.group({ enabled: false })
-    })
+    super(animator, api, formBuilder);
     this.modeSelection = new FormControl(modes.minimizeVariance);
-    this.modeSelection.valueChanges.subscribe( data=>{
-      console.log('here is where you would do data stuff when mode changes')
-      console.log(data);
-    })
   }
 
   ngOnInit(): void { }
@@ -177,7 +153,7 @@ export class PortfolioOptimizerComponent implements OnInit {
         this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.none);
         setTimeout(()=>{
           this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.full);
-        }, toHeightDuration+10)
+        }, Widget.toHeightDuration+10)
       },
       err =>{
         console.log(err);
@@ -194,38 +170,7 @@ export class PortfolioOptimizerComponent implements OnInit {
     this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.forty);
     setTimeout(()=>{
       this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.sixty)
-    }, toHeightDuration+10)
+    }, Widget.toHeightDuration+10)
   }
-
-  public setTickers(tickers: string[]): void{ 
-    console.log('setting tickerss')
-    this.tickers = [...this.tickers, ...tickers];
-    this.tickers = this.tickers.filter(function(element, index, arr){
-      return index == arr.indexOf(element);
-    })
-  }
-
-  public removeTicker(ticker : string): void{  
-    console.log('removing ticker')
-    this.tickers.splice(this.tickers.indexOf(ticker), 1); }
-
-  public setDates(dates : string []): void{ this.dates = dates; }
   
-  public removeDates(): void{ this.dates = [] }
-
-  public setTarget(target : number): void{ this.targetReturn = target; }
-
-  public removeTarget(): void{ this.targetReturn = undefined; }
-
-  public setInvestment(investment: number): void{ this.totalInvestment = investment; }
-
-  public removeInvestment(): void { this.totalInvestment = undefined;}
-
-  public setProbability(prob : number): void{ this.probability = prob;}
-
-  public removeProbability(){ this.probability = undefined; }
-
-  public setExpiry(expiry : number){ this.expiry = expiry; }
-
-  public removeExpiry(){ this.expiry = undefined; }
 }

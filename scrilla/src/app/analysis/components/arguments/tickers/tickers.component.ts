@@ -16,14 +16,13 @@ export class TickersComponent implements OnInit {
   public tickerTutorial !: MatTooltip;
   
   @Input()
-  public single : boolean = false;
+  public limit?: number;
+
   @Input()
   public disabled : boolean = false;
 
   @Output()
   public tickers : EventEmitter<string[]> = new EventEmitter<string[]>();
-  @Output()
-  public ticker : EventEmitter<string> = new EventEmitter<string>();
 
   public addAnimationControl : AnimationControl = this.animator.initAnimation()
   public tickerControl !: FormControl;
@@ -33,7 +32,7 @@ export class TickersComponent implements OnInit {
 
   ngOnInit(): void { 
     let validators = [Validators.required]
-    if(this.single){ validators.push(this.multipleTickersValidator())}
+    if(this.limit !== undefined){ validators.push(this.multipleTickersValidator())}
     this.tickerControl = new FormControl('', validators)
   }
 
@@ -60,7 +59,7 @@ export class TickersComponent implements OnInit {
     // TODO: before emitting, call service to see if inputted tickers are valid tickers,
     //  i.e. are the tickers listed on the stock exchange? 
     //  If not, custom Validator needed.
-    if(this.single){ this.ticker.emit(tickerArray[0])}
+    if(this.limit !== undefined){ this.tickers.emit(tickerArray.slice(0, this.limit))}
     else{ this.tickers.emit(tickerArray)}
     this.tickerControl.reset()
   }

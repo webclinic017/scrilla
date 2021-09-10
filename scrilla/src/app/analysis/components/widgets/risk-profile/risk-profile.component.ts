@@ -3,41 +3,31 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Holding } from 'src/app/models/holding';
 import { AnimationControl, animationControls, AnimationProperties, AnimationService } from 'src/app/services/animations.service';
 import { ApiService, QueryParams } from 'src/app/services/api.service';
+import { Widget } from '../../widget';
 
-const foldAnimationProperties : AnimationProperties= {
-  delay: '', duration: '250ms', easing: ''
-}
-const toHeightDuration=350
-const toHeightAnimationProperties: AnimationProperties = {
-  delay: '', duration: `${toHeightDuration}ms`, easing: ''
-}
 
 @Component({
   selector: 'app-risk-profile',
   templateUrl: './risk-profile.component.html',
   styleUrls: ['../widgets.css'],
   animations: [
-    AnimationService.getFoldTrigger(foldAnimationProperties),
-    AnimationService.getScaleTrigger(1.25),
-    AnimationService.getToHeightTrigger(toHeightAnimationProperties),
+    AnimationService.getFoldTrigger(Widget.foldAnimationProperties),
+    AnimationService.getScaleTrigger(Widget.scaleFactor),
+    AnimationService.getToHeightTrigger(Widget.toHeightAnimationProperties),
   ]
 })
-export class RiskProfileComponent implements OnInit {
+export class RiskProfileComponent extends Widget implements OnInit {
 
   public holdings ?: Holding[];
-  public tickers: string[] = [];
-  public dates ?: string[]
 
   public loading : boolean = false;
-  public optionalArguments : FormGroup;
   
   public calcBtnAnimationControl : AnimationControl = this.animator.initAnimation();
   public clearBtnAnimationControl : AnimationControl = this.animator.initAnimation();
-  public inputCardAnimationControl = this.animator.initAnimation();
-  public outputCardAnimationControl = this.animator.initAnimation();
 
-  constructor(public animator : AnimationService, public formBuilder : FormBuilder,
-              public api: ApiService) { 
+  constructor(public animator : AnimationService, public api: ApiService, 
+              public formBuilder : FormBuilder,) {
+    super(animator, api, formBuilder); 
     this.optionalArguments = this.formBuilder.group({
       date: this.formBuilder.group({ enabled: false })
     })
@@ -59,7 +49,7 @@ export class RiskProfileComponent implements OnInit {
       this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.none);
       setTimeout(()=>{
         this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.full);
-      }, toHeightDuration)
+      }, Widget.toHeightDuration)
     })
   }
 
@@ -69,14 +59,7 @@ export class RiskProfileComponent implements OnInit {
     this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.forty);
     setTimeout(()=>{
       this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.sixty)
-    }, toHeightDuration)
+    }, Widget.toHeightDuration)
   }
 
-  public setTickers(tickers: string[]){ this.tickers = tickers; }
-  
-  public removeTicker(ticker : string): void{  this.tickers.splice(this.tickers.indexOf(ticker), 1); }
-
-  public setDates(dates : string[]){ this.dates = dates}
-
-  public removeDates(){ this.dates = undefined; }
 }

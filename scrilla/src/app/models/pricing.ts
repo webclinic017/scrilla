@@ -1,4 +1,12 @@
+export interface data{
+    [key: string]: Object
+}
+
 export interface DiscountDividend{
     ticker: string,
-    discount_dividend_model: number,
+    net_present_value: number,
+    model_alpha: number,
+    model_beta: number,
+    model_discount: number,
+    model_data: data[]
 }
