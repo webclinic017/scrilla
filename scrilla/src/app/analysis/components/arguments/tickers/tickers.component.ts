@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { MatTooltip } from '@angular/material/tooltip';
 import { AnimationControl, AnimationService } from 'src/app/services/animations.service';
 
 @Component({
@@ -11,7 +12,9 @@ import { AnimationControl, AnimationService } from 'src/app/services/animations.
   ]
 })
 export class TickersComponent implements OnInit {
-
+  @ViewChild('tutorialTooltip')
+  public tickerTutorial !: MatTooltip;
+  
   @Input()
   public single : boolean = false;
   @Input()

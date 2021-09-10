@@ -10,8 +10,10 @@ export interface AnimationControl{
     translateOff?: string, translateOn?: string, toHeight?: string
 }
 
+export const defaultDuration = 500
+
 export const defaultAnimationProperties : AnimationProperties = {
-    delay: '25ms', duration: '500ms', easing: ''
+    delay: '25ms', duration: `${defaultDuration}ms`, easing: ''
 }
 
 export const animationControls = {

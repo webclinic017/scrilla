@@ -10,13 +10,15 @@
                                 [@scale]="tutorialBtnAnimationControl.scale"
                                 (mouseenter)="tutorialBtnAnimationControl = animator.animateScale()"
                                 (mouseleave)="tutorialBtnAnimationControl = animator.initAnimation()"
-                                (click)="step()">
-                            {{ whichStep ? 'Show Next' : 'Tutorial'}}
+                                (click)="stepTutorial()">
+                            {{ whichStep !== undefined ? 'Show Next' : 'Tutorial'}}
                         </button>
                     </div>
                     <div class="action-button">
                         <button mat-raised-button color="accent"
-                            matTooltip="Optimize the current portfolio of tickers"
+                            #tutorialTooltip="matTooltip"
+                            matTooltip="6. Once all the input and constraints have been set, click this button to optimize your portfolio"
+                            matTooltipDisabled="true"
                             [disabled]="tickers.length === 0 || (tickers.length > 0 && portfolio !== undefined) ||
                                         ( modeSelection.value === modes.minimizeConditionalValueAtRisk && (!probability || !expiry)) "
                             [@scale]="optimizeBtnAnimationControl.scale"
@@ -31,12 +33,14 @@
 
             
         </mat-card-title>
-        <mat-card-subtitle>Mode: {{modeSelection.value.title}} </mat-card-subtitle>
+        <mat-card-subtitle>Mode: {{modeSelection.value.title}} {{whichStep}}</mat-card-subtitle>
         <mat-card-content>
+
             <div class="arguments-container">
                 <section id="mode-selection" class="item mat-elevation-z3"
                     #tutorialTooltip="matTooltip"
-                    matTooltip="Select an optimization mode. You can choose from a strategy that will either minimize your portfolio volatility, maximize your portfolio's sharpe ratio, or minimize your portfolio's conditional value at risk">
+                    matTooltip="1. Select an optimization mode. You can choose from a strategy that will either minimize your portfolio volatility, maximize your portfolio's sharpe ratio, or minimize your portfolio's conditional value at risk"
+                    matTooltipDisabled="true">
                     <h2>Mode</h2>
                     <mat-button-toggle-group aria-label="Mode Selection" vertical 
                                             [formControl]="modeSelection">
@@ -60,7 +64,8 @@
 
                 <section id="optional-toggle" class="item mat-elevation-z2" [formGroup]="optionalArguments"
                     #tutorialTooltip="matTooltip" matTooltipPosition="above"
-                    matTooltip="Select any optional constraints you want to impose on your portfolio.">
+                    matTooltip="2. Select any optional constraints you want to impose on your portfolio."
+                    matTooltipDisabled="true">
                     <h2>Optional Input</h2>
                     <div formGroupName="target">
                         <mat-checkbox formControlName="enabled" aria-label="Target Return Input, Optional"
@@ -85,7 +90,8 @@
                 <span id="ticker-input" class="item mat-elevation-z2">
                     <app-tickers [disabled]="portfolio !== undefined"
                                 #tutorialTooltip="matTooltip"
-                                matTooltip="Enter a basket of assets separated by a comma. Equities should be specified by ticker symbols from the NYSE Listing Directory and cryptocurrencies should be specified by their corresponding tickers from Coinbase. "
+                                matTooltip="3. Enter a basket of assets separated by a comma. Equities should be specified by ticker symbols from the NYSE Listing Directory and cryptocurrencies should be specified by their corresponding tickers from Coinbase."
+                                [matTooltipDisabled]="whichStep !== 2"
                                 (tickers)="setTickers($event)"></app-tickers>
                 </span>
 
@@ -108,9 +114,11 @@
 
                 <span id="target-input" class="item mat-elevation-z2" [@fold]
                         #tutorialTooltip="matTooltip"
-                        matTooltip="If you selected an optional input, enter a value."
+                        matTooltip="5. If you selected an optional input, enter a value."
+                        matTooltipDisabled="true"
                         *ngIf="optionalArguments.get('target.enabled')?.value">
                     <app-scalar title="Target Return"
+                                #targetInput
                                 [disabled]="portfolio !== undefined"
                                 [currency]="false"
                                 (scalar)="setTarget($event)" ></app-scalar>
@@ -132,6 +140,8 @@
             </div>
         </mat-card-content>
     </mat-card>
+
+    <mat-progress-bar *ngIf="loading" mode="buffer" color="accent"></mat-progress-bar>
 
     <mat-card class="output-card" [@toHeight]="this.outputCardAnimationControl.toHeight">
         <mat-card-title>

@@ -1,9 +1,11 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { Portfolio } from 'src/app/models/holding';
 import { AnimationProperties, AnimationService, animationControls } from 'src/app/services/animations.service';
 import { ApiService, QueryParams } from 'src/app/services/api.service';
+import { ScalarComponent } from '../../arguments/scalar/scalar.component';
 import { TickersComponent } from '../../arguments/tickers/tickers.component';
 
 const foldAnimationProperties : AnimationProperties= {
@@ -41,6 +43,9 @@ const modes : any = {
 export class PortfolioOptimizerComponent implements OnInit {
   @ViewChildren('tutorialTooltip')
   public tutorialTooltips !: QueryList<MatTooltip>;
+
+  @ViewChild('targetInput')
+  public targetComponent !: ScalarComponent;
   @ViewChild(TickersComponent)
   public tickerComponent !: TickersComponent;
   
@@ -62,6 +67,7 @@ export class PortfolioOptimizerComponent implements OnInit {
   public portfolio?: Portfolio;
   public whichStep?: number;
 
+  public loading : boolean = false;
   public optionalArguments : FormGroup;
   public modeSelection : FormControl;
 
@@ -81,30 +87,75 @@ export class PortfolioOptimizerComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  public step(){
+    // yes, this may is ugly
+  public stepTutorial(){
     if(this.whichStep === undefined){ this.whichStep = 0;}
     else{ 
       this.whichStep++;
-      if(this.whichStep > this.tutorialTooltips.toArray().length - 1){
+       // # of viewchildren + extra viewchilds
+      if(this.whichStep > this.tutorialTooltips.toArray().length){
         this.whichStep = undefined!;
       } 
     }
-    console.log(this.whichStep)
     if(this.whichStep !== undefined){
       this.tutorialTooltips.forEach(element=>{ element.hide(); })
-      this.tutorialTooltips.toArray()[this.whichStep].show()
+        // order of tutorialTooltips is determined by DOM insertion order;
+        // the disconnect between the index and the state, as seen in the 
+        // the following switch statement, is due to this fact. The last
+        // tutorialTooltip, the optimize button, is inserted into the DOM,
+        // ahead of the other tutorialTooltips, so the switch statement
+        // has to be careful what element of the array it is modifying.
       switch(this.whichStep){
+        case 0:
+          this.tutorialTooltips.toArray()[1].disabled = false;
+          this.tutorialTooltips.toArray()[1].show()
+          break;
         case 1:
+          this.tutorialTooltips.toArray()[1].disabled = true;
+          this.tutorialTooltips.toArray()[2].disabled = false;
+          this.tutorialTooltips.toArray()[2].show()
           this.optionalArguments.controls['target'].get('enabled')?.setValue(true)
           break;
         case 2: 
-          this.tickerComponent.tickerControl.setValue('ALLY, BX')
+          this.tutorialTooltips.toArray()[2].disabled = true;
+          this.tutorialTooltips.toArray()[3].disabled = false;
+          this.tutorialTooltips.toArray()[3].show()
+          this.tickerComponent.tickerControl.setValue('TSLA, MSFT')
+          this.tickerComponent.tickerControl.markAsTouched();
+          break;
+        case 3:
+          this.tutorialTooltips.toArray()[3].disabled = true;
+          this.tickerComponent.tickerTutorial.disabled = false;
+          this.tickerComponent.tickerTutorial.show();
+          this.tickerComponent.addAnimationControl = this.animator.animateScale();          
+          break;
+        case 4:
+          this.tickerComponent.parseTickers();
+          this.tickerComponent.addAnimationControl = this.animator.initAnimation();
+          this.tickerComponent.tickerTutorial.disabled = true;
+          this.tutorialTooltips.toArray()[4].disabled = false;
+          this.tutorialTooltips.toArray()[4].show()
+          this.targetComponent.scalarControl.setValue(0.25)
+          this.targetComponent.scalarControl.markAsTouched();
+          this.targetComponent.addAnimationControl = this.animator.animateScale();
+          break;
+        case 5:
+          this.targetComponent.parseScalar();
+          this.targetComponent.addAnimationControl = this.animator.initAnimation();
+          this.optimizeBtnAnimationControl = this.animator.animateScale();
+          this.tutorialTooltips.toArray()[4].disabled = true;
+          this.tutorialTooltips.toArray()[0].disabled = false;
+          this.tutorialTooltips.toArray()[0].show()
+          break;
+
       }
     }
     else{
       this.optionalArguments.controls['target'].get('enabled')?.setValue(false);
+      this.tutorialTooltips.toArray()[0].disabled = true;
       this.tickerComponent.tickerControl.setValue('');
-
+      this.targetComponent.scalarControl.setValue(undefined)
+      this.optimize();
     }
   }
 
@@ -117,10 +168,12 @@ export class PortfolioOptimizerComponent implements OnInit {
       mode: this.modeSelection.value.param,
       prob: this.probability, expiry: this.expiry
     }
+    this.loading = true;
     this.api.optimize(params).subscribe(
       data=>{ 
         this.portfolio = data;  
         this.modeSelection.disable(); this.optionalArguments.disable();
+        this.loading = false;
         this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.toHeight.states.none);
         setTimeout(()=>{
           this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.toHeight.states.full);

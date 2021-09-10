@@ -22,6 +22,9 @@
     <mat-card-actions align="end">
         <button mat-icon-button color="accent" matTooltip="Add tickers"
             *ngIf="tickerControl.value && !tickerControl.invalid && (tickerControl.dirty || tickerControl.touched)"
+            #tutorialTooltip="matTooltip"
+            matTooltip="4. Click the Add button to store the assets in your portfolio"  
+            matTooltipDisabled="true"
             [@scale]="addAnimationControl.scale" [disabled]="this.disabled"
             (mouseenter)="addAnimationControl = this.animator.animateScale()"
             (mouseleave)="addAnimationControl = this.animator.initAnimation()"

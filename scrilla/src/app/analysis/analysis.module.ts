@@ -15,6 +15,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AllocationComponent } from './components/results/allocation/allocation.component';
@@ -62,6 +63,7 @@ import { ConstraintsComponent } from './components/results/constraints/constrain
     MatIconModule,
     MatInputModule,
     MatNativeDateModule,
+    MatProgressBarModule,
     MatTableModule,
     MatTooltipModule,
   ],
