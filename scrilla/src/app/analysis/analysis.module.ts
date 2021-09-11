@@ -18,6 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AllocationComponent } from './components/results/allocation/allocation.component';
 
@@ -31,6 +32,7 @@ import { DateComponent } from './components/arguments/date/date.component';
 import { ProfileComponent } from './components/results/profile/profile.component';
 import { CorrelationMatrixComponent } from './components/widgets/correlation-matrix/correlation-matrix.component';
 import { ConstraintsComponent } from './components/results/constraints/constraints.component';
+import { ModelComponent } from './components/results/model/model.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { ConstraintsComponent } from './components/results/constraints/constrain
     AllocationComponent,
     ProfileComponent,
     CorrelationMatrixComponent,
-    ConstraintsComponent
+    ConstraintsComponent,
+    ModelComponent
   ],
   imports: [
     CommonModule,
@@ -66,6 +69,7 @@ import { ConstraintsComponent } from './components/results/constraints/constrain
     MatNativeDateModule,
     MatProgressBarModule,
     MatTableModule,
+    MatTabsModule,
     MatTooltipModule,
   ],
   providers: [ DatePipe ]

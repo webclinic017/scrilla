@@ -1,5 +1,5 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { AnimationControl, AnimationProperties, AnimationService } from "src/app/services/animations.service";
+import { AnimationControl, animationControls, AnimationProperties, AnimationService } from "src/app/services/animations.service";
 import { ApiService } from "src/app/services/api.service";
 
 export class Widget{
@@ -22,7 +22,9 @@ export class Widget{
 
     public inputCardAnimationControl : AnimationControl = this.animator.initAnimation();
     public outputCardAnimationControl : AnimationControl = this.animator.initAnimation();
-  
+    public clearBtnAnimationControl = this.animator.initAnimation();
+    public calcBtnAnimationControl = this.animator.initAnimation();
+
     public optionalArguments : FormGroup;
 
     constructor(public animator : AnimationService, public api: ApiService,
@@ -57,10 +59,24 @@ export class Widget{
 
     public setProbability(prob : number): void{ this.probability = prob;}
 
-    public removeProbability(){ this.probability = undefined; }
+    public removeProbability(): void{ this.probability = undefined; }
 
-    public setExpiry(expiry : number){ this.expiry = expiry; }
+    public setExpiry(expiry : number): void{ this.expiry = expiry; }
 
-    public removeExpiry(){ this.expiry = undefined; }
+    public removeExpiry(): void{ this.expiry = undefined; }
+
+    public animateCalculate(): void{
+        this.optionalArguments.disable();
+        this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.none);
+        setTimeout(()=>{  this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.full);}, 
+                    Widget.toHeightDuration);
+    }
+
+    public animiateClear(): void {
+        this.optionalArguments.enable()
+        this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.forty);
+        setTimeout(()=>{ this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.sixty) }, 
+                    Widget.toHeightDuration)
+    }
 
 }

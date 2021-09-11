@@ -1,0 +1,47 @@
+{{title}}
+<div class="tab-container" *ngIf="results !== undefined">
+    <mat-tab-group>
+        <mat-tab *ngFor="let result of results" [label]="result.ticker" class="fill">
+            <div class="row-container">
+                <div id="discount-dividend-summary" class="summary-container"
+                    *ngIf="this.isDDM()">
+                    <mat-card class="card mat-elevation-z2">
+                        <mat-card-title>Net Present Value</mat-card-title>
+                        <mat-card-subtitle class="result-container">
+                                {{ result.net_present_value | number: '1.2-2' }}
+                        </mat-card-subtitle>
+                    </mat-card>
+
+                    <mat-card class="card mat-elevation-z2">
+                        <mat-card-title>Model Slope</mat-card-title>
+                        <mat-card-subtitle class="result-container">
+                            {{ result.model_alpha | number: '1.2-4' }}
+                        </mat-card-subtitle>
+                    </mat-card>
+
+                    <mat-card class="card mat-elevation-z2">
+                        <mat-card-title>Model Intercept</mat-card-title>
+                        <mat-card-subtitle class="result-container">
+                            {{ result.model_beta | number: '1.2-4'}}
+                        </mat-card-subtitle>
+                    </mat-card>
+
+                    <mat-card class="card mat-elevation-z2">
+                        <mat-card-title>Model Discount</mat-card-title>
+                        <mat-card-subtitle class="result-container">
+                            {{ result.model_discount | number: '1.2-4' }}
+                        </mat-card-subtitle>
+                    </mat-card>
+                </div>
+
+                <div class="chart-container mat-elevation-z2">
+                    <div class="title-container">Model Visualization</div>
+                    <div class="display-container">
+                        
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+
+</div>

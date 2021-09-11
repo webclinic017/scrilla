@@ -7,7 +7,7 @@
                     <div class="action-button">
                         <button mat-raised-button color="accent"
                             [@scale]="calcBtnAnimationControl.scale"
-                            [disabled]="this.tickers.length === 0 || this.model !== undefined"
+                            [disabled]="this.tickers.length === 0 || this.results!== undefined"
                             (mouseenter)="this.calcBtnAnimationControl = this.animator.animateScale()"
                             (mouseleave)="this.calcBtnAnimationControl = this.animator.initAnimation()"
                             (click)="this.calculate()">
@@ -30,7 +30,7 @@
                 </section>
 
                 <span id="ticker-input" class="item mat-elevation-z2">
-                    <app-tickers [limit]="1" (tickers)="setTickers($event)"></app-tickers>
+                    <app-tickers (tickers)="setTickers($event)"></app-tickers>
                 </span>
                 
                 <span id="date-input" class="item mat-elevation-z3" [@fold]
@@ -63,12 +63,14 @@
         <mat-card-content>
             <div class="result-container">
                 <div class="item side-item">
-                    <app-constraints [tickers]="this.tickers" [dates]="this.dates" [disabled]="this.model !== undefined"
+                    <app-constraints [tickers]="this.tickers" [dates]="this.dates" [disabled]="this.results !== undefined"
                                     (removeTicker)="this.removeTicker($event)" (removeDates)="this.removeDates()">
                     </app-constraints>
                 </div>
                 <div class="item main-item">
-                    <div *ngIf="this.model">result app goes here</div>
+                    <app-model *ngIf="this.results" 
+                                [model]="this.selectedModel"
+                                [results]="this.results"></app-model>
                 </div>
             </div>
         </mat-card-content>

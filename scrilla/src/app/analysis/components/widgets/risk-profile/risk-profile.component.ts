@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Holding } from 'src/app/models/holding';
 import { AnimationControl, animationControls, AnimationProperties, AnimationService } from 'src/app/services/animations.service';
 import { ApiService, QueryParams } from 'src/app/services/api.service';
-import { Widget } from '../../widget';
+import { Widget } from '../widget';
 
 
 @Component({
@@ -21,9 +21,6 @@ export class RiskProfileComponent extends Widget implements OnInit {
   public holdings ?: Holding[];
 
   public loading : boolean = false;
-  
-  public calcBtnAnimationControl : AnimationControl = this.animator.initAnimation();
-  public clearBtnAnimationControl : AnimationControl = this.animator.initAnimation();
 
   constructor(public animator : AnimationService, public api: ApiService, 
               public formBuilder : FormBuilder,) {
@@ -42,24 +39,16 @@ export class RiskProfileComponent extends Widget implements OnInit {
       end: this.dates ? this.dates[1] : undefined,
     }
     this.loading = true;
-    this.api.profile(params).subscribe( (data)=>{
+    this.api.risk_profile(params).subscribe( (data)=>{
       this.holdings = data;
-      this.optionalArguments.disable();
       this.loading = false;
-      this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.none);
-      setTimeout(()=>{
-        this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.full);
-      }, Widget.toHeightDuration)
+      super.animateCalculate();
     })
   }
 
   public clear() : void {
     this.holdings = undefined; this.tickers = []; this.dates = undefined;
-    this.optionalArguments.enable()
-    this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.forty);
-    setTimeout(()=>{
-      this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.sixty)
-    }, Widget.toHeightDuration)
+    super.animiateClear();
   }
 
 }

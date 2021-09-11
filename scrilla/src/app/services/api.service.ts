@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Holding, Portfolio } from '../models/holding';
+import { DiscountDividend } from '../models/pricing';
 import { HostService } from './host.service';
 
 export interface QueryParams{
   tickers: string[],
-  start: string | undefined, end?: string,
+  start?: string, end?: string,
   target?: number, invest?:number,
   mode?: string, prob?: number, 
   expiry?: number
@@ -45,14 +46,18 @@ export class ApiService {
     return query;
   }
 
-  public optimize(params: QueryParams): Observable<Portfolio>{
+  public optimize_portfolio(params: QueryParams): Observable<Portfolio>{
     let url = `${this.host.getHost()}/${endpoints.api.optimize}?${this.constructQuery(params)}`
     return this.http.get<Portfolio>(url)
   }
 
-  public profile(params: QueryParams): Observable<Holding[]>{
+  public risk_profile(params: QueryParams): Observable<Holding[]>{
     let url =`${this.host.getHost()}/${endpoints.api.risk_profile}?${this.constructQuery(params)}`
     return this.http.get<Holding[]>(url)
   }
 
+  public dividend_model(params: QueryParams): Observable<DiscountDividend[]>{
+    let url = `${this.host.getHost()}/${endpoints.api.discount_dividend}?${this.constructQuery(params)}`
+    return this.http.get<DiscountDividend[]>(url);
+  }
 }

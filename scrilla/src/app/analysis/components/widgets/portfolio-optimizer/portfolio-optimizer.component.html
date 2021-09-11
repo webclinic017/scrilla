@@ -21,10 +21,10 @@
                             matTooltipDisabled="true"
                             [disabled]="tickers.length === 0 || (tickers.length > 0 && portfolio !== undefined) ||
                                         ( modeSelection.value === modes.minimizeConditionalValueAtRisk && (!probability || !expiry)) "
-                            [@scale]="optimizeBtnAnimationControl.scale"
-                            (mouseenter)="optimizeBtnAnimationControl = animator.animateScale()"
-                            (mouseleave)="optimizeBtnAnimationControl = animator.initAnimation()"
-                            (click)="optimize()">
+                            [@scale]="calcBtnAnimationControl.scale"
+                            (mouseenter)="calcBtnAnimationControl = animator.animateScale()"
+                            (mouseleave)="calcBtnAnimationControl = animator.initAnimation()"
+                            (click)="calculate()">
                             Optimize
                         </button>
                     </div>

@@ -55,4 +55,5 @@
 .result-container .main-item{
     min-width: 75%;
     max-width: 79%;
+    min-height: 100%;
 }

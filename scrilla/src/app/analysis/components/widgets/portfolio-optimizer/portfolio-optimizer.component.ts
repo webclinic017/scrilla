@@ -2,11 +2,11 @@ import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { Portfolio } from 'src/app/models/holding';
-import { AnimationProperties, AnimationService, animationControls } from 'src/app/services/animations.service';
+import { AnimationService } from 'src/app/services/animations.service';
 import { ApiService, QueryParams } from 'src/app/services/api.service';
 import { ScalarComponent } from '../../arguments/scalar/scalar.component';
 import { TickersComponent } from '../../arguments/tickers/tickers.component';
-import { Widget } from '../../widget';
+import { Widget } from '../widget';
 
 const modes : any = {
   minimizeVariance: {
@@ -45,9 +45,7 @@ export class PortfolioOptimizerComponent extends Widget implements OnInit {
   
   public modes : any = modes;
 
-  public optimizeBtnAnimationControl = this.animator.initAnimation();
   public tutorialBtnAnimationControl = this.animator.initAnimation();
-  public clearBtnAnimationControl = this.animator.initAnimation();
 
   public portfolio?: Portfolio;
   public whichStep?: number;
@@ -118,7 +116,7 @@ export class PortfolioOptimizerComponent extends Widget implements OnInit {
         case 5:
           this.targetComponent.parseScalar();
           this.targetComponent.addAnimationControl = this.animator.initAnimation();
-          this.optimizeBtnAnimationControl = this.animator.animateScale();
+          this.calcBtnAnimationControl = this.animator.animateScale();
           this.tutorialTooltips.toArray()[4].disabled = true;
           this.tutorialTooltips.toArray()[0].disabled = false;
           this.tutorialTooltips.toArray()[0].show()
@@ -131,11 +129,11 @@ export class PortfolioOptimizerComponent extends Widget implements OnInit {
       this.tutorialTooltips.toArray()[0].disabled = true;
       this.tickerComponent.tickerControl.setValue('');
       this.targetComponent.scalarControl.setValue(undefined)
-      this.optimize();
+      this.calculate();
     }
   }
 
-  public optimize(){
+  public calculate(){
     let params : QueryParams = {
       tickers: this.tickers,
       start: this.dates ? this.dates[0] : undefined,
@@ -145,15 +143,12 @@ export class PortfolioOptimizerComponent extends Widget implements OnInit {
       prob: this.probability, expiry: this.expiry
     }
     this.loading = true;
-    this.api.optimize(params).subscribe(
+    this.api.optimize_portfolio(params).subscribe(
       data=>{ 
         this.portfolio = data;  
-        this.modeSelection.disable(); this.optionalArguments.disable();
+        this.modeSelection.disable();
         this.loading = false;
-        this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.none);
-        setTimeout(()=>{
-          this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.full);
-        }, Widget.toHeightDuration+10)
+        super.animateCalculate();
       },
       err =>{
         console.log(err);
@@ -166,11 +161,8 @@ export class PortfolioOptimizerComponent extends Widget implements OnInit {
     this.tickers = []; this.targetReturn = undefined;
     this.totalInvestment = undefined; this.dates = undefined;
     this.expiry = undefined; this.probability = undefined;
-    this.modeSelection.enable(); this.optionalArguments.enable();
-    this.outputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.forty);
-    setTimeout(()=>{
-      this.inputCardAnimationControl = this.animator.animateToHeight(animationControls.to.states.sixty)
-    }, Widget.toHeightDuration+10)
+    this.modeSelection.enable(); 
+    super.animiateClear();
   }
   
 }
