@@ -40,6 +40,7 @@ export class PriceModelComponent extends Widget implements OnInit {
     let params : QueryParams={ tickers: this.tickers, }
     this.api.dividend_model(params).subscribe((data)=>{
       this.results = data;
+      console.log(data);
       super.animateCalculate();
     })
   }

@@ -1,4 +1,6 @@
 table{ width: 100%; height: 100%;}
+h2{ margin-left: 2.5%; font-size: 12px; margin-bottom: 0;}
+
 .ticker-card .mat-chip { font-size: 10px; }
 .card { overflow: auto; }
 .card .mat-card-title{ font-size: 12px; }
@@ -30,7 +32,11 @@ table{ width: 100%; height: 100%;}
     display: flex; flex-direction: column;
     justify-content: flex-start;
 }
-.tab-container{ min-width: 100; min-height: 100%;}
+.group-container{ min-width: 100; min-height: 100%;}
+.tab-container{
+    display: flex; flex-direction: row;
+    justify-content: flex-start;
+}
 .chart-container{
     margin-left: 2.5%; width: 35%;
     overflow: auto;

@@ -1,8 +1,8 @@
-{{title}}
-<div class="tab-container" *ngIf="results !== undefined">
+<h2>{{title}}</h2>
+<div class="group-container" *ngIf="results !== undefined">
     <mat-tab-group>
         <mat-tab *ngFor="let result of results" [label]="result.ticker" class="fill">
-            <div class="row-container">
+            <div class="tab-container">
                 <div id="discount-dividend-summary" class="summary-container"
                     *ngIf="this.isDDM()">
                     <mat-card class="card mat-elevation-z2">
@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="chart-container mat-elevation-z2">
-                    <div class="title-container">Model Visualization</div>
+                    <div class="title-container"><h2>Model Visualization</h2></div>
                     <div class="display-container">
                         
                     </div>
