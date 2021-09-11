@@ -1,10 +1,7 @@
-export interface dataPoint{
-    actual_price: number,
-    model_price: number
-}
-
 export interface dataSeries{
-    [date: string]: dataPoint;
+    date: string,
+    model_price: number,
+    actual_price: number
 }
 
 export interface DiscountDividend{

@@ -38,7 +38,13 @@ h2{ margin-left: 2.5%; font-size: 12px; margin-bottom: 0;}
     justify-content: flex-start;
 }
 .chart-container{
-    margin-left: 2.5%; width: 35%;
+    margin-left: 2.5%; min-width: 35%;
+    overflow: auto;
+    display: flex; flex-direction: column;
+    justify-content: flex-start;
+}
+.large-chart-container{
+    margin-left: 2.5%; min-width: 70%;
     overflow: auto;
     display: flex; flex-direction: column;
     justify-content: flex-start;

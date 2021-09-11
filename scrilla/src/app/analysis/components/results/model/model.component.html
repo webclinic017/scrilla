@@ -8,7 +8,7 @@
                     <mat-card class="card mat-elevation-z2">
                         <mat-card-title>Net Present Value</mat-card-title>
                         <mat-card-subtitle class="result-container">
-                                {{ result.net_present_value | number: '1.2-2' }}
+                                {{ result.net_present_value | currency }}
                         </mat-card-subtitle>
                     </mat-card>
 
@@ -34,10 +34,14 @@
                     </mat-card>
                 </div>
 
-                <div class="chart-container mat-elevation-z2">
+                <div class="large-chart-container mat-elevation-z2">
                     <div class="title-container"><h2>Model Visualization</h2></div>
                     <div class="display-container">
-                        
+                        <div>
+                            <canvas baseChart chartType="line" [legend]="true"[options]="chartOptions" [colors]="chartColors"
+                                    [datasets]="chartData[results.indexOf(result)]" [labels]="chartLabels[results.indexOf(result)]">
+                            </canvas>
+                        </div>
                     </div>
                 </div>
             </div>

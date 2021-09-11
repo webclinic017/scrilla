@@ -23,30 +23,30 @@ export class ModelComponent implements OnInit {
     responsive: true,
     legend: { labels: { fontColor: [`${chartFontColor}`], } },
     scales: {
-      xAxes:[{ 
-        //ticks:{ stepSize: 15, beginAtZero: true, fontColor: `${chartFontColor}` },
-        scaleLabel: { display: true, labelString: 'Payment Date', fontColor:`${chartFontColor}`},   
-        gridLines: { color: `${chartFontColor}` }  
+      xAxes:[{
+        scaleLabel:{ labelString: 'Payment Date', fontColor:`${chartFontColor}`},
+        gridLines: { color: `${chartFontColor}`}
       }],
       yAxes:[{ 
-        //ticks: { fontColor: `${chartFontColor}`, stepSize: 15, beginAtZero: true },
+        ticks: { fontColor: `${chartFontColor}`},
         scaleLabel: { display: true, labelString: 'Amount', fontColor:`${chartFontColor}` },
         gridLines: { color:  `${chartFontColor}`},
       }],
     }
   };
+  public chartLabels : Label[][] = [];
+  // [ticker][date][actual or model]
   public chartData: ChartDataSets[][] = [];
+
   public chartColors: Color[] = [
-    { backgroundColor: '#a0439b', borderColor: `${chartBorderColor}`}, 
-    { backgroundColor: '#6da043', borderColor: `${chartBorderColor}`}, 
-    { backgroundColor: '#43a076', borderColor: `${chartBorderColor}`}, 
-    { backgroundColor: '#439ba0', borderColor: `${chartBorderColor}`}, 
-    { backgroundColor: '#4843a0', borderColor: `${chartBorderColor}`}, 
+    { backgroundColor: 'rgba(160, 67, 155, 0.35)', borderColor: `transparent`, pointBackgroundColor: '#a0439b'}, 
+    { backgroundColor: 'transparent', borderColor: '#6da043', pointBackgroundColor: '#6da043'},  
   ]
 
   constructor() { }
 
   ngOnInit(): void {
+    // initialize component title based on input
     switch(this.model){
       case pricingModels.ddm:
         this.title = "Discount Dividend Model";
@@ -55,7 +55,34 @@ export class ModelComponent implements OnInit {
         this.title = "Pricing Model";
         break;
     }
+    // initialize chart data structure based on API results
+    if(this.results && this.results.length>0){
+      this.results.forEach((result,index, arr)=>{
+        result.ticker
+        this.chartData[index] = []
+        this.chartLabels[index] = []
+
+        let actual_prices : number[] = []
+        let model_prices : number[] = []
+
+        result.model_data.forEach( (dataPoint) =>{
+          actual_prices.push(dataPoint.actual_price)
+          model_prices.push(Math.round(dataPoint.model_price*10000)/10000)
+          this.chartLabels[index].push(dataPoint.date)
+        })
+      
+        // restults are returned latest to earliest, want to put in the reverse order,
+        // i.e. start with x = 0 => earliest 
+        actual_prices = actual_prices.reverse()
+        model_prices = model_prices.reverse()
+        this.chartLabels[index] = this.chartLabels[index].reverse()
+
+        this.chartData[index].push({ data: actual_prices, label: `${result.ticker} Actual`})
+        this.chartData[index].push({ data: model_prices, label: `${result.ticker} Model`})
+        console.log(this.chartData[index])
+    })
   }
+}
 
   public isDDM(){ return this.model === pricingModels.ddm;}
 
