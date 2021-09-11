@@ -1,5 +1,5 @@
 # application dependencies
-scrilla==1.1.7
+scrilla==1.1.8
 
 # framework dependencies
 django==3.2.6

@@ -142,7 +142,7 @@ def discount_dividend(request):
             subresponse['model_alpha'] = cashflow.alpha
             subresponse['model_beta'] = cashflow.beta
             subresponse['model_discount'] = discount
-            subresponse['model_data'] = sample
+            subresponse['model_data'] = cashflow.generate_model_comparison()
         else: 
             subresponse['error']= "discount dividend modelprice cannot be computed for this equity"
         

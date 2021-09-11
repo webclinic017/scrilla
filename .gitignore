@@ -4,5 +4,6 @@
 *.pyc
 /scrilla/db.sqlite3
 /scrilla/static/*
+/src/scrilla.egg-info/*
 /dist/
 /.vscode
