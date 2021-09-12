@@ -23,6 +23,8 @@ export class ScalarComponent implements OnInit {
   @Input()
   public title !: string;
   @Input()
+  public toolTipText !: string;
+  @Input()
   public bounds !: number[];
   @Input()
   public disabled : boolean = false;

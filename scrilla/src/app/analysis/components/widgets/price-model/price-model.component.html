@@ -1,12 +1,18 @@
 <div class="widget-container">
     <mat-card class="input-card" [@toHeight]="this.inputCardAnimationControl.toHeight">
-        <mat-card-title>
-            <div class="title">
-                <div>Input</div>
+        <mat-card-title class="title">
+                <div>Input</div>    
                 <div class="action-group">
+                    <div>
+                        <mat-form-field class="dropdown" appearance="fill">
+                            <mat-label>Pricing Model</mat-label>
+                            <mat-select [formControl]="this.modeSelection" required>
+                                <mat-option *ngFor="let mode of modes" [value]="mode">{{mode.title}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
                     <div class="action-button">
-                        <button mat-raised-button color="accent"
-                            [@scale]="calcBtnAnimationControl.scale"
+                        <button mat-raised-button color="accent" [@scale]="calcBtnAnimationControl.scale"
                             [disabled]="this.tickers.length === 0 || this.results!== undefined"
                             (mouseenter)="this.calcBtnAnimationControl = this.animator.animateScale()"
                             (mouseleave)="this.calcBtnAnimationControl = this.animator.initAnimation()"
@@ -15,29 +21,11 @@
                         </button>
                     </div>
                 </div>
-            </div>
         </mat-card-title>
-        <mat-card-content>
-            <div class="arguments-container">
-                <section id="optional-toggle" [formGroup]="this.optionalArguments" class="item mat-elevation-z2">
-                    <h2>Optional Input</h2>
-                    <div formGroupName="date">
-                        <mat-checkbox formControlName="enabled" aria-label="Date Range Selection, Optional"
-                            matTooltip="Sample data defaults to last 100 trading days if no date range is specified.">
-                        Date Range
-                        </mat-checkbox>
-                    </div>
-                </section>
-
+        <mat-card-content class="arguments-container">
                 <span id="ticker-input" class="item mat-elevation-z2">
                     <app-tickers (tickers)="setTickers($event)"></app-tickers>
                 </span>
-                
-                <span id="date-input" class="item mat-elevation-z3" [@fold]
-                        *ngIf="optionalArguments.get('date.enabled')?.value">
-                    <app-date (dates)="this.setDates($event)"></app-date>
-                </span>
-            </div>
         </mat-card-content>
     </mat-card>
 
@@ -49,10 +37,10 @@
                 <div>Output</div>
                 <div class="action-button-group">
                     <div class="action-button">
-                        <button mat-raised-button color="warn"
-                            [@scale]="this.clearBtnAnimationControl.scale"
+                        <button mat-raised-button color="warn" [@scale]="this.clearBtnAnimationControl.scale"
                             (mouseenter)="this.clearBtnAnimationControl = this.animator.animateScale()"
                             (mouseleave)="this.clearBtnAnimationControl = this.animator.initAnimation()"
+                            [disabled]="this.results === undefined"
                             (click)="this.clear()">
                             Clear
                         </button>
@@ -67,10 +55,8 @@
                                     (removeTicker)="this.removeTicker($event)" (removeDates)="this.removeDates()">
                     </app-constraints>
                 </div>
-                <div class="item main-item">
-                    <app-model *ngIf="this.results" 
-                                [model]="this.selectedModel"
-                                [results]="this.results"></app-model>
+                <div class="item main-item" *ngIf="this.results">
+                    <app-model [model]="this.modeSelection.value" [results]="this.results"></app-model>
                 </div>
             </div>
         </mat-card-content>

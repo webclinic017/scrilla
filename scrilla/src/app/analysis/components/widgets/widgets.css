@@ -8,52 +8,34 @@
 .widget-container .mat-card-subtitle, 
 .widget-container h2{ margin-left: 2.5%; font-size: 12px; margin-bottom: 0;}
 
+.disclaimer{ margin-top: 1%; font-size: 10px }
 .arguments-container{
     height: 50%;
     display: flex; flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+    flex-wrap: wrap; justify-content: flex-start;
 }
 .arguments-container .item{ padding: 0.5%; margin:0.5%;}
 .arguments-container .mat-button-toggle{ font-size: 10px;}
 .input-card, .output-card{
-    overflow: auto;
-    padding: 8px;
+    overflow: auto; padding: 8px;
     margin-right: 0.5%; margin-left: 0.5%;
 }
-.input-card{
-    height: 60%;
-}
-.output-card{
-    height: 40%;
-}
+.input-card{ height: 60%; }
+.output-card{ height: 40%; }
 .output-card .title, .input-card .title{ display: flex; flex-direction: row; justify-content: space-between;}
-.output-card .mat-card-content{
-    min-height: 50%;
-}
+.input-card .title .dropdown{ font-size: 11px; }
+.output-card .mat-card-content{ min-height: 50%; }
 .action-group{
     display: flex; flex-direction: row;
     justify-content: flex-end; 
     margin-right: 0.5%;
 }
-.action-group .action-button{
-    margin-left: 15%; margin-right: 2.5%;
-}
-
+.action-group .action-button{ margin-left: 15%; margin-right: 2.5%; }
 .result-container{
     width: 100%; 
     display: flex; flex-direction: row;
     flex-wrap: wrap; justify-content: flex-start;
 }
-.result-container .item{
-    padding: 0.5%; margin:0.5%;
-}
-.result-container .side-item{
-    max-width: 20%;
-    min-width: 15%;
-}
-.result-container .main-item{
-    min-width: 75%;
-    max-width: 79%;
-    min-height: 100%;
-}
+.result-container .item{ padding: 0.5%; margin:0.5%; }
+.result-container .grid-item{ width: 100%; }
+.result-container .main-item{ width: 100%; }

@@ -33,7 +33,7 @@ h2{ margin-left: 2.5%; font-size: 12px; margin-bottom: 0;}
     justify-content: flex-start;
 }
 .group-container{ min-width: 100; min-height: 100%;}
-.tab-container{
+.tab-container, .constraint-container{
     display: flex; flex-direction: row;
     justify-content: flex-start;
 }

@@ -63,7 +63,6 @@ export class ProfileComponent implements OnInit {
   constructor(public animator : AnimationService) { }
 
   ngOnInit(): void {
-    console.log(this.holdings)
     if(this.holdings.length > 0){
       this.holdings.forEach(holding=>{
         if(holding.annual_volatility && holding.annual_return){

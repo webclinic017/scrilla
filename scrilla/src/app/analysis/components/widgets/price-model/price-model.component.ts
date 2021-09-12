@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { DiscountDividend } from 'src/app/models/pricing';
 import { AnimationService } from 'src/app/services/animations.service';
 import { ApiService, QueryParams } from 'src/app/services/api.service';
 import { Widget } from '../widget';
 
-export const pricingModels ={
-  ddm: 'discount_dividend_model'
+interface modeType {
+    title: string, param: string
 }
-
+export const modes : modeType[] =[
+  {
+      title: 'Discount Dividend Model',
+      param: 'ddm'
+  }
+]
 @Component({
   selector: 'app-price-model',
   templateUrl: './price-model.component.html',
@@ -21,18 +26,26 @@ export const pricingModels ={
 })
 export class PriceModelComponent extends Widget implements OnInit {
 
-  public selectedModel : string = pricingModels.ddm;
+  // pull constant into component so it can be used in template
+  public modes = modes;
 
   public results : DiscountDividend[] | undefined;
 
   public loading : boolean = false;
+  
+  public modeSelection : FormControl;
+
 
   constructor(public animator : AnimationService,public api: ApiService,
               public formBuilder : FormBuilder) { 
     super(animator, api, formBuilder)
+    this.modeSelection = new FormControl(this.modes[0])
   }
   
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.modes);
+
+  }
 
   // TODO: generalize to allow user to select pricing model and include model in params.
   //        posssibly. depends on how I implement other pricing models.
@@ -40,7 +53,6 @@ export class PriceModelComponent extends Widget implements OnInit {
     let params : QueryParams={ tickers: this.tickers, }
     this.api.dividend_model(params).subscribe((data)=>{
       this.results = data;
-      console.log(data);
       super.animateCalculate();
     })
   }

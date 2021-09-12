@@ -20,8 +20,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { AllocationComponent } from './components/results/allocation/allocation.component';
+import { MatSelectModule } from '@angular/material/select';
 
+import { AllocationComponent } from './components/results/allocation/allocation.component';
 import { AnalysisRoutingModule } from './analysis-routing.module';
 import { RiskProfileComponent } from './components/widgets/risk-profile/risk-profile.component';
 import { PriceModelComponent } from './components/widgets/price-model/price-model.component';
@@ -71,6 +72,7 @@ import { ModelComponent } from './components/results/model/model.component';
     MatTableModule,
     MatTabsModule,
     MatTooltipModule,
+    MatSelectModule,
   ],
   providers: [ DatePipe ]
 })

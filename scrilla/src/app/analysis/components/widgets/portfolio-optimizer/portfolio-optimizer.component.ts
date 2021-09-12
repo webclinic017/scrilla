@@ -1,6 +1,7 @@
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Portfolio } from 'src/app/models/holding';
 import { AnimationService } from 'src/app/services/animations.service';
 import { ApiService, QueryParams } from 'src/app/services/api.service';
@@ -54,7 +55,7 @@ export class PortfolioOptimizerComponent extends Widget implements OnInit {
   public modeSelection : FormControl;
 
   constructor(public animator : AnimationService, public api: ApiService,
-              public formBuilder : FormBuilder) { 
+              public formBuilder : FormBuilder, private sanitizer: DomSanitizer) { 
     super(animator, api, formBuilder);
     this.modeSelection = new FormControl(modes.minimizeVariance);
   }
@@ -79,6 +80,9 @@ export class PortfolioOptimizerComponent extends Widget implements OnInit {
         // tutorialTooltip, the optimize button, is inserted into the DOM,
         // ahead of the other tutorialTooltips, so the switch statement
         // has to be careful what element of the array it is modifying.
+
+        // i rememebr having an idea on how to simplify this, but i forget what 
+        // it was. i think it had something with ...nope, i forget. 
       switch(this.whichStep){
         case 0:
           this.tutorialTooltips.toArray()[1].disabled = false;
@@ -109,7 +113,7 @@ export class PortfolioOptimizerComponent extends Widget implements OnInit {
           this.tickerComponent.tickerTutorial.disabled = true;
           this.tutorialTooltips.toArray()[4].disabled = false;
           this.tutorialTooltips.toArray()[4].show()
-          this.targetComponent.scalarControl.setValue(0.18)
+          this.targetComponent.scalarControl.setValue(0.12)
           this.targetComponent.scalarControl.markAsTouched();
           this.targetComponent.addAnimationControl = this.animator.animateScale();
           break;

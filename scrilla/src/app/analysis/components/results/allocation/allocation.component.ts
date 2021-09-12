@@ -1,8 +1,9 @@
-import { Component,Input, OnInit } from '@angular/core';
-import { ChartOptions, ChartType } from 'chart.js';
-import { Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, SingleDataSet } from 'ng2-charts';
+import { Component,Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ChartOptions } from 'chart.js';
+import { BaseChartDirective, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, SingleDataSet } from 'ng2-charts';
 import {Portfolio } from 'src/app/models/holding';
-import { AnimationProperties, AnimationService } from 'src/app/services/animations.service';
+import { AnimationControl, AnimationProperties, AnimationService } from 'src/app/services/animations.service';
 
 const foldAnimationProperties : AnimationProperties= {
   delay: '', duration: '250ms', easing: ''
@@ -17,7 +18,9 @@ export interface PieArgs{
   templateUrl: './allocation.component.html',
   styleUrls: ['../results.css'],
   animations:[
-    AnimationService.getFoldTrigger(foldAnimationProperties)
+    AnimationService.getFoldTrigger(foldAnimationProperties),
+    AnimationService.getScaleTrigger(1.25),
+    AnimationService.getHighlightTrigger('#E0E0E0')
   ]
 })
 export class AllocationComponent implements OnInit {
@@ -25,6 +28,10 @@ export class AllocationComponent implements OnInit {
   @Input()
   public portfolio!: Portfolio;
   
+  @ViewChild('chart')
+  public chartElement !: BaseChartDirective;
+  
+  public chartDataUrl : any;
   public chartOptions : ChartOptions={ 
     responsive: true,
     legend:{
@@ -42,7 +49,10 @@ export class AllocationComponent implements OnInit {
 
   public displayedColumns: string[] = [ ];
 
-  constructor() { 
+  public downloadResultsBtnAnimationControl = this.animator.initAnimation();
+  public downloadChartBtnAnimationControl = this.animator.initAnimation();
+
+  constructor(public animator: AnimationService, private sanitizer: DomSanitizer) { 
     monkeyPatchChartJsTooltip();
     monkeyPatchChartJsLegend();
   }
@@ -64,6 +74,28 @@ export class AllocationComponent implements OnInit {
       if(this.portfolio.holdings[0].annual_volatility !== undefined){ this.displayedColumns.push('annual_volatility')}
     }
   }
+
+  ngAfterViewInit(){
+    // sort of hacky, but chart needs to be initialized before dataURL is constructed or else canvas is blank
+    setTimeout(()=>{
+      this.chartDataUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.chartElement.toBase64Image())
+    }, 1000)
+  }
+
+  public getPortfolioJsonUri(): SafeResourceUrl{
+    let jsonFormat = JSON.stringify(this.portfolio)
+    return this.sanitizer.bypassSecurityTrustResourceUrl("data:text/json;charset=UTF-8," + encodeURIComponent(jsonFormat));
+  }
+
+  public getPortfolioFileName(ext: string): string{
+    let filename : string = '';
+    this.portfolio.holdings.forEach((holding)=>{
+      filename = filename.concat(holding.ticker, '_');
+    })
+    return filename.concat(`portfolio.${ext}`)
+  }
+
+  public animateDownload(): AnimationControl{ return {...this.animator.animateScale(), ...this.animator.animateHighlight()} }
 
 
 }

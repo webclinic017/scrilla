@@ -46,12 +46,8 @@ export class ConstraintsComponent implements OnInit {
   
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
-  ngOnChanges(changes : SimpleChanges){
-    console.log(changes);
-  }
+  ngOnInit(): void { }
+  
   public tickerRemoved(ticker : string) : void { this.removeTicker.emit(ticker) }
 
   public targetRemoved(): void { this.removeTarget.emit(true); }

@@ -1,4 +1,4 @@
-<h2>{{title}}</h2>
+<h2>{{model.title}}</h2>
 <div class="group-container" *ngIf="results !== undefined">
     <mat-tab-group>
         <mat-tab *ngFor="let result of results" [label]="result.ticker" class="fill">

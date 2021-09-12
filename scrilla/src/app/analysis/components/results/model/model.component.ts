@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, Label, SingleDataSet } from 'ng2-charts';
 import { DiscountDividend } from 'src/app/models/pricing';
-import { pricingModels } from '../../widgets/price-model/price-model.component';
+import { modes } from '../../widgets/price-model/price-model.component';
 
 const chartFontColor : string = 'rgb(232, 245, 233, 0.50)'
 const chartBorderColor : string = 'rgb(185, 237, 237, 0.35)'
@@ -13,7 +13,7 @@ const chartBorderColor : string = 'rgb(185, 237, 237, 0.35)'
   styleUrls: ['../results.css']
 })
 export class ModelComponent implements OnInit {
-  @Input() model!: string;
+  @Input() model!: any;
 
   @Input() results : DiscountDividend[] | undefined; // | otherModel
 
@@ -46,15 +46,6 @@ export class ModelComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    // initialize component title based on input
-    switch(this.model){
-      case pricingModels.ddm:
-        this.title = "Discount Dividend Model";
-        break;
-      default:
-        this.title = "Pricing Model";
-        break;
-    }
     // initialize chart data structure based on API results
     if(this.results && this.results.length>0){
       this.results.forEach((result,index, arr)=>{
@@ -79,11 +70,10 @@ export class ModelComponent implements OnInit {
 
         this.chartData[index].push({ data: actual_prices, label: `${result.ticker} Actual`})
         this.chartData[index].push({ data: model_prices, label: `${result.ticker} Model`})
-        console.log(this.chartData[index])
     })
   }
 }
 
-  public isDDM(){ return this.model === pricingModels.ddm;}
+  public isDDM(){ return this.model === modes[0];}
 
 }

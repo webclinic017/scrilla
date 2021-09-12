@@ -4,14 +4,25 @@
         <mat-card class="card mat-elevation-z2" >
             <mat-card-title>
                 <div class="title-container">
-                    <div class="title">Portfolio Summary</div>
+                    <div class="title">Portfolio Summary
+                    </div>
                     <div class="chip-row-container">
                         <mat-chip class="chip mat-elevation-z3">Portfolio Return: {{this.portfolio.portfolio_return | percent: '1.2-4'}}</mat-chip>
                         <mat-chip class="chip mat-elevation-z3">Portfolio Volatility: {{this.portfolio.portfolio_volatility | percent: '1.2-4'}}</mat-chip>
                     </div>
+                    <div>
+                        <a [href]="this.getPortfolioJsonUri()" [download]="this.getPortfolioFileName('json')">
+                            <mat-icon matTooltip="Export portfolio as JSON file"
+                                    [color]="this.downloadResultsBtnAnimationControl.scale ? 'accent' : 'primary' " 
+                                    [@scale]="this.downloadResultsBtnAnimationControl.scale"
+                                    (mouseenter)="this.downloadResultsBtnAnimationControl = this.animateDownload()"
+                                    (mouseleave)="this.downloadResultsBtnAnimationControl = this.animator.initAnimation()">
+                                        cloud_download</mat-icon>
+                        </a>
+                    </div>
                 </div>
             </mat-card-title>
-            <mat-card-content>
+            <mat-card-content>          
                 <table mat-table [dataSource]="portfolio.holdings">
                     <ng-container matColumnDef="ticker">
                         <th mat-header-cell *matHeaderCellDef> Symbol </th>
@@ -44,10 +55,21 @@
     </div>
     
     <div class="chart-container mat-elevation-z2">
-        <div class="title-container">Portfolio Allocations</div>
+        <div class="title-container">
+            <div class="title">Portfolio Allocations</div>
+            <div *ngIf="this.chartDataUrl">
+                <a [href]="this.chartDataUrl" [download]="this.getPortfolioFileName('png')">
+                    <mat-icon matTooltip="Export graph as PNG image"
+                        [color]="this.downloadChartBtnAnimationControl.scale ? 'accent' : 'primary' " 
+                        [@scale]="this.downloadChartBtnAnimationControl.scale"
+                        (mouseenter)="this.downloadChartBtnAnimationControl = this.animateDownload()"
+                        (mouseleave)="this.downloadChartBtnAnimationControl = this.animator.initAnimation()">cloud_download</mat-icon>
+                </a>
+            </div>
+        </div>
         <div class="display-container">
             <div>
-                <canvas baseChart chartType="pie" [legend]="true" [options]="chartOptions"
+                <canvas #chart=base-chart baseChart chartType="pie" [legend]="true" [options]="chartOptions"
                         [data]="chartData" [labels]="chartLabels" [colors]="chartColors">
                 </canvas>
             </div>
@@ -56,4 +78,3 @@
     </div>
     
 </div>
-result app goes here

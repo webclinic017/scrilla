@@ -8,10 +8,10 @@
             <mat-label>Enter a number</mat-label>
             <input matInput type="text" *ngIf="currency" [formControl]="scalarControl"
                 mvndrMatCurrencyFormat  [allowNegative]="false" [currencyCode]="'USD'"
-                matTooltip="Enter the investment total" 
+                [matTooltip]="toolTipText" 
                 (keyup.enter)="parseScalar()">
             <input matInput type="number" *ngIf="!currency" [formControl]="this.scalarControl"
-                matTooltip="Enter annualized rate"
+                [matTooltip]="toolTipText"
                 (keyup.enter)="parseScalar()">
             <button matSuffix mat-icon-button aria-label="Clear"
                 *ngIf="scalarControl.value && scalarControl.touched" 
@@ -26,7 +26,7 @@
     </mat-card-content>
 
     <mat-card-actions align="end">
-        <button mat-icon-button color="accent" matTooltip="{{ currency ? 'Add investment total' : 'Add annualized rate'}}"
+        <button mat-icon-button color="accent" matTooltip="Add constraint to portfolio"
             *ngIf="this.scalarControl.value && !this.scalarControl.invalid && (this.scalarControl.touched || this.scalarControl.dirty)"
             [@scale]="addAnimationControl.scale" [disabled]="this.disabled"
             (mouseenter)="addAnimationControl = this.animator.animateScale()"
