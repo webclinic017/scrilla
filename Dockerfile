@@ -1,4 +1,4 @@
-FROM python:3.8.8
+FROM python:3.8.8-slim
 
 USER root
 
@@ -7,7 +7,7 @@ RUN useradd -ms /bin/bash chinchalinchin && \
      usermod -a -G admin chinchalinchin && \ 
      apt-get update -y && \
      apt-get install -y curl wait-for-it postgresql-client-11 libpq-dev build-essential \ 
-                         libffi-dev git libopenblas-dev liblapack-dev libfreetype6 libpng-dev \
+                         libffi-dev libopenblas-dev liblapack-dev libfreetype6 libpng-dev \
                          pkg-config python3-dev gfortran gcc 
 
 WORKDIR /home/
@@ -18,8 +18,9 @@ RUN CFLAGS="-g0 -Wl,--strip-all -I/usr/include:/usr/local/include -L/usr/lib:/us
                     --no-cache-dir \
                     --global-option=build_ext \
                     --global-option="-j 4" \
-                    --requirement requirements.txt && \
-     apt-get purge -y --auto-remove build-essential gfortan gcc python3-dev && \
+                    --requirement requirements.txt
+     # separate layer because `pip install` takes forever to build from source. cache if possible.
+RUN  apt-get purge -y --auto-remove build-essential gfortran gcc python3-dev && \
      apt-get clean && \
      rm -rf /var/lib/apt/lists/*
 
