@@ -13,6 +13,7 @@ RUN useradd -ms /bin/bash chinchalinchin && \
 WORKDIR /home/
 COPY /requirements-docker.txt /home/requirements.txt
 RUN CFLAGS="-g0 -Wl,--strip-all -I/usr/include:/usr/local/include -L/usr/lib:/usr/local/lib" && \
+     pip install --upgrade pip && \
      pip install --compile \
                     --no-cache-dir \
                     --global-option=build_ext \
