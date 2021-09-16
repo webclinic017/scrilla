@@ -51,7 +51,9 @@ export class PriceModelComponent extends Widget implements OnInit {
   //        posssibly. depends on how I implement other pricing models.
   public calculate(): void{
     let params : QueryParams={ tickers: this.tickers, }
+    this.loading = true;
     this.api.dividend_model(params).subscribe((data)=>{
+      this.loading = false;
       this.results = data;
       super.animateCalculate();
     })

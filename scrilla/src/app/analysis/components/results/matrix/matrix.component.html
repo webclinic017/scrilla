@@ -1,0 +1,10 @@
+<mat-grid-list [cols]="this.matrix[0].length" rowHeight="25px">
+    <div *ngFor="let row of this.matrix">
+        <div *ngFor="let col of row">
+            <mat-grid-tile *ngIf="this.matrix.indexOf(row) === 0 || row.indexOf(col) === 0">{{col}}</mat-grid-tile>
+            <mat-grid-tile *ngIf="this.matrix.indexOf(row) !== 0 && row.indexOf(col) !== 0">
+                {{col | percent: '1.2-2' }}</mat-grid-tile>
+        </div>
+    </div>
+  </mat-grid-list>
+  

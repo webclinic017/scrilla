@@ -12,6 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatGridListModule } from '@angular/material/grid-list'; 
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -34,6 +35,7 @@ import { ProfileComponent } from './components/results/profile/profile.component
 import { CorrelationMatrixComponent } from './components/widgets/correlation-matrix/correlation-matrix.component';
 import { ConstraintsComponent } from './components/results/constraints/constraints.component';
 import { ModelComponent } from './components/results/model/model.component';
+import { MatrixComponent } from './components/results/matrix/matrix.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import { ModelComponent } from './components/results/model/model.component';
     ProfileComponent,
     CorrelationMatrixComponent,
     ConstraintsComponent,
-    ModelComponent
+    ModelComponent,
+    MatrixComponent
   ],
   imports: [
     CommonModule,
@@ -65,6 +68,7 @@ import { ModelComponent } from './components/results/model/model.component';
     MatCheckboxModule,
     MatDatepickerModule,
     MatFormFieldModule,
+    MatGridListModule,
     MatIconModule,
     MatInputModule,
     MatNativeDateModule,

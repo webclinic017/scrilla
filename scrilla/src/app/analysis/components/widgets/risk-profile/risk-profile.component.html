@@ -61,16 +61,14 @@
                 </div>
             </div>
         </mat-card-title>
-        <mat-card-content>
-            <div class="result-container">
-                <div class="item side-item">
-                    <app-constraints [tickers]="this.tickers" [dates]="this.dates" [disabled]="this.holdings !== undefined"
-                                    (removeTicker)="this.removeTicker($event)" (removeDates)="this.removeDates()">
-                    </app-constraints>
-                </div>
-                <div class="item main-item">
-                    <app-profile *ngIf="this.holdings" [holdings]="this.holdings"></app-profile>
-                </div>
+        <mat-card-content class="result-container">
+            <div class="item side-item">
+                <app-constraints [tickers]="this.tickers" [dates]="this.dates" [disabled]="this.holdings !== undefined"
+                                (removeTicker)="this.removeTicker($event)" (removeDates)="this.removeDates()">
+                </app-constraints>
+            </div>
+            <div class="item main-item">
+                <app-profile *ngIf="this.holdings" [holdings]="this.holdings"></app-profile>
             </div>
         </mat-card-content>
     </mat-card>

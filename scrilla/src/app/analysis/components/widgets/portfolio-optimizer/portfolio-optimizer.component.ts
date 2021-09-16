@@ -1,7 +1,6 @@
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Portfolio } from 'src/app/models/holding';
 import { AnimationService } from 'src/app/services/animations.service';
 import { ApiService, QueryParams } from 'src/app/services/api.service';

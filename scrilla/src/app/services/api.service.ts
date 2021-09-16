@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Holding, Portfolio } from '../models/holding';
 import { DiscountDividend } from '../models/pricing';
+import { Correlation } from '../models/statistics';
 import { HostService } from './host.service';
 
 export interface QueryParams{
@@ -59,5 +60,10 @@ export class ApiService {
   public dividend_model(params: QueryParams): Observable<DiscountDividend[]>{
     let url = `${this.host.getHost()}/${endpoints.api.discount_dividend}?${this.constructQuery(params)}`
     return this.http.get<DiscountDividend[]>(url);
+  }
+
+  public correlation_matrix(params: QueryParams): Observable<Correlation[]>{
+    let url = `${this.host.getHost()}/${endpoints.api.correlation}?${this.constructQuery(params)}`
+    return this.http.get<Correlation[]>(url);
   }
 }

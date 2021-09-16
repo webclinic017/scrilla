@@ -36,6 +36,7 @@
         </mat-card-content>
     </mat-card>
 
+    <mat-progress-bar *ngIf="loading" mode="buffer" color="accent"></mat-progress-bar>
 
     <mat-card class="output-card" [@toHeight]="this.outputCardAnimationControl.toHeight">
         <mat-card-title class="title">
@@ -55,5 +56,15 @@
             </div>
 
         </mat-card-title>
+        <mat-card-content class="result-container">
+            <div class="item side-item">
+                <app-constraints [tickers]="this.tickers" [dates]="this.dates" [disabled]="this.correl_matrix !== undefined"
+                                (removeTicker)="this.removeTicker($event)" (removeDates)="this.removeDates()">
+                </app-constraints>
+            </div>
+            <div class="item main-item">
+                <app-matrix *ngIf="this.correl_matrix" [matrix]="this.correl_matrix"></app-matrix>
+            </div>
+        </mat-card-content>
     </mat-card>
 </div>
