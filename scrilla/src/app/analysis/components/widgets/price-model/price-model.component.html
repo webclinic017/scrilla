@@ -23,9 +23,9 @@
                 </div>
         </mat-card-title>
         <mat-card-content class="arguments-container">
-                <span id="ticker-input" class="item mat-elevation-z2">
-                    <app-tickers (tickers)="setTickers($event)"></app-tickers>
-                </span>
+            <span id="ticker-input" class="item mat-elevation-z2">
+                <app-tickers (tickers)="setTickers($event)"></app-tickers>
+            </span>
         </mat-card-content>
     </mat-card>
 
@@ -40,8 +40,7 @@
                         <button mat-raised-button color="warn" [@scale]="this.clearBtnAnimationControl.scale"
                             (mouseenter)="this.clearBtnAnimationControl = this.animator.animateScale()"
                             (mouseleave)="this.clearBtnAnimationControl = this.animator.initAnimation()"
-                            [disabled]="this.results === undefined"
-                            (click)="this.clear()">
+                            [disabled]="this.results === undefined" (click)="this.clear()">
                             Clear
                         </button>
                     </div>

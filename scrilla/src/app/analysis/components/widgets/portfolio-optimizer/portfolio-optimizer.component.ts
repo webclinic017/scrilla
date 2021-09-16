@@ -55,7 +55,7 @@ export class PortfolioOptimizerComponent extends Widget implements OnInit {
   public modeSelection : FormControl;
 
   constructor(public animator : AnimationService, public api: ApiService,
-              public formBuilder : FormBuilder, private sanitizer: DomSanitizer) { 
+              public formBuilder : FormBuilder) { 
     super(animator, api, formBuilder);
     this.modeSelection = new FormControl(modes.minimizeVariance);
   }

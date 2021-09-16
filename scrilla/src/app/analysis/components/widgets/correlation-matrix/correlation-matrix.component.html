@@ -1,1 +1,59 @@
-<p>correlation-matrix works!</p>
+<div class="widget-container">
+    <mat-card class="input-card" [@toHeight]="this.inputCardAnimationControl.toHeight">
+        <mat-card-title class="title">
+            <div>Input</div>
+            <div class="action-group">
+                <div class="action-button">
+                    <button mat-raised-button color="accent" matTooltipDisabled="true"
+                        [disabled]="tickers.length === 0 || (tickers.length > 0 && correl_matrix !== undefined)"
+                        [@scale]="calcBtnAnimationControl.scale" (click)="calculate()"
+                        (mouseenter)="calcBtnAnimationControl = animator.animateScale()"
+                        (mouseleave)="calcBtnAnimationControl = animator.initAnimation()">
+                        Optimize
+                    </button>
+                </div>
+            </div>
+        </mat-card-title>
+        <mat-card-content class="arguments-container">
+            <section id="optional-toggle" class="item mat-elevation-z2" [formGroup]="optionalArguments">
+                <h2>Optional Input</h2>
+                <div formGroupName="date">
+                    <mat-checkbox formControlName="enabled" aria-label="Date Range Selection, Optional"
+                                matTooltip="Sample data defaults to last 100 trading days if no date range is specified.">
+                        Date Range
+                    </mat-checkbox>
+                </div>
+            </section>
+
+            <span id="ticker-input" class="item mat-elevation-z2">
+                <app-tickers [disabled]="correl_matrix !== undefined" (tickers)="setTickers($event)"></app-tickers>
+            </span>
+
+            <span id="date-input" class="item mat-elevation-z3" [@fold]
+                    *ngIf="optionalArguments.get('date.enabled')?.value">
+                <app-date [disabled]="correl_matrix !== undefined" (dates)="setDates($event)"></app-date>
+            </span>
+        </mat-card-content>
+    </mat-card>
+
+
+    <mat-card class="output-card" [@toHeight]="this.outputCardAnimationControl.toHeight">
+        <mat-card-title class="title">
+            <div>Output</div>
+
+            <div class="action-button-group">
+                <div class="action-button">
+                    <button mat-raised-button color="warn"
+                        [@scale]="this.clearBtnAnimationControl.scale"
+                        [disabled]="this.correl_matrix === undefined"
+                        (mouseenter)="this.clearBtnAnimationControl = this.animator.animateScale()"
+                        (mouseleave)="this.clearBtnAnimationControl = this.animator.initAnimation()"
+                        (click)="this.clear()">
+                        Clear
+                    </button>
+                </div>
+            </div>
+
+        </mat-card-title>
+    </mat-card>
+</div>
