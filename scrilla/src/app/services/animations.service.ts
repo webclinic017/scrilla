@@ -1,4 +1,4 @@
-import { animate, animateChild, keyframes, style, query, state, transition, trigger, AnimationTriggerMetadata, AnimationMetadata } from '@angular/animations';
+import { animate, animateChild, keyframes, style, query, state, transition, trigger, AnimationTriggerMetadata } from '@angular/animations';
 import { Injectable } from '@angular/core';
 
 export interface AnimationProperties{
@@ -23,12 +23,6 @@ export const animationControls = {
         trigger: 'scale',
         states: {
             scale: 'scale'
-        }
-    },
-    opacity:{
-        trigger: 'opacity',
-        states: {
-            opaque: 'opague'
         }
     },
     highlight:{
@@ -73,6 +67,9 @@ export const animationControls = {
     fold:{
         trigger: 'fold'
     },
+    opacity:{
+        trigger: 'opacity',
+    },
 }
 
 @Injectable({
@@ -110,8 +107,6 @@ export class AnimationService{
     public animateScale() : AnimationControl{ return { scale: `${animationControls.scale.states.scale}`} }
 
     public animateHighlight() : AnimationControl { return { highlight: `${animationControls.highlight.states.highlight}` }}
-
-    public animateOpacity() : AnimationControl  { return { opacity: `${animationControls.opacity.states.opaque}`}}
 
     public animateTranslateOff(state : string) : AnimationControl { return { translateOff: `${state}` } }
 

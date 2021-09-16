@@ -12,6 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list'; 
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -67,6 +68,7 @@ import { MatrixComponent } from './components/results/matrix/matrix.component';
     MatChipsModule,
     MatCheckboxModule,
     MatDatepickerModule,
+    MatDividerModule,
     MatFormFieldModule,
     MatGridListModule,
     MatIconModule,

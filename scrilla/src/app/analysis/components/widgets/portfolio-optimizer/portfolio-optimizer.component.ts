@@ -31,6 +31,7 @@ const modes : any = {
     AnimationService.getScaleTrigger(Widget.scaleFactor),
     AnimationService.getFoldTrigger(Widget.foldAnimationProperties),
     AnimationService.getToHeightTrigger(Widget.toHeightAnimationProperties),
+    AnimationService.getOpacityTrigger()
   ]
 })
 export class PortfolioOptimizerComponent extends Widget implements OnInit {

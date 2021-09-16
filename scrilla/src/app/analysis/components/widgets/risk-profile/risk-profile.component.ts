@@ -14,6 +14,7 @@ import { Widget } from '../widget';
     AnimationService.getFoldTrigger(Widget.foldAnimationProperties),
     AnimationService.getScaleTrigger(Widget.scaleFactor),
     AnimationService.getToHeightTrigger(Widget.toHeightAnimationProperties),
+    AnimationService.getOpacityTrigger()
   ]
 })
 export class RiskProfileComponent extends Widget implements OnInit {

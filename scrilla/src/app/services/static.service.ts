@@ -17,7 +17,7 @@ export class StaticService {
     return [
       { name: 'Risk Analysis', route: 'analysis/risk' }, 
       { name: 'Price Models', route: 'analysis/pricing'},
-      { name: 'Correlation Estimation', route: 'analysis/correlation' },
+      { name: 'Correlation Matrix', route: 'analysis/correlation' },
       { name: 'Portfolio Optimization', route: 'analysis/optimizer'},
     ];
   }

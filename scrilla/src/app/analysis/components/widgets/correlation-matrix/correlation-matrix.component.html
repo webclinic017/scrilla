@@ -1,4 +1,4 @@
-<div class="widget-container">
+<div class="widget-container" [@opacity] [@fold]>
     <mat-card class="input-card" [@toHeight]="this.inputCardAnimationControl.toHeight">
         <mat-card-title class="title">
             <div>Input</div>
@@ -9,7 +9,7 @@
                         [@scale]="calcBtnAnimationControl.scale" (click)="calculate()"
                         (mouseenter)="calcBtnAnimationControl = animator.animateScale()"
                         (mouseleave)="calcBtnAnimationControl = animator.initAnimation()">
-                        Optimize
+                        Calculate
                     </button>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                 </app-constraints>
             </div>
             <div class="item main-item">
-                <app-matrix *ngIf="this.correl_matrix" [matrix]="this.correl_matrix"></app-matrix>
+                <app-matrix *ngIf="this.correl_matrix" [matrix]="this.correl_matrix" [tickers]="this.tickers"></app-matrix>
             </div>
         </mat-card-content>
     </mat-card>

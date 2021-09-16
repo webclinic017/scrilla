@@ -22,6 +22,7 @@ export const modes : modeType[] =[
     AnimationService.getFoldTrigger(Widget.foldAnimationProperties),
     AnimationService.getScaleTrigger(Widget.scaleFactor),
     AnimationService.getToHeightTrigger(Widget.toHeightAnimationProperties),
+    AnimationService.getOpacityTrigger()
   ]
 })
 export class PriceModelComponent extends Widget implements OnInit {
@@ -42,10 +43,7 @@ export class PriceModelComponent extends Widget implements OnInit {
     this.modeSelection = new FormControl(this.modes[0])
   }
   
-  ngOnInit(): void {
-    console.log(this.modes);
-
-  }
+  ngOnInit(): void {  }
 
   // TODO: generalize to allow user to select pricing model and include model in params.
   //        posssibly. depends on how I implement other pricing models.

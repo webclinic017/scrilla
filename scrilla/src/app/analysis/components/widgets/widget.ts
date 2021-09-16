@@ -28,7 +28,7 @@ export class Widget{
     public optionalArguments : FormGroup;
 
     constructor(public animator : AnimationService, public api: ApiService,
-              public formBuilder : FormBuilder) { 
+                public formBuilder : FormBuilder) { 
         this.optionalArguments = this.formBuilder.group({
             target: this.formBuilder.group({ enabled: false }),
             invest: this.formBuilder.group({ enabled: false }),

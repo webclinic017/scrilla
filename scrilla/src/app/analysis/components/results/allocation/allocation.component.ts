@@ -4,6 +4,7 @@ import { ChartOptions } from 'chart.js';
 import { BaseChartDirective, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, SingleDataSet } from 'ng2-charts';
 import {Portfolio } from 'src/app/models/holding';
 import { AnimationControl, AnimationProperties, AnimationService } from 'src/app/services/animations.service';
+import { Result } from '../result';
 
 const foldAnimationProperties : AnimationProperties= {
   delay: '', duration: '250ms', easing: ''
@@ -23,7 +24,7 @@ export interface PieArgs{
     AnimationService.getHighlightTrigger('#E0E0E0')
   ]
 })
-export class AllocationComponent implements OnInit {
+export class AllocationComponent extends Result implements OnInit {
 
   @Input()
   public portfolio!: Portfolio;
@@ -49,10 +50,8 @@ export class AllocationComponent implements OnInit {
 
   public displayedColumns: string[] = [ ];
 
-  public downloadResultsBtnAnimationControl = this.animator.initAnimation();
-  public downloadChartBtnAnimationControl = this.animator.initAnimation();
-
-  constructor(public animator: AnimationService, private sanitizer: DomSanitizer) { 
+  constructor(public animator: AnimationService, public sanitizer: DomSanitizer) { 
+    super(animator, sanitizer)
     monkeyPatchChartJsTooltip();
     monkeyPatchChartJsLegend();
   }
@@ -83,8 +82,7 @@ export class AllocationComponent implements OnInit {
   }
 
   public getPortfolioJsonUri(): SafeResourceUrl{
-    let jsonFormat = JSON.stringify(this.portfolio)
-    return this.sanitizer.bypassSecurityTrustResourceUrl("data:text/json;charset=UTF-8," + encodeURIComponent(jsonFormat));
+    return super.formatResultJsonUri(this.portfolio);
   }
 
   public getPortfolioFileName(ext: string): string{
@@ -94,8 +92,5 @@ export class AllocationComponent implements OnInit {
     })
     return filename.concat(`portfolio.${ext}`)
   }
-
-  public animateDownload(): AnimationControl{ return {...this.animator.animateScale(), ...this.animator.animateHighlight()} }
-
 
 }

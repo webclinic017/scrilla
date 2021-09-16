@@ -1,10 +1,28 @@
-<mat-grid-list [cols]="this.matrix[0].length" rowHeight="25px">
-    <div *ngFor="let row of this.matrix">
-        <div *ngFor="let col of row">
-            <mat-grid-tile *ngIf="this.matrix.indexOf(row) === 0 || row.indexOf(col) === 0">{{col}}</mat-grid-tile>
-            <mat-grid-tile *ngIf="this.matrix.indexOf(row) !== 0 && row.indexOf(col) !== 0">
-                {{col | percent: '1.2-2' }}</mat-grid-tile>
+
+<mat-card class="card">
+    <mat-card-title class="title-container">
+        <div class="title">Correlation Matrix</div>
+        <div>
+            <a [href]="this.getMatrixJsonUri()" [download]="this.getMatrixFileName()">
+                <mat-icon matTooltip="Export portfolio as JSON file"
+                        [color]="this.downloadResultsBtnAnimationControl.scale ? 'accent' : 'primary' " 
+                        [@scale]="this.downloadResultsBtnAnimationControl.scale"
+                        (mouseenter)="this.downloadResultsBtnAnimationControl = this.animateDownload()"
+                        (mouseleave)="this.downloadResultsBtnAnimationControl = this.animator.initAnimation()">
+                            cloud_download</mat-icon>
+            </a>
         </div>
-    </div>
-  </mat-grid-list>
+    </mat-card-title>
+    <mat-card-content>
+        <mat-grid-list [cols]="this.format_matrix[0].length" rowHeight="25px">
+            <div *ngFor="let row of this.format_matrix">
+                <div *ngFor="let col of row">
+                    <mat-grid-tile *ngIf="this.format_matrix.indexOf(row) === 0 || row.indexOf(col) === 0">{{col}}</mat-grid-tile>
+                    <mat-grid-tile class="mat-elevation-z4" *ngIf="this.format_matrix.indexOf(row) !== 0 && row.indexOf(col) !== 0">
+                        {{col | percent: '1.2-2' }}</mat-grid-tile>
+                </div>
+            </div>
+        </mat-grid-list>
+    </mat-card-content>
+</mat-card>
   
