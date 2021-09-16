@@ -8,7 +8,7 @@ RUN useradd -ms /bin/bash chinchalinchin && \
      apt-get update -y && \
      apt-get install -y curl wait-for-it postgresql-client-11 libpq-dev build-essential \ 
                          libffi-dev libopenblas-dev liblapack-dev libfreetype6 libpng-dev \
-                         pkg-config python3-dev gfortran gcc 
+                         libjpeg-dev zlib1g-dev pkg-config python3-dev gfortran gcc 
 
 WORKDIR /home/
 COPY /requirements-docker.txt /home/requirements.txt
