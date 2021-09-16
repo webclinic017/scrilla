@@ -7,13 +7,20 @@ RUN useradd -ms /bin/bash chinchalinchin && \
      usermod -a -G admin chinchalinchin && \ 
      apt-get update -y && \
      apt-get install -y curl wait-for-it postgresql-client-11 libpq-dev build-essential \ 
-                         libffi-dev git && \
-     apt-get clean && \
-     rm -rf /var/lib/apt/lists/*
+                         libffi-dev git libopenblas-dev liblapack-dev libfreetype6 libpng-dev \
+                         pkg-config python3-dev gfortran gcc 
 
 WORKDIR /home/
 COPY /requirements-docker.txt /home/requirements.txt
-RUN pip install --compile --no-cache-dir --requirement requirements.txt
+RUN CFLAGS="-g0 -Wl,--strip-all -I/usr/include:/usr/local/include -L/usr/lib:/usr/local/lib" && \
+     pip install --compile \
+                    --no-cache-dir \
+                    --global-option=build_ext \
+                    --global-option="-j 4" \
+                    --requirement requirements.txt && \
+     apt-get purge -y --auto-remove build-essential gfortan gcc python3-dev && \
+     apt-get clean && \
+     rm -rf /var/lib/apt/lists/*
 
 COPY --chown=chinchalinchin:admin /scrilla/ /home/scrilla/
 COPY --chown=chinchalinchin:admin /scripts/ /home/scripts/
