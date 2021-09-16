@@ -6,9 +6,9 @@ from rest_framework.response import Response
 
 from core import settings 
 
-from scrilla import files, services
+from scrilla import services
 from scrilla.analysis import optimizer, statistics, markets
-from scrilla.util import plotter
+from scrilla.util import plotter, formatter
 from scrilla.objects.portfolio import Portfolio
 from scrilla.objects.cashflow import Cashflow
 
@@ -49,7 +49,7 @@ def optimize_portfolio(request):
     else:
         optimal_allocation = optimizer.optimize_portfolio_variance(portfolio=portfolio, target_return=params['target'])
 
-    response = files.format_allocation(optimal_allocation, portfolio, investment=params['invest'])
+    response = formatter.format_allocation(optimal_allocation, portfolio, investment=params['invest'])
     
     return Response(data=response)
 
@@ -77,7 +77,7 @@ def risk_profile(request):
         graph.print_png(response)
         return response
 
-    response = files.format_profiles(profiles=profiles)
+    response = formatter.format_profiles(profiles=profiles)
     return Response(data=response)
 
 @api_view(['GET'])
@@ -89,7 +89,7 @@ def correlation_matrix(request):
 
     matrix = statistics.ito_correlation_matrix(tickers=params['tickers'], start_date=params['start_date'], end_date=params['end_date'])
 
-    response = files.format_correlation_matrix(tickers=params['tickers'], correlation_matrix=matrix)
+    response = formatter.format_correlation_matrix(tickers=params['tickers'], correlation_matrix=matrix)
 
     return Response(data=response)
 
@@ -110,7 +110,7 @@ def efficient_frontier(request):
         graph.print_png(response)
         return response
 
-    response = files.format_frontier(portfolio=portfolio,frontier=frontier,investment=params['invest'])
+    response = formatter.format_frontier(portfolio=portfolio,frontier=frontier,investment=params['invest'])
     return Response(data=response)
 
 @api_view(['GET'])
