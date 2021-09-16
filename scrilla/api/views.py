@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 from core import settings 
 
-from scrilla import services
+from scrilla import services, errors
 from scrilla.analysis import optimizer, statistics, markets
 from scrilla.util import plotter, formatter
 from scrilla.objects.portfolio import Portfolio
@@ -16,8 +16,8 @@ def parse_query_params(request):
     try: 
         return {
             'tickers': request.query_params.getlist('tickers', []),
-            'start_date': request.query_params.get('start_date'),
-            'end_date': request.query_params.get('end_date'),
+            'start_date': start_date,
+            'end_date': end_date,
             'invest': float(request.query_params.get('invest')) if request.query_params.get('invest') else None,
             'target': float(request.query_params.get('target')) if request.query_params.get('target') else None,
             'mode': str(request.query_params.get('mode')).lower(),
@@ -33,6 +33,7 @@ def parse_query_params(request):
 def optimize_portfolio(request):
     try:
         params = parse_query_params(request)
+        params['start_date'], params['end_date']
     except ValueError:
         return Response(data={ 'message': 'invalid query parameters'}, status=status.HTTP_400_BAD_REQUEST)
 
