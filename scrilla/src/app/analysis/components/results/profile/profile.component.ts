@@ -1,5 +1,5 @@
-import { animation } from '@angular/animations';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { BaseChartDirective, Color } from 'ng2-charts';
 import { Holding } from 'src/app/models/holding';
@@ -60,7 +60,7 @@ export class ProfileComponent implements OnInit {
     { backgroundColor: '#4843a0', borderColor: `${chartBorderColor}`}, 
   ]
 
-  constructor(public animator : AnimationService) { }
+  constructor(public animator : AnimationService, public sanitizer : DomSanitizer) { }
 
   ngOnInit(): void {
     if(this.holdings.length > 0){
