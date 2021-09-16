@@ -88,7 +88,7 @@ def correlation_matrix(request):
         return Response(data={ 'message': 'invalid query parameters'}, status=status.HTTP_400_BAD_REQUEST)
 
     matrix = statistics.ito_correlation_matrix(tickers=params['tickers'], start_date=params['start_date'], end_date=params['end_date'])
-
+    
     response = files.format_correlation_matrix(tickers=params['tickers'], correlation_matrix=matrix)
 
     return Response(data=response)
