@@ -1,10 +1,10 @@
 <div class="page-container">
     <div class="title">
-        Select A Plan
+        <div>Select A Plan</div>
     </div>
-    <div class="row">
-        <div class="item">
-            <mat-card id="free-tier-plan" class="card">
+    <div class="register-content">
+        <div class="register-item">
+            <mat-card id="free-tier-plan" class="mat-elevation-z10">
                 <mat-card-title>Free Tier</mat-card-title>
                 <mat-card-subtitle>Try Before You Buy</mat-card-subtitle>
                 <mat-card-content>
@@ -14,28 +14,21 @@
 
                     <mat-divider></mat-divider>
 
-                    <mat-list>
-                        <mat-list-item>
+                    <mat-list id="free-list" dense>
+                        <mat-list-item id="free-item-1">
                             <mat-icon mat-list-icon color="accent">attach_money</mat-icon>
-                            <div mat-line matTooltip="A full list of functions can be found in the documentation.">
+                            <div mat-line  matTooltipPosition="above"
+                                matTooltip="A full list of functions can be found in the documentation.">
                                 <span>Access To All Analysis Functions
                                 <mat-icon class="helper">help</mat-icon></span>
                             </div>
                         </mat-list-item>
-                        <mat-list-item>
+                        <mat-list-item id="free-item-2">
                             <mat-icon mat-list-icon color="accent">attach_money</mat-icon>
-                            <div mat-line matTooltip="Upgrade at any time!">
-                                <span>5 Requests Per Minute
+                            <div mat-line  matTooltipPosition="above"
+                                matTooltip="Upgrade to Paid Tier at any time for unlimited access!">
+                                <span>5 Requests Per Minute / 100 Request Per Day
                                 <mat-icon class="helper">help</mat-icon></span>
-                            </div>
-                        </mat-list-item>
-                        <mat-list-item>
-                            <mat-icon mat-list-icon color="accent">attach_money</mat-icon>
-                            <div mat-line matTooltip="hello" matTooltipPosition="above">
-                                <span>
-                                    100 Requests Per Day
-                                    <mat-icon class="helper">help</mat-icon>
-                                </span>
                             </div>
                         </mat-list-item>
                     </mat-list>
@@ -48,18 +41,51 @@
 
             </mat-card>
         </div>
-        <div class="item">
-            <mat-card id="paid-tier-plan" class="card">
+        <div class="register-item">
+            <mat-card id="paid-tier-plan" class="mat-elevation-z10">
                 <mat-card-title>Paid Tier</mat-card-title>
                 <mat-card-subtitle>$9 per month</mat-card-subtitle>
                 <mat-card-content>
 
+                    <div class="blurb">
+                        Built to scale for personal portfolios, small businesses and high-throughput organizations.
+                    </div>
                     <mat-divider></mat-divider>
 
+                    <mat-list id="paid-list" dense>
+                        <mat-list-item id="paid-item-1">
+                            <mat-icon mat-list-icon color="accent">attach_money</mat-icon>
+                            <div mat-line matTooltipPosition="above"
+                                matTooltip="A full list of functions can be found in the documentation.">
+                                <span>
+                                    Access To All Analysis Functions
+                                    <mat-icon class="helper">help</mat-icon>
+                                </span>
+                            </div>
+                        </mat-list-item>
+                        <mat-list-item id="paid-item-2">
+                            <mat-icon mat-list-icon color="accent">attach_money</mat-icon>
+                            <div mat-line  matTooltipPosition="above"
+                                matTooltip="If you need a higher throughput, contact support.">
+                                <span>60 Requests Per Minute / 1000 Request Per Day
+                                <mat-icon class="helper">help</mat-icon></span>
+                            </div>
+                        </mat-list-item>
+                        <mat-list-item id="paid-item-3">
+                            <mat-icon mat-list-icon color="accent">attach_money</mat-icon>
+                            <div mat-line matTooltipPosition="above"
+                                            matTooltip="">
+                                ASDF
+                            </div>
+                        </mat-list-item>
+                    </mat-list>
 
                 </mat-card-content>
+
+                <mat-card-actions>
+                    <button class="start-button" mat-raised-button>Get Started <mat-icon>chevron_right</mat-icon></button>
+                </mat-card-actions>
             </mat-card>
         </div>
-
     </div>
 </div>

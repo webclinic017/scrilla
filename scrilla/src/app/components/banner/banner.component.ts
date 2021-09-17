@@ -23,7 +23,7 @@ export class BannerComponent implements OnInit {
                     .pipe( 
                       filter( (data : any) => data instanceof NavigationEnd))
                     .subscribe((val)=>{
-                      this.title = this.staticService.exchangeWidgetRouteForTitle(val.url)
+                      this.title = this.staticService.exchangeRouteForTitle(val.url)
     })
 
   }

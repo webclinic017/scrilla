@@ -6,6 +6,11 @@ export interface staticInfo{
   description?: string
 }
 
+const appInfo: staticInfo[] = [
+  { name: 'Registration', route: '/register' },
+  { name: 'Login', route: '/login' }
+]
+
 const widgetInfo : staticInfo[] = [
   { name: 'Risk Analysis', route: '/analysis/risk' }, 
   { name: 'Price Models', route: '/analysis/pricing'},
@@ -26,10 +31,15 @@ export class StaticService {
 
   constructor() { }
 
-  public exchangeWidgetRouteForTitle(route: string) : string{
+  public exchangeRouteForTitle(route: string) : string{
     if(widgetInfo.some((value) => value.route === route)){
-      widgetInfo.filter( element =>{ return element.route === route })
       return " : ".concat(widgetInfo.filter( element =>{ return element.route === route })[0].name.toLowerCase());
+    }
+    else if(docInfo.some((value)=> value.route === route)){
+      return " : ".concat(docInfo.filter( element=> {return element.route === route})[0].name.toLowerCase());
+    }
+    else if(appInfo.some( (value)=> value.route === route)){
+      return " : ".concat(appInfo.filter( element => { return element.route === route})[0].name.toLowerCase());
     }
     return "";
   }

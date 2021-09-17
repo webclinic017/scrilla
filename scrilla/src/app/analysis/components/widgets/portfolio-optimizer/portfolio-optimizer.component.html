@@ -5,7 +5,9 @@
             <div class="action-group">
                 <div class="action-button">
                     <button mat-raised-button color="primary" matTooltip="Take a tour of the Portfolio Optimization app"
-                            [@scale]="tutorialBtnAnimationControl.scale" (click)="stepTutorial()"
+                            [@scale]="tutorialBtnAnimationControl.scale" 
+                            [@flash]="tutorialBtnAnimationControl.flash"
+                            (click)="stepTutorial()"
                             (mouseenter)="tutorialBtnAnimationControl = animator.animateScale()"
                             (mouseleave)="tutorialBtnAnimationControl = animator.initAnimation()">
                         {{ whichStep !== undefined ? 'Show Next' : 'Tutorial'}}
@@ -25,7 +27,7 @@
             </div>
             
         </mat-card-title>
-        <mat-card-subtitle>Mode: {{modeSelection.value.title}} {{whichStep}}</mat-card-subtitle>
+        <mat-card-subtitle>Mode: {{modeSelection.value.title}}</mat-card-subtitle>
         <mat-card-content class="arguments-container">
             <section id="mode-selection" class="item mat-elevation-z3" #tutorialTooltip="matTooltip" matTooltipDisabled="true"
                 matTooltip="1. Select an optimization mode. You can choose from a strategy that will either minimize your portfolio volatility, maximize your portfolio's sharpe ratio, or minimize your portfolio's conditional value at risk">

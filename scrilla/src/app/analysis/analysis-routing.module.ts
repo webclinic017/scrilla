@@ -8,6 +8,7 @@ import { RiskProfileComponent } from './components/widgets/risk-profile/risk-pro
 const routes: Routes = [
   { path: 'risk', component: RiskProfileComponent },
   { path: 'optimizer', component: PortfolioOptimizerComponent },
+  { path: 'optimizer/:tutorial', component: PortfolioOptimizerComponent },
   { path: 'pricing', component: PriceModelComponent },
   { path: 'correlation', component: CorrelationMatrixComponent}
 

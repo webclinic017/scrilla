@@ -1,6 +1,6 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AnimationProperties, AnimationControl, AnimationService, animationControls } from '../../services/animations.service';
 
 const scaleAnimationProperties : AnimationProperties = {
@@ -45,7 +45,7 @@ export class SplashComponent implements OnInit {
     this.animator.initAnimation(), this.animator.initAnimation(), this.animator.initAnimation()
   ]
 
-  constructor(public animator : AnimationService) { }
+  constructor(public animator : AnimationService, private router: Router) { }
 
   ngOnInit(): void {}
   
@@ -77,5 +77,11 @@ export class SplashComponent implements OnInit {
 
   public animateButtons() : AnimationControl{
     return {...this.animator.animateScale(), ...this.animator.animateHighlight()}
+  }
+
+  public navigateToRegister() : void{ this.router.navigateByUrl('register'); }
+
+  public navigateToOptimize(): void { 
+    this.router.navigateByUrl('analysis/optimizer/true')
   }
 }

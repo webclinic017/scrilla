@@ -7,7 +7,7 @@ export interface AnimationProperties{
 
 export interface AnimationControl{
     scale?: string, highlight?: string, opacity?: string,
-    translateOff?: string, translateOn?: string, 
+    translateOff?: string, translateOn?: string, flash?:string,
     toHeight?: string, toWidth?: string, toDimensions?:string,
 }
 
@@ -29,6 +29,12 @@ export const animationControls = {
         trigger: 'highlight',
         states: {
             highlight: 'highlight'
+        }
+    },
+    flash: {
+        trigger: 'flash',
+        states: {
+            flash: 'flash'
         }
     },
     translate:{
@@ -104,10 +110,15 @@ export class AnimationService{
      */
 
     // SERVICE INSTANCE METHODS
+
+    // SINGLE STATE ANIMATIONS
     public animateScale() : AnimationControl{ return { scale: `${animationControls.scale.states.scale}`} }
 
     public animateHighlight() : AnimationControl { return { highlight: `${animationControls.highlight.states.highlight}` }}
 
+    public animateFlash(): AnimationControl { return { flash: `${animationControls.flash.states.flash}` } }
+
+    // MULTI-STATE ANIMATIONS
     public animateTranslateOff(state : string) : AnimationControl { return { translateOff: `${state}` } }
 
     public animateTranslateOn(state: string) : AnimationControl { return { translateOn: `${state}` } }
@@ -118,6 +129,7 @@ export class AnimationService{
 
     public animateToDimensions(state: string) : AnimationControl { return { toDimensions: `${state}` } }
 
+    // ANIMATION CONTROL INITIALIZER
     public initAnimation() : AnimationControl { return { scale: '', highlight: '', translateOff: '', translateOn: '' } }
 
     // STATIC FACTORY METHODS
@@ -148,6 +160,22 @@ export class AnimationService{
             state(`${animationControls.highlight.states.highlight}`, style({ backgroundColor: `${cssColor}`})),
             transition(`void <=> ${animationControls.highlight.states.highlight}`, [ animate(this.getAnimationString(properties))])
         ])                                   
+    }
+
+    public static getFlashTrigger(flashOnCssColor: string, flashOffCssColor: string,
+                                    properties : AnimationProperties = defaultAnimationProperties)
+    : AnimationTriggerMetadata{
+        return trigger(`${animationControls.flash.trigger}`, [
+            transition(`* => ${animationControls.flash.states.flash}`, [
+                animate(this.getAnimationString(properties), keyframes([
+                    style({ backgroundColor: `${flashOnCssColor}`, offset: 0.2 }),
+                    style({ backgroundColor: `${flashOffCssColor}`, offset: 0.4 }),
+                    style({ backgroundColor: `${flashOnCssColor}`, offset: 0.6 }),
+                    style({ backgroundColor: `${flashOffCssColor}`, offset: 0.8 }),
+                    style({ backgroundColor: `${flashOnCssColor}`, offset: 1 })
+                ]))
+            ])
+        ])
     }
 
     public static getTranslateOffTrigger(distance: string, 
@@ -263,7 +291,8 @@ export class AnimationService{
         ])
     }
 
-    public static getOpacityTrigger(properties: AnimationProperties = defaultAnimationProperties){
+    public static getOpacityTrigger(properties: AnimationProperties = defaultAnimationProperties)
+    : AnimationTriggerMetadata {
         return trigger(`${animationControls.opacity.trigger}`,[
             transition(':enter', [
                 animate(this.getAnimationString(properties), keyframes([

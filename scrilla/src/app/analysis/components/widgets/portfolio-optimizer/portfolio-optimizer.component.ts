@@ -3,7 +3,7 @@ import { FormBuilder, FormControl } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Portfolio } from 'src/app/models/holding';
-import { AnimationService } from 'src/app/services/animations.service';
+import { AnimationProperties, AnimationService } from 'src/app/services/animations.service';
 import { ApiService, QueryParams } from 'src/app/services/api.service';
 import { ScalarComponent } from '../../arguments/scalar/scalar.component';
 import { TickersComponent } from '../../arguments/tickers/tickers.component';
@@ -24,6 +24,11 @@ const modes : any = {
   }
 }
 
+const flashOn = "#BA68C8"
+const flashOff = "#7B1FA2"
+const flashAnimationProperties : AnimationProperties = {
+  delay: '', duration: '3000ms', easing: ''
+}
 @Component({
   selector: 'app-portfolio-optimizer',
   templateUrl: './portfolio-optimizer.component.html',
@@ -32,6 +37,7 @@ const modes : any = {
     AnimationService.getScaleTrigger(Widget.scaleFactor),
     AnimationService.getFoldTrigger(Widget.foldAnimationProperties),
     AnimationService.getToHeightTrigger(Widget.toHeightAnimationProperties),
+    AnimationService.getFlashTrigger(flashOn, flashOff, flashAnimationProperties),
     AnimationService.getOpacityTrigger()
   ]
 })
@@ -62,9 +68,22 @@ export class PortfolioOptimizerComponent extends Widget implements OnInit {
     this.modeSelection = new FormControl(modes.minimizeVariance);
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    
+  }
 
-    // yes, this may is ugly
+  ngAfterViewInit(): void{
+    setTimeout(()=>{
+      if(this.route.snapshot.paramMap.get('tutorial')){
+        this.stepTutorial();
+        setTimeout(()=>{
+          this.tutorialBtnAnimationControl = this.animator.animateFlash();
+        }, 500)
+      }
+    }, 1000)
+  }
+
+    // yes, this is ugly
   public stepTutorial(){
     if(this.whichStep === undefined){ this.whichStep = 0;}
     else{ 

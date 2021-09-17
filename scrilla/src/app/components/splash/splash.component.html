@@ -53,13 +53,15 @@
                 [@scale]="this.registerBtnAnimationControl.scale" 
                 [@highlight]="this.registerBtnAnimationControl.highlight"
                 (mouseenter)="this.registerBtnAnimationControl = this.animateButtons()" 
-                (mouseleave)="this.registerBtnAnimationControl = animator.initAnimation()">
+                (mouseleave)="this.registerBtnAnimationControl = animator.initAnimation()"
+                (click)="navigateToRegister()">
                 Register</button>
             <button mat-raised-button class="mat-elevation-z2" color="accent"
                 [@scale]="this.tryBtnAnimationControl.scale" 
                 [@highlight]="this.tryBtnAnimationControl.highlight"
                 (mouseenter)="this.tryBtnAnimationControl = this.animateButtons()" 
-                (mouseleave)="this.tryBtnAnimationControl = animator.initAnimation()">Try It Out</button>
+                (mouseleave)="this.tryBtnAnimationControl = animator.initAnimation()"
+                (click)="navigateToOptimize()">Try It Out</button>
         </div>
 
     </div>
