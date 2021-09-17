@@ -6,3 +6,5 @@
 TODO: 
 
 interestrate dataset doesn't update until after market close. need _latest function to try first key and then except KeyError and try second key.
+
+target_return < -> conditional variance at risk optimization
