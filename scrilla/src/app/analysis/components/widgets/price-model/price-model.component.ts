@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DiscountDividend } from 'src/app/models/pricing';
 import { AnimationService } from 'src/app/services/animations.service';
 import { ApiService, QueryParams } from 'src/app/services/api.service';
@@ -38,8 +39,9 @@ export class PriceModelComponent extends Widget implements OnInit {
 
 
   constructor(public animator : AnimationService,public api: ApiService,
-              public formBuilder : FormBuilder) { 
-    super(animator, api, formBuilder)
+              public formBuilder : FormBuilder, public router: Router, 
+              public route: ActivatedRoute) {
+                super(animator, api, formBuilder, router, route);
     this.modeSelection = new FormControl(this.modes[0])
   }
   

@@ -43,7 +43,11 @@ export class DateComponent implements OnInit {
   public parseDates(): void{
     let startDate : string | null = this.datePipe.transform(this.rangeGroup.value.start, 'yyyy-MM-dd');
     let endDate : string | null = this.datePipe.transform(this.rangeGroup.value.end, 'yyyy-MM-dd');
-    if(startDate && endDate){ this.dates.emit([startDate, endDate]) }
+    if(startDate && endDate){ 
+      this.dates.emit([startDate, endDate]);
+      this.rangeGroup.controls['start'].setValue('')
+      this.rangeGroup.controls['end'].setValue('')
+    }
 
   }
 

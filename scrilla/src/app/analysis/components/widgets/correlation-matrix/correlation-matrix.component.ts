@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Correlation } from 'src/app/models/statistics';
 import { AnimationService } from 'src/app/services/animations.service';
 import { ApiService, QueryParams } from 'src/app/services/api.service';
@@ -23,8 +24,9 @@ export class CorrelationMatrixComponent extends Widget implements OnInit {
   public loading : boolean = false;
 
   constructor(public animator : AnimationService, public api: ApiService,
-    public formBuilder : FormBuilder) {
-      super(animator, api, formBuilder);
+              public formBuilder : FormBuilder, public router: Router, 
+              public route: ActivatedRoute) {
+      super(animator, api, formBuilder, router, route);
      }
 
   ngOnInit(): void { }
