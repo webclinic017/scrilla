@@ -2,9 +2,17 @@
     <div class="data-table-container" *ngIf="this.holdings && this.holdings.length > 0"
             [@toDimensions]="this.tableAnimationControl.toDimensions">
         <mat-card class="card mat-elevation-z2">
-            <mat-card-title>
-                <div class="title-container">
-                    <div class="title">Risk Summary</div>
+            <mat-card-title class="title-container">
+                <div class="title">Risk Summary</div>
+                <div>
+                    <a [href]="this.getProfileJsonUri()" [download]="this.getProfileFileName('json')">
+                        <mat-icon matTooltip="Export profile as JSON file"
+                                [color]="this.downloadResultsBtnAnimationControl.scale ? 'accent' : 'primary' " 
+                                [@scale]="this.downloadResultsBtnAnimationControl.scale"
+                                (mouseenter)="this.downloadResultsBtnAnimationControl = this.animateDownload()"
+                                (mouseleave)="this.downloadResultsBtnAnimationControl = this.animator.initAnimation()">
+                                    cloud_download</mat-icon>
+                    </a>
                 </div>
             </mat-card-title>
             <mat-card-content>

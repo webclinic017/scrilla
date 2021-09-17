@@ -28,20 +28,14 @@ export class StaticService {
 
   public exchangeWidgetRouteForTitle(route: string) : string{
     if(widgetInfo.some((value) => value.route === route)){
-      console.log(route)
-      widgetInfo.filter( element =>{ 
-        return element.route === route 
-      })
+      widgetInfo.filter( element =>{ return element.route === route })
       return " : ".concat(widgetInfo.filter( element =>{ return element.route === route })[0].name.toLowerCase());
     }
     return "";
   }
 
-  public getWidgetInfo() : staticInfo[]{
-    return widgetInfo;
-  }
+  public getWidgetInfo() : staticInfo[]{ return widgetInfo; }
 
-  public getDocInfo() : staticInfo[]{
-    return docInfo
-  }
+  public getDocInfo() : staticInfo[]{ return docInfo }
+  
 }

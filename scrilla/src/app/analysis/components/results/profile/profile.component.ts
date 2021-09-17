@@ -4,6 +4,7 @@ import { ChartDataSets, ChartOptions } from 'chart.js';
 import { BaseChartDirective, Color } from 'ng2-charts';
 import { Holding } from 'src/app/models/holding';
 import { AnimationControl, animationControls, AnimationProperties, AnimationService } from 'src/app/services/animations.service';
+import { Result } from '../result';
 
 const toDimensionsDuration = 500
 const toDimensionsAnimationProperties : AnimationProperties= {
@@ -19,10 +20,13 @@ const chartBorderColor : string = 'rgb(185, 237, 237, 0.35)'
   styleUrls: ['../results.css'],
   animations: [
     AnimationService.getToDimensionsTrigger(toDimensionsAnimationProperties),
-    AnimationService.getScaleTrigger(1.25)
+    AnimationService.getFoldTrigger(Result.foldAnimationProperties),
+    AnimationService.getScaleTrigger(1.25),
+    AnimationService.getHighlightTrigger('#E0E0E0')
+
   ]
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent extends Result implements OnInit {
   @ViewChild(BaseChartDirective) public chart!: BaseChartDirective;
 
   @Input() holdings !: Holding[];
@@ -34,6 +38,7 @@ export class ProfileComponent implements OnInit {
   public graphToggleAnimationControl : AnimationControl = this.animator.initAnimation();
   
 
+  public chartDataUrl: any;
   public chartExpanded : boolean = false;
   public chartOptions : ChartOptions={ 
     responsive: true,
@@ -60,7 +65,9 @@ export class ProfileComponent implements OnInit {
     { backgroundColor: '#4843a0', borderColor: `${chartBorderColor}`}, 
   ]
 
-  constructor(public animator : AnimationService, public sanitizer : DomSanitizer) { }
+  constructor(public animator : AnimationService, public sanitizer : DomSanitizer) { 
+    super(animator, sanitizer)
+  }
 
   ngOnInit(): void {
     if(this.holdings.length > 0){
@@ -84,6 +91,12 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  ngAfterViewInit(){
+    setTimeout(()=>{
+      this.chartDataUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.chart.toBase64Image())
+    }, 1000)
+  }
+
   public expand(){
     this.chartExpanded = true;
     this.tableAnimationControl = this.animator.animateToDimensions(animationControls.to.states.none);
@@ -104,5 +117,14 @@ export class ProfileComponent implements OnInit {
         this.chart.chart.resize();
       }, toDimensionsDuration+10)
     }, toDimensionsDuration+10)
+  }
+
+  public getProfileJsonUri(){
+    return super.formatResultJsonUri(this.holdings)
+  }
+  public getProfileFileName(ext: string){
+    let filename : string = "";
+    this.holdings.forEach(holding=>{ filename = filename.concat(holding.ticker).concat('_')});
+    return filename.concat('_profile.').concat(ext)
   }
 }

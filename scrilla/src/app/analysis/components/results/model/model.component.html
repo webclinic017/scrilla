@@ -1,6 +1,8 @@
-<h2>{{model.title}}</h2>
+<div class="title-container">
+    <div class="title"><h2>{{model.title}}</h2></div>
+</div>
 <div class="group-container" *ngIf="results !== undefined">
-    <mat-tab-group>
+    <mat-tab-group (selectedTabChange)="rerender($event)">
         <mat-tab *ngFor="let result of results" [label]="result.ticker" class="fill">
             <div class="tab-container">
                 <div id="discount-dividend-summary" class="summary-container"
@@ -35,10 +37,22 @@
                 </div>
 
                 <div class="large-chart-container mat-elevation-z2">
-                    <div class="title-container"><h2>Model Visualization</h2></div>
+                    <div class="title-container">
+                        <div class="title">Model Visualization</div>
+                        <div *ngIf="this.chartDataUrls.length > 0">
+                            <a [href]="this.chartDataUrls[results.indexOf(result)]" 
+                                [download]="this.getModelFileName(results.indexOf(result), 'png')">
+                                <mat-icon matTooltip="Export graph as PNG image"
+                                    [color]="this.downloadChartBtnAnimationControl.scale ? 'accent' : 'primary' " 
+                                    [@scale]="this.downloadChartBtnAnimationControl.scale"
+                                    (mouseenter)="this.downloadChartBtnAnimationControl = this.animateDownload()"
+                                    (mouseleave)="this.downloadChartBtnAnimationControl = this.animator.initAnimation()">cloud_download</mat-icon>
+                            </a>
+                        </div>
+                    </div>
                     <div class="display-container">
                         <div>
-                            <canvas baseChart chartType="line" [legend]="true"[options]="chartOptions" [colors]="chartColors"
+                            <canvas #chart=base-chart baseChart chartType="line" [legend]="true"[options]="chartOptions" [colors]="chartColors"
                                     [datasets]="chartData[results.indexOf(result)]" [labels]="chartLabels[results.indexOf(result)]">
                             </canvas>
                         </div>

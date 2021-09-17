@@ -16,8 +16,8 @@ h2{ margin-left: 2.5%; font-size: 12px; margin-bottom: 0;}
     display:flex; flex-direction: row;
     justify-content: space-between;
 }
-.card .title-container .title{
-    font-weight: bold;
+.title{
+    font-weight: bold; font-size: 14px; margin-top: 1%;
 }
 .card .title-container .chip-row-container{
     width: 75%;
@@ -49,9 +49,9 @@ h2{ margin-left: 2.5%; font-size: 12px; margin-bottom: 0;}
     display: flex; flex-direction: column;
     justify-content: flex-start;
 }
-.chart-container .title-container{
+.chart-container .title-container, .large-chart-container .title-container{
     margin-left: 5%; margin-right: 2.5%;
-    font-weight:bold; font-size: 14px; 
+    font-weight:bold;
     display: flex; flex-direction: row;
     justify-content: space-between;
 }

@@ -5,7 +5,7 @@ import { AnimationService } from 'src/app/services/animations.service';
 import { ApiService, QueryParams } from 'src/app/services/api.service';
 import { Widget } from '../widget';
 
-interface modeType {
+export interface modeType {
     title: string, param: string
 }
 export const modes : modeType[] =[

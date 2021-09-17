@@ -4,7 +4,7 @@
         <div class="title">Correlation Matrix</div>
         <div>
             <a [href]="this.getMatrixJsonUri()" [download]="this.getMatrixFileName()">
-                <mat-icon matTooltip="Export portfolio as JSON file"
+                <mat-icon matTooltip="Export correlation matrix as JSON file"
                         [color]="this.downloadResultsBtnAnimationControl.scale ? 'accent' : 'primary' " 
                         [@scale]="this.downloadResultsBtnAnimationControl.scale"
                         (mouseenter)="this.downloadResultsBtnAnimationControl = this.animateDownload()"

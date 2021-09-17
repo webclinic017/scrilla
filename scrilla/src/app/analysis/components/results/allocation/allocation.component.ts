@@ -1,14 +1,11 @@
-import { Component,Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component,Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ChartOptions } from 'chart.js';
 import { BaseChartDirective, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, SingleDataSet } from 'ng2-charts';
 import {Portfolio } from 'src/app/models/holding';
-import { AnimationControl, AnimationProperties, AnimationService } from 'src/app/services/animations.service';
+import { AnimationService } from 'src/app/services/animations.service';
 import { Result } from '../result';
 
-const foldAnimationProperties : AnimationProperties= {
-  delay: '', duration: '250ms', easing: ''
-}
 
 export interface PieArgs{
   name: string, value: number
@@ -19,7 +16,7 @@ export interface PieArgs{
   templateUrl: './allocation.component.html',
   styleUrls: ['../results.css'],
   animations:[
-    AnimationService.getFoldTrigger(foldAnimationProperties),
+    AnimationService.getFoldTrigger(Result.foldAnimationProperties),
     AnimationService.getScaleTrigger(1.25),
     AnimationService.getHighlightTrigger('#E0E0E0')
   ]
@@ -80,6 +77,7 @@ export class AllocationComponent extends Result implements OnInit {
       this.chartDataUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.chartElement.toBase64Image())
     }, 1000)
   }
+
 
   public getPortfolioJsonUri(): SafeResourceUrl{
     return super.formatResultJsonUri(this.portfolio);
