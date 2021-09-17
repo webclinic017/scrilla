@@ -154,9 +154,20 @@ export class AnimationService{
                                             properties: AnimationProperties = defaultAnimationProperties) 
     : AnimationTriggerMetadata {
         return trigger(`${animationControls.translate.triggers.off}`, [
-            state(`${animationControls.translate.states.left}`, style({ transform: `translateX(-${distance})`, opacity: '0'})),
-            state(`${animationControls.translate.states.right}`, style({ transform: `translateX(${distance})`, opacity: '0'})),
-            transition('* => *', animate(this.getAnimationString(properties)))
+            transition(`*=> ${animationControls.translate.states.left}`, [
+                animate(this.getAnimationString(properties), keyframes([
+                    style({ transform: 'translateX(0)', opacity: '1', offset: 0}),
+                    style({ transform: `translateX(-${distance})`, opacity: '0', offset: 0.99 }),
+                    style({ transform: 'translateX(0)', opacity: '0', offset: 1})
+                ]))
+            ]),
+            transition(`*=> ${animationControls.translate.states.right}`, [
+                animate(this.getAnimationString(properties), keyframes([
+                    style({ transform: 'translateX(0)', opacity: '1', offset: 0}),
+                    style({ transform: `translateX(${distance})`, opacity: '0', offset: 0.99 }),
+                    style({ transform: 'translateX(0)', opacity: '0', offset: 1})
+                ]))
+            ])
         ])
     }
 
