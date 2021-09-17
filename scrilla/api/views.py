@@ -8,26 +8,34 @@ from core import settings
 
 from scrilla import services, errors
 from scrilla.analysis import optimizer, statistics, markets
-from scrilla.util import plotter, formatter
+from scrilla.util import plotter, formatter, helper
 from scrilla.objects.portfolio import Portfolio
 from scrilla.objects.cashflow import Cashflow
+
+def parse_date(date : str):
+    return helper.parse_date_string(date) if date is not None else None
+
+def parse_float(num : str):
+    return float(num) if num is not None else None
 
 def parse_query_params(request):
     try: 
         return {
             'tickers': request.query_params.getlist('tickers', []),
-            'start_date': request.query_params.get('start_date'),
-            'end_date': request.query_params.get('end_date'),
-            'invest': float(request.query_params.get('invest')) if request.query_params.get('invest') else None,
-            'target': float(request.query_params.get('target')) if request.query_params.get('target') else None,
+            'start_date': parse_date(request.query_params.get('start')),
+            'end_date': parse_date(request.query_params.get('end')),
+            'invest': parse_float(request.query_params.get('invest')),
+            'target': parse_float(request.query_params.get('target')),
             'mode': str(request.query_params.get('mode')).lower(),
             'image': str(request.query_params.get('image')).lower() == 'true',
-            'discount': float(request.query_params.get('discount')) if request.query_params.get('discount') else None, 
-            'prob': float(request.query_params.get('prob')) if request.query_params.get('prob') else None,
-            'expiry': float(request.query_params.get('expiry')) if request.query_params.get('expiry') else None
+            'discount': parse_float(request.query_params.get('discount')), 
+            'prob': parse_float(request.query_params.get('prob')),
+            'expiry': parse_float(request.query_params.get('expiry'))
         }
     except ValueError as ve:
         raise ve
+    except TypeError as te:
+        raise te
 
 @api_view(['GET'])
 def optimize_portfolio(request):
