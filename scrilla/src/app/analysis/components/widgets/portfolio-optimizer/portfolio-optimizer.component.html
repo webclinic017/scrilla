@@ -81,15 +81,16 @@
             <span id="probability-input" class="item mat-elevation-z2" [@fold]
                     *ngIf="modeSelection.value === modes.minimizeConditionalValueAtRisk">
                 <app-scalar title="Probability of Loss" toolTipText="Enter prior probability of loss"
-                            [disabled]="portfolio !== undefined" [currency]="false" [bounds]="[0,1]"
+                            [required]="true" [currency]="false" [bounds]="[0,1]"
+                            [disabled]="portfolio !== undefined"
                             (scalar)="setProbability($event)"></app-scalar>
             </span>
 
             <span id="expiry-input" class="item mat-elevation-z3" [@fold]
                     *ngIf="modeSelection.value === modes.minimizeConditionalValueAtRisk">
                 <app-scalar title="Time Until Loss" toolTipText="Enter time horizon of portfolio in years"
-                            [disabled]="portfolio !== undefined" [currency]="false"
-                            (scalar)="setExpiry($event)"></app-scalar>
+                            [disabled]="portfolio !== undefined" [currency]="false" [required]="true"
+                            [bounds]=[0] (scalar)="setExpiry($event)"></app-scalar>
             </span>
 
             <span id="target-input"  *ngIf="optionalArguments.get('target.enabled')?.value" class="item mat-elevation-z2" 
@@ -102,7 +103,8 @@
 
             <span id="invest-input" class="item mat-elevation-z2" [@fold]
                     *ngIf="optionalArguments.get('invest.enabled')?.value">
-                <app-scalar title="Total Investment" [disabled]="portfolio !== undefined" [currency]="true"
+                <app-scalar title="Total Investment" [disabled]="portfolio !== undefined" 
+                            [currency]="true" [bounds]="[0]"
                             toolTipText="Enter total amount of money invested into portfolio"
                             (scalar)="setInvestment($event)"></app-scalar>
             </span>

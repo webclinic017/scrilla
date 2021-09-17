@@ -24,10 +24,14 @@ export class ScalarComponent implements OnInit {
   public title !: string;
   @Input()
   public toolTipText !: string;
+
+  // first element is minimum, second element is maximum
   @Input()
   public bounds !: number[];
   @Input()
   public disabled : boolean = false;
+  @Input()
+  public required: boolean = false;
 
   @Output()
   public scalar : EventEmitter<number> = new EventEmitter<number>()
@@ -40,12 +44,18 @@ export class ScalarComponent implements OnInit {
   // @Input doesn't exist until after the constructor is called, so 
   // FormControl must be created here instead of constructor
   ngOnInit(): void { 
+
+    let validators = []
+    if(this.required){ validators.push(Validators.required)}
     if(this.bounds){
-      this.scalarControl = new FormControl({
-        value: '', disabled: this.disabled},
-        [ Validators.min(this.bounds[0]), Validators.max(this.bounds[1])],)
+        if(this.bounds.length>0){
+          validators.push(Validators.min(this.bounds[0])) 
+        }
+        if(this.bounds.length>1){
+          validators.push(Validators.max(this.bounds[1]))
+        }
     }
-    else{ this.scalarControl = new FormControl({ value: '', disabled: this.disabled }, []) }
+    this.scalarControl = new FormControl({ value: '', disabled: this.disabled }, validators)
   }
 
   ngOnChanges(changes: SimpleChanges){

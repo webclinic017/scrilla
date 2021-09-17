@@ -19,8 +19,9 @@
                 <mat-icon>close</mat-icon>
             </button>
         <mat-error *ngIf="scalarControl.invalid && (scalarControl.dirty || scalarControl.touched)">
-            <div *ngIf="bounds && scalarControl.errors?.min">Must be greater than {{bounds[0]}}</div>
-            <div *ngIf="bounds && scalarControl.errors?.max">Must be less than {{bounds[1]}}</div>
+            <div *ngIf="required && scalarControl.errors?.required">{{title}} is required!</div>
+            <div *ngIf="bounds && scalarControl.errors?.min">Must be greater than {{bounds[0]}}!</div>
+            <div *ngIf="bounds && scalarControl.errors?.max">Must be less than {{bounds[1]}}!</div>
         </mat-error>
         </mat-form-field>
     </mat-card-content>

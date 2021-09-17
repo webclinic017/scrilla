@@ -30,8 +30,8 @@
     width: 75%; height: 100%; 
 }
 .translation-container .translation-item { 
-    position: absolute; 
-    width:100%;
+    position: absolute; width:100%; 
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif; 
 }
 .translation-container .translation-item .item-text{
     position: static; 
