@@ -7,7 +7,9 @@ import { AnimationControl, AnimationService } from 'src/app/services/animations.
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   animations: [
-    AnimationService.getScaleTrigger(1.025)
+    AnimationService.getScaleTrigger(1.025),
+    AnimationService.getHighlightTrigger('#A5D6A7'),
+    AnimationService.getFontColorTrigger('#212121')
   ]
 })
 export class LoginComponent implements OnInit {
@@ -23,5 +25,11 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit(): void { }
+
+  public animateButton(): AnimationControl{
+    return {...this.animator.animateScale(), 
+              ...this.animator.animateHighlight(),
+              ...this.animator.animateFontColor()}
+  }
 
 }

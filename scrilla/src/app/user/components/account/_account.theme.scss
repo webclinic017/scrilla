@@ -8,8 +8,8 @@
     $accent-palette: map.get($color-config, 'accent');
     $warn-palette: map.get($color-config, 'warn');
 
-    .login-button{
-      background-color: map-get($accent-palette, 400)
+    .upgrade-button{
+      background-color: map-get($warn-palette, 400);
     }
 }
 

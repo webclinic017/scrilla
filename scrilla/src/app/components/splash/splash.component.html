@@ -34,17 +34,19 @@
         </div>
 
         <div class="button-pane">
-            <button mat-raised-button class="mat-elevation-z2" color="accent"
+            <button mat-raised-button class="pane-button mat-elevation-z2"
                 [@scale]="this.registerBtnAnimationControl.scale" 
                 [@highlight]="this.registerBtnAnimationControl.highlight"
+                [@fontColor]="this.registerBtnAnimationControl.fontColor"
                 (mouseenter)="this.registerBtnAnimationControl = this.animateButtons()" 
                 (mouseleave)="this.registerBtnAnimationControl = animator.initAnimation()"
                 (click)="navigateToRegister()">
                 Register</button>
 
-            <button mat-raised-button class="mat-elevation-z2" color="accent"
+            <button mat-raised-button class="pane-button mat-elevation-z2"
                 [@scale]="this.tryBtnAnimationControl.scale" 
                 [@highlight]="this.tryBtnAnimationControl.highlight"
+                [@fontColor]="this.tryBtnAnimationControl.fontColor"
                 (mouseenter)="this.tryBtnAnimationControl = this.animateButtons()" 
                 (mouseleave)="this.tryBtnAnimationControl = animator.initAnimation()"
                 (click)="navigateToOptimize()">Try It Out</button>

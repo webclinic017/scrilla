@@ -33,7 +33,6 @@ export class StaticService {
 
   public exchangeRouteForTitle(route: string) : string{
     if(widgetInfo.some((value) => value.route === route)){
-      console.log(route)
       return " : ".concat(widgetInfo.filter( element =>{ return route.includes(element.route) })[0].name.toLowerCase());
     }
     else if(docInfo.some((value)=> value.route === route)){

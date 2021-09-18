@@ -7,7 +7,7 @@
             <mat-card id="free-tier-plan" class="mat-elevation-z10" [@fold]>
                 <mat-card-title>Free Tier</mat-card-title>
                 <mat-card-subtitle>Try Before You Buy</mat-card-subtitle>
-                <mat-card-content class="wrap">
+                <mat-card-content>
                     <div class="blurb">
                         Everything you need to start managing your own investments. 
                     </div>
@@ -38,7 +38,9 @@
                 <mat-card-actions>
                     <button class="start-button" mat-raised-button
                         [@scale]="freeStartBtnAnimationControl.scale"
-                        (mouseenter)="freeStartBtnAnimationControl = animator.animateScale()"
+                        [@highlight]="freeStartBtnAnimationControl.highlight"
+                        [@fontColor]="freeStartBtnAnimationControl.fontColor"
+                        (mouseenter)="freeStartBtnAnimationControl = this.animateButton()"
                         (mouseleave)="freeStartBtnAnimationControl = animator.initAnimation()">
                         Get Started <mat-icon>chevron_right</mat-icon>
                     </button>
@@ -80,7 +82,7 @@
                         <mat-list-item id="paid-item-3">
                             <mat-icon mat-list-icon color="accent">attach_money</mat-icon>
                             <div mat-line matTooltipPosition="above"
-                                            matTooltip="Submit a ticket through your account page or email support directly.">
+                                            matTooltip="Submit a ticket through the help page or email support directly.">
                                 <span>Responsive Tech Support 
                                     <mat-icon class="helper">help</mat-icon>
                                 </span>
@@ -102,7 +104,9 @@
                 <mat-card-actions>
                     <button class="start-button" mat-raised-button
                     [@scale]="paidStartBtnAnimationControl.scale"
-                    (mouseenter)="paidStartBtnAnimationControl = animator.animateScale()"
+                    [@highlight]="paidStartBtnAnimationControl.highlight"
+                    [@fontColor]="paidStartBtnAnimationControl.fontColor"
+                    (mouseenter)="paidStartBtnAnimationControl = this.animateButton()"
                     (mouseleave)="paidStartBtnAnimationControl = animator.initAnimation()">
                         Get Started <mat-icon>chevron_right</mat-icon>
                     </button>

@@ -37,6 +37,7 @@ import { CorrelationMatrixComponent } from './components/widgets/correlation-mat
 import { ConstraintsComponent } from './components/results/constraints/constraints.component';
 import { ModelComponent } from './components/results/model/model.component';
 import { MatrixComponent } from './components/results/matrix/matrix.component';
+import { SharedModule } from '../shared.module';
 
 @NgModule({
   declarations: [
@@ -54,11 +55,9 @@ import { MatrixComponent } from './components/results/matrix/matrix.component';
     MatrixComponent
   ],
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
     AnalysisRoutingModule,
-
+    SharedModule,
+    
     MatCurrencyFormatModule,
     ChartsModule,
 
@@ -71,13 +70,10 @@ import { MatrixComponent } from './components/results/matrix/matrix.component';
     MatDividerModule,
     MatFormFieldModule,
     MatGridListModule,
-    MatIconModule,
-    MatInputModule,
     MatNativeDateModule,
     MatProgressBarModule,
     MatTableModule,
     MatTabsModule,
-    MatTooltipModule,
     MatSelectModule,
   ],
   providers: [ DatePipe ]

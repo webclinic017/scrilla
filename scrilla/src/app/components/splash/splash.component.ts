@@ -20,7 +20,7 @@ const translateAnimationProperties : AnimationProperties = {
       // passing it into the animation...
 const highlightHexColor='#81C784';
 const translateDistance='75%';
-const scaleFactor=1.5
+const scaleFactor=1.5;
 
 @Component({
   selector: 'app-splash',
@@ -32,7 +32,8 @@ const scaleFactor=1.5
     AnimationService.getTranslateOffTrigger(translateDistance, translateAnimationProperties),
     AnimationService.getTranslateOnTrigger(translateDistance, translateAnimationProperties),
     AnimationService.getOpacityTrigger(),
-    AnimationService.getFoldTrigger(foldAnimationProperties)
+    AnimationService.getFoldTrigger(foldAnimationProperties),
+    AnimationService.getFontColorTrigger('#212121')
   ]
 })
 export class SplashComponent implements OnInit {
@@ -89,10 +90,12 @@ export class SplashComponent implements OnInit {
   }
 
   public animateButtons() : AnimationControl{
-    return {...this.animator.animateScale(), ...this.animator.animateHighlight()}
+    return {...this.animator.animateScale(), 
+            ...this.animator.animateHighlight(),
+            ...this.animator.animateFontColor()}
   }
 
-  public navigateToRegister() : void{ this.router.navigateByUrl('plan'); }
+  public navigateToRegister() : void{ this.router.navigateByUrl('user/plan'); }
 
   public navigateToOptimize(): void { 
     this.router.navigateByUrl('analysis/optimizer/true')

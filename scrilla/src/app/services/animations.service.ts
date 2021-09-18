@@ -9,6 +9,7 @@ export interface AnimationControl{
     scale?: string, highlight?: string, opacity?: string,
     translateOff?: string, translateOn?: string, flash?:string,
     toHeight?: string, toWidth?: string, toDimensions?:string,
+    fontColor?:string,
 }
 
 export const defaultDuration = 500
@@ -29,6 +30,12 @@ export const animationControls = {
         trigger: 'highlight',
         states: {
             highlight: 'highlight'
+        }
+    },
+    fontColor: {
+        trigger: 'fontColor',
+        states: {
+            fontColor: 'fontColor'
         }
     },
     flash: {
@@ -116,6 +123,8 @@ export class AnimationService{
 
     public animateHighlight() : AnimationControl { return { highlight: `${animationControls.highlight.states.highlight}` }}
 
+    public animateFontColor() : AnimationControl { return { fontColor: `${animationControls.fontColor.states.fontColor}` } }
+
     public animateFlash(): AnimationControl { return { flash: `${animationControls.flash.states.flash}` } }
 
     // MULTI-STATE ANIMATIONS
@@ -159,6 +168,16 @@ export class AnimationService{
         return trigger(`${animationControls.highlight.trigger}`, [
             state(`${animationControls.highlight.states.highlight}`, style({ backgroundColor: `${cssColor}`})),
             transition(`void <=> ${animationControls.highlight.states.highlight}`, [ animate(this.getAnimationString(properties))])
+        ])                                   
+    }
+
+    public static getFontColorTrigger(cssColor: string,
+                                    properties: AnimationProperties = defaultAnimationProperties)
+    : AnimationTriggerMetadata{
+
+        return trigger(`${animationControls.fontColor.trigger}`, [
+            state(`${animationControls.fontColor.states.fontColor}`, style({ color: `${cssColor}`})),
+            transition(`void <=> ${animationControls.fontColor.states.fontColor}`, [ animate(this.getAnimationString(properties))])
         ])                                   
     }
 
