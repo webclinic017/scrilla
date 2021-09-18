@@ -19,9 +19,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SideNavComponent } from './components/sidenav/sidenav.component';
 import { HttpClientModule } from '@angular/common/http';
-import { RegisterComponent } from './components/register/register.component';
+import { PlanComponent } from './components/plan/plan.component';
 import { LoginComponent } from './components/login/login.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 
 @NgModule({
@@ -31,8 +32,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     FooterComponent,
     SplashComponent,
     SideNavComponent,
-    RegisterComponent,
-    LoginComponent
+    PlanComponent,
+    LoginComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

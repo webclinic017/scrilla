@@ -4,7 +4,7 @@
     </div>
     <div class="register-content">
         <div class="register-item">
-            <mat-card id="free-tier-plan" class="mat-elevation-z10">
+            <mat-card id="free-tier-plan" class="mat-elevation-z10" [@fold]>
                 <mat-card-title>Free Tier</mat-card-title>
                 <mat-card-subtitle>Try Before You Buy</mat-card-subtitle>
                 <mat-card-content>
@@ -12,7 +12,7 @@
                         Everything you need to start managing your own investments. 
                     </div>
 
-                    <mat-divider></mat-divider>
+                    <hr>
 
                     <mat-list id="free-list" dense>
                         <mat-list-item id="free-item-1">
@@ -26,8 +26,8 @@
                         <mat-list-item id="free-item-2">
                             <mat-icon mat-list-icon color="accent">attach_money</mat-icon>
                             <div mat-line  matTooltipPosition="above"
-                                matTooltip="Upgrade to Paid Tier at any time for unlimited access!">
-                                <span>5 Requests Per Minute / 100 Request Per Day
+                                matTooltip="Upgrade to Paid Tier at any time for greater access!">
+                                <span>5 Requests Per Minute / 50 Request Per Day
                                 <mat-icon class="helper">help</mat-icon></span>
                             </div>
                         </mat-list-item>
@@ -36,13 +36,18 @@
                 </mat-card-content>
                 
                 <mat-card-actions>
-                    <button class="start-button" mat-raised-button>Get Started <mat-icon>chevron_right</mat-icon></button>
+                    <button class="start-button" mat-raised-button
+                        [@scale]="freeStartBtnAnimationControl.scale"
+                        (mouseenter)="freeStartBtnAnimationControl = animator.animateScale()"
+                        (mouseleave)="freeStartBtnAnimationControl = animator.initAnimation()">
+                        Get Started <mat-icon>chevron_right</mat-icon>
+                    </button>
                 </mat-card-actions>
 
             </mat-card>
         </div>
         <div class="register-item">
-            <mat-card id="paid-tier-plan" class="mat-elevation-z10">
+            <mat-card id="paid-tier-plan" class="mat-elevation-z10" [@fold]>
                 <mat-card-title>Paid Tier</mat-card-title>
                 <mat-card-subtitle>$9 per month</mat-card-subtitle>
                 <mat-card-content>
@@ -50,7 +55,8 @@
                     <div class="blurb">
                         Built to scale for personal portfolios, small businesses and high-throughput organizations.
                     </div>
-                    <mat-divider></mat-divider>
+                    
+                    <hr>
 
                     <mat-list id="paid-list" dense>
                         <mat-list-item id="paid-item-1">
@@ -74,8 +80,19 @@
                         <mat-list-item id="paid-item-3">
                             <mat-icon mat-list-icon color="accent">attach_money</mat-icon>
                             <div mat-line matTooltipPosition="above"
-                                            matTooltip="">
-                                ASDF
+                                            matTooltip="Submit a ticket through your account page or email support directly.">
+                                <span>Responsive Tech Support 
+                                    <mat-icon class="helper">help</mat-icon>
+                                </span>
+                            </div>
+                        </mat-list-item>
+                        <mat-list-item id="paid-item-3">
+                            <mat-icon mat-list-icon color="accent">attach_money</mat-icon>
+                            <div mat-line matTooltipPosition="above"
+                                            matTooltip="Your requests for new library or UI features take priority over others">
+                                <span>Priority Feature Request
+                                    <mat-icon class="helper">help</mat-icon>
+                                </span>
                             </div>
                         </mat-list-item>
                     </mat-list>
@@ -83,7 +100,12 @@
                 </mat-card-content>
 
                 <mat-card-actions>
-                    <button class="start-button" mat-raised-button>Get Started <mat-icon>chevron_right</mat-icon></button>
+                    <button class="start-button" mat-raised-button
+                    [@scale]="paidStartBtnAnimationControl.scale"
+                    (mouseenter)="paidStartBtnAnimationControl = animator.animateScale()"
+                    (mouseleave)="paidStartBtnAnimationControl = animator.initAnimation()">
+                        Get Started <mat-icon>chevron_right</mat-icon>
+                    </button>
                 </mat-card-actions>
             </mat-card>
         </div>

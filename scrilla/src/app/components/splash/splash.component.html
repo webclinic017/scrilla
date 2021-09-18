@@ -1,11 +1,11 @@
-<div class="splash-container">
+<div class="splash-container" [@opacity] [@fold]> 
 
     <div class="splash-card mat-elevation-z0">
 
         <div class="title-pane"><h2>Asset Management Made Easy</h2></div>
 
         <div class="content-pane">
-            <button mat-icon-button
+            <button class="left-chevron" mat-icon-button
                 [@scale]="this.leftNavAnimationControl.scale"
                 (mouseenter)="this.leftNavAnimationControl = animator.animateScale()"
                 (mouseleave)="this.leftNavAnimationControl = animator.initAnimation()"
@@ -14,38 +14,23 @@
             </button>
 
             <div class="translation-container">
-                <div class="translation-item" [ngStyle]="paneIndex == 0 ? { 'opacity': '1' } : { opacity: '0' } "
-                    [@translateOn]="paneAnimationControls[0].translateOn"
-                    [@translateOff]="paneAnimationControls[0].translateOff">
+                <div class="translation-item" *ngFor="let blurb of paneBlurbs; let i = index"
+                    [ngStyle]="paneIndex == i ? { 'opacity': '1' } : { opacity: '0' } "
+                    [@translateOn]="paneAnimationControls[i].translateOn"
+                    [@translateOff]="paneAnimationControls[i].translateOff">
                     <div class="item-text">
-                        Professional grade financial analysis in a few clicks!
-                    </div>
-                </div>
-                <div class="translation-item"
-                    [ngStyle]="paneIndex == 1 ? { 'opacity': '1' } : { opacity: '0' } "
-                    [@translateOn]="paneAnimationControls[1].translateOn"
-                    [@translateOff]="paneAnimationControls[1].translateOff">
-                    <div class="item-text">
-                        Free tier API for programmatic use or intuitive user interface for browsing!
-                    </div>
-                </div>
-                <div class="translation-item"
-                    [ngStyle]="paneIndex == 2 ? { 'opacity': '1' } : { opacity: '0' } "
-                    [@translateOn]="paneAnimationControls[2].translateOn"
-                    [@translateOff]="paneAnimationControls[2].translateOff">
-                    <div class="item-text">
-                        Long term support, open-source code with GNU public license!
+                        {{blurb}}
                     </div>
                 </div>
             </div>
-            <button mat-icon-button color="accent"
+
+            <button class="right-chevron" mat-icon-button color="accent"
                 [@scale]="this.rightNavAnimationControl.scale"
                 (mouseenter)="this.rightNavAnimationControl = animator.animateScale()"
                 (mouseleave)="this.rightNavAnimationControl = animator.initAnimation()"
                 (click)="this.incrementPaneIndex()">
                 <mat-icon>chevron_right</mat-icon>
             </button>
-
         </div>
 
         <div class="button-pane">
@@ -56,6 +41,7 @@
                 (mouseleave)="this.registerBtnAnimationControl = animator.initAnimation()"
                 (click)="navigateToRegister()">
                 Register</button>
+
             <button mat-raised-button class="mat-elevation-z2" color="accent"
                 [@scale]="this.tryBtnAnimationControl.scale" 
                 [@highlight]="this.tryBtnAnimationControl.highlight"

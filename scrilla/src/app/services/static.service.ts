@@ -33,13 +33,14 @@ export class StaticService {
 
   public exchangeRouteForTitle(route: string) : string{
     if(widgetInfo.some((value) => value.route === route)){
-      return " : ".concat(widgetInfo.filter( element =>{ return element.route === route })[0].name.toLowerCase());
+      console.log(route)
+      return " : ".concat(widgetInfo.filter( element =>{ return route.includes(element.route) })[0].name.toLowerCase());
     }
     else if(docInfo.some((value)=> value.route === route)){
-      return " : ".concat(docInfo.filter( element=> {return element.route === route})[0].name.toLowerCase());
+      return " : ".concat(docInfo.filter( element=> { return route.includes(element.route)})[0].name.toLowerCase());
     }
     else if(appInfo.some( (value)=> value.route === route)){
-      return " : ".concat(appInfo.filter( element => { return element.route === route})[0].name.toLowerCase());
+      return " : ".concat(appInfo.filter( element => { return route.includes(element.route)})[0].name.toLowerCase());
     }
     return "";
   }

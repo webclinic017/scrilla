@@ -15,11 +15,11 @@
     text-align: center;
 }
 .splash-card .content-pane{
-    background: none;
-    width: 50%;  margin: auto;
+    background: none; width: 100%;  margin: auto;
     display: flex; flex-direction: row;
     justify-content:space-between; align-items:center;
 }
+
 .splash-card .button-pane{
     width: 50%; margin:auto;
     display: flex; flex-direction: row;
@@ -36,4 +36,9 @@
 .translation-container .translation-item .item-text{
     position: static; 
     margin:auto; text-align:center;
+}
+
+@media screen and (min-width:421px){
+    .splash-card .content-pane .left-chevron { margin-left: 20%;}
+    .splash-card .content-pane .right-chevron { margin-right: 20%; }
 }

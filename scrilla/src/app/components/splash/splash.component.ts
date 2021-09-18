@@ -6,7 +6,9 @@ import { AnimationProperties, AnimationControl, AnimationService, animationContr
 const scaleAnimationProperties : AnimationProperties = {
   delay: '', duration: '250ms', easing: ''
 }
-
+const foldAnimationProperties : AnimationProperties= {
+  delay: '', duration: '250ms', easing: ''
+}
 // separate duration from properties so it can be referenced by setTimeout when 
 // coordinating on and off translations in the incrementPaneIndex and decrementPaneIndex
 // methods. 
@@ -28,14 +30,22 @@ const scaleFactor=1.5
     AnimationService.getScaleTrigger(scaleFactor, scaleAnimationProperties),
     AnimationService.getHighlightTrigger(highlightHexColor),
     AnimationService.getTranslateOffTrigger(translateDistance, translateAnimationProperties),
-    AnimationService.getTranslateOnTrigger(translateDistance, translateAnimationProperties)
+    AnimationService.getTranslateOnTrigger(translateDistance, translateAnimationProperties),
+    AnimationService.getOpacityTrigger(),
+    AnimationService.getFoldTrigger(foldAnimationProperties)
   ]
 })
 export class SplashComponent implements OnInit {
 
   public paneIndex : number = 0;
-  public paneSize : number = 3;
 
+  public paneBlurbs = [
+    "Professional grade financial analysis in a few clicks",
+    "Well documented API for programmatic use in projects",
+    "Responsive, fluid web UI for browsing experience",
+    "Long term support, open-source code with GNU public license",
+    "Constantly evolving CLI library with new features introduced all the time"
+  ]
   public registerBtnAnimationControl: AnimationControl = this.animator.initAnimation();
   public tryBtnAnimationControl : AnimationControl =  this.animator.initAnimation();
   public rightNavAnimationControl: AnimationControl = this.animator.initAnimation();
@@ -53,7 +63,7 @@ export class SplashComponent implements OnInit {
     let previousIndex = this.paneIndex;
     let bufferIndex = this.paneIndex;
     ++bufferIndex;
-    if(bufferIndex==this.paneSize){ bufferIndex = 0 }
+    if(bufferIndex==this.paneBlurbs.length){ bufferIndex = 0 }
     this.paneAnimationControls[previousIndex] = this.animator.animateTranslateOff(animationControls.translate.states.left)
     
     setTimeout(()=>{
@@ -66,7 +76,7 @@ export class SplashComponent implements OnInit {
     let previousIndex = this.paneIndex;
     let bufferIndex = this.paneIndex
     --bufferIndex;
-    if(bufferIndex==-1) { bufferIndex = this.paneSize - 1 }
+    if(bufferIndex==-1) { bufferIndex = this.paneBlurbs.length - 1 }
     this.paneAnimationControls[previousIndex] = this.animator.animateTranslateOff(animationControls.translate.states.right)
 
     setTimeout(()=>{
@@ -79,7 +89,7 @@ export class SplashComponent implements OnInit {
     return {...this.animator.animateScale(), ...this.animator.animateHighlight()}
   }
 
-  public navigateToRegister() : void{ this.router.navigateByUrl('register'); }
+  public navigateToRegister() : void{ this.router.navigateByUrl('plan'); }
 
   public navigateToOptimize(): void { 
     this.router.navigateByUrl('analysis/optimizer/true')
