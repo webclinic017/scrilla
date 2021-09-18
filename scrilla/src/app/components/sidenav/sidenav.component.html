@@ -5,21 +5,21 @@
 
     <mat-nav-list #menuSelection>
         <div mat-subheader>Account</div>
-        <mat-list-item>
+        <mat-list-item routerLink="/plan">
             <mat-icon color="accent" mat-list-icon>label_important</mat-icon>
-            <div mat-line routerLink="/plan" (click)="navigationDrawer.toggle()" tabindex="-1">Register</div>
+            <div mat-line (click)="navigationDrawer.toggle()" tabindex="-1">Register</div>
         </mat-list-item>
-        <mat-list-item>
+        <mat-list-item routerLink="/login">
             <mat-icon color="accent" mat-list-icon>label_important</mat-icon>
-            <div mat-line routerLink="/login" (click)="navigationDrawer.toggle()" tabindex="-1">Login</div>
+            <div mat-line (click)="navigationDrawer.toggle()" tabindex="-1">Login</div>
         </mat-list-item>
 
         <mat-divider></mat-divider>
 
         <div mat-subheader>Apps</div>
-        <mat-list-item *ngFor="let widget of staticData.getWidgetInfo()">
+        <mat-list-item *ngFor="let widget of staticData.getWidgetInfo()" [routerLink]="widget.route">
             <mat-icon color="accent" matListIcon >label_important</mat-icon>
-            <a matLine [routerLink]="widget.route" (click)="navigationDrawer.toggle()">{{widget.name}}</a>
+            <div matLine (click)="navigationDrawer.toggle()">{{widget.name}}</div>
         
         </mat-list-item>
 

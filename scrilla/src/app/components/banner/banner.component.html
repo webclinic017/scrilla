@@ -12,8 +12,37 @@
         <span class="spacer"></span>
 
         <button class="contact-button" mat-icon-button color="accent" aria-label="contact-button"
-            (click)="toggleMenu()">
+            (click)="toggleHelp()">
             <mat-icon>contact_support</mat-icon>
         </button>
     </mat-toolbar>
+    <div *ngIf="helpBar" class="help-bar">
+        <div class="help-item">
+            <button mat-raised-button class="mat-elevation-z3"
+                    [@scale]="whatBtnAnimationControl.scale"
+                    [@highlight]="whatBtnAnimationControl.highlight"
+                    (mouseenter)="whatBtnAnimationControl = this.animateButton()"
+                    (mouseleave)="whatBtnAnimationControl = animator.initAnimation()">
+                What Is This?
+            </button>
+        </div>
+        <div class="help-item">
+            <button mat-raised-button class="mat-elevation-z3"
+                    [@scale]="supportBtnAnimationControl.scale"
+                    [@highlight]="supportBtnAnimationControl.highlight"
+                    (mouseenter)="supportBtnAnimationControl = this.animateButton()"
+                    (mouseleave)="supportBtnAnimationControl = animator.initAnimation()">
+                Contact Support
+            </button>
+        </div>
+        <div class="help-item">
+            <button mat-raised-button class="mat-elevation-z3"
+                    [@scale]="featureBtnAnimationControl.scale"
+                    [@highlight]="featureBtnAnimationControl.highlight"
+                    (mouseenter)="featureBtnAnimationControl = this.animateButton()"
+                    (mouseleave)="featureBtnAnimationControl = animator.initAnimation()">
+                Submit A Feature Request
+            </button>
+        </div>
+    </div>
 </header>

@@ -3,3 +3,12 @@ h1 a{
     text-decoration: none;
 }
 .spacer { flex: 1 1 auto; }
+
+.help-bar{
+    width: 100%;
+    display: flex; flex-direction: row;
+    justify-content: space-around;
+}
+.help-item{
+    padding-top: 1%; padding-bottom: 1%;
+}
