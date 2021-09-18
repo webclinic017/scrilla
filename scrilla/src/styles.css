@@ -25,19 +25,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; overflow-x:
 .fill{ width: 100%; height: 100%;}
 .fill-width{ width:100%; }
 .fill-height{ height: 100%; }
-.spacer { flex: 1 1 auto; }
-.scroller{ overflow: auto; }
-
-.vertical-container{
-    display: flex; flex-direction: column;
-    justify-content: center;
-}
-.row-container{
-    display: flex; flex-direction: row;
-    justify-content:space-evenly;
-}
-.flex-wrap{
-    flex-wrap: wrap;
-}
 
 ::-webkit-scrollbar { width: 10px;}
+
+.debug{
+    border:5px;
+    border-style: dashed;
+    border-color: red;
+}

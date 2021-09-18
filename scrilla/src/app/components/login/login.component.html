@@ -1,1 +1,35 @@
-<p>login works!</p>
+<div class="page-container">
+    <div class="card-container">
+        <mat-card class="card">
+            <mat-card-title class="title">Sign in to your account</mat-card-title>
+            <mat-card-content class="content-container">
+                <form [formGroup]="loginFormGroup" class="field-container">
+
+                    <mat-form-field appearance="fill"  class="field">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="email" formControlName="email">
+                        <mat-error *ngIf="loginFormGroup.controls.email.hasError('email') && !loginFormGroup.controls.email.hasError('required')">
+                            Please enter a valid email
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="field">
+                        <mat-label>Password</mat-label>
+                        <input matInput type="password" formControlName="password">
+                        <mat-error *ngIf="loginFormGroup.controls.password.hasError('required')">
+                            This field is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </form>
+            </mat-card-content>
+            <mat-card-actions class="actions">
+                <button mat-raised-button class="login-button"
+                    [@scale]="loginBtnAnimationControl.scale"
+                    (mouseenter)="loginBtnAnimationControl = animator.animateScale()"
+                    (mouseleave)="loginBtnAnimationControl = animator.initAnimation()">
+                    Login
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

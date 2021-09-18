@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BannerComponent } from './components/banner/banner.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SplashComponent } from './components/splash/splash.component';
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import { PlanComponent } from './components/plan/plan.component';
+import { LoginComponent } from './components/login/login.component';
+import { SideNavComponent } from './components/sidenav/sidenav.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -17,12 +21,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { SideNavComponent } from './components/sidenav/sidenav.component';
 import { HttpClientModule } from '@angular/common/http';
-import { PlanComponent } from './components/plan/plan.component';
-import { LoginComponent } from './components/login/login.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CheckoutComponent } from './components/checkout/checkout.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -41,13 +43,15 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-
-    ScrollingModule,
+    FormsModule,
+    ReactiveFormsModule,
     
     MatButtonModule,
     MatCardModule,
+    MatFormFieldModule,
     MatDividerModule,
     MatIconModule,
+    MatInputModule,
     MatListModule,
     MatToolbarModule,
     MatTooltipModule,

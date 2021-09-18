@@ -51,11 +51,14 @@ export class SplashComponent implements OnInit {
   public rightNavAnimationControl: AnimationControl = this.animator.initAnimation();
   public leftNavAnimationControl : AnimationControl = this.animator.initAnimation();
 
-  public paneAnimationControls : AnimationControl[]= [
-    this.animator.initAnimation(), this.animator.initAnimation(), this.animator.initAnimation()
-  ]
+  public paneAnimationControls : AnimationControl[] = [];
 
-  constructor(public animator : AnimationService, private router: Router) { }
+  constructor(public animator : AnimationService, private router: Router) { 
+    this.paneBlurbs.forEach(()=>{
+      this.paneAnimationControls.push(this.animator.initAnimation());
+    })
+
+  }
 
   ngOnInit(): void {}
   

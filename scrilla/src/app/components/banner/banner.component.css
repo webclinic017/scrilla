@@ -2,3 +2,4 @@ h1 a{
     color: antiquewhite;
     text-decoration: none;
 }
+.spacer { flex: 1 1 auto; }

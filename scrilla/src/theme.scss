@@ -4,6 +4,7 @@
 @use './app/app.theme' as app;
 @use './app/components/splash/splash.theme' as splash;
 @use './app/components/plan/plan.theme' as plan;
+@use './app/components/login/login.theme' as login;
 @use './app/analysis/components/widgets/widgets.theme' as widgets;
 @use './app/analysis/components/results/results.theme' as results;
 
@@ -23,3 +24,4 @@ $theme: mat-dark-theme($primary, $accent, $warn);
 @include widgets.theme($theme);
 @include results.theme($theme);
 @include plan.theme($theme);
+@include login.theme($theme);
